@@ -6,13 +6,14 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/17 13:42:11 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/17 17:44:12 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "Libft/libft.h"
+# include "Printf/printf.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -44,8 +45,32 @@ int		exec_cmd(char *cmd_line, char **paths);
 
 char	*init_cmd_path(char *cmd, char **paths);
 
+int		ft_non_builtins(char **newargv);
+
 
 		//	PROMPT_MSG.C
 
 char	*prompt_msg(void);
+
+
+		//	FT_BUILTINS.C
+
+int		ft_builtins(char **newargv);
+
+
+		//	FT_ECHO.C
+
+int		ft_echo(char **newargv);
+
+void	write_newargv(char **newargv, int c);
+
+
+		//	FT_PWD.C
+
+int		ft_pwd(char **newargv);
+
+
+		//	FT_CD.C
+
+int		ft_cd(char **newargv);
 #endif

@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt_msg.c                                       :+:      :+:    :+:   */
+/*   ft_matlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/17 13:36:34 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/17 16:08:41 by abrun            ###   ########.fr       */
+/*   Created: 2021/10/11 16:51:20 by abrun             #+#    #+#             */
+/*   Updated: 2021/10/11 16:51:22 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-char	*prompt_msg(void)
+int	ft_matlen(char **mat)
 {
-	char	*cmd_line;
+	int		matlen;
 
-	rl_on_new_line();
-	cmd_line = readline("\033[0;32m->  \033[0;34mMinishell \033[0;m");
-	add_history(cmd_line);
-	return (cmd_line);
+	matlen = 0;
+	while (mat[matlen])
+		matlen++;
+	return (matlen);
 }

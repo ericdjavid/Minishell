@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt_msg.c                                       :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/17 13:36:34 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/17 16:08:41 by abrun            ###   ########.fr       */
+/*   Created: 2021/11/17 17:32:46 by abrun             #+#    #+#             */
+/*   Updated: 2021/11/17 17:36:24 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*prompt_msg(void)
+int	ft_pwd(char **newargv)
 {
-	char	*cmd_line;
+	char	buf[1024];
 
-	rl_on_new_line();
-	cmd_line = readline("\033[0;32m->  \033[0;34mMinishell \033[0;m");
-	add_history(cmd_line);
-	return (cmd_line);
+	if (ft_matlen(newargv) != 1)
+		return (0);
+	ft_printf_fd(1, "%s\n", getcwd(buf, 1024));
+	return (1);
 }

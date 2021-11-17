@@ -1,7 +1,7 @@
 NAME	= libft.a
 
 SRCS	= ft_strdup.c free_matc.c ft_strlen.c print_matc.c ft_strncmp.c\
-ft_strcat.c ft_strcpy.c ft_split.c
+ft_strcat.c ft_strcpy.c ft_split.c ft_matlen.c
 
 OBJS	= $(SRCS:.c=.o)
 

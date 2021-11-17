@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt_msg.c                                       :+:      :+:    :+:   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/17 13:36:34 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/17 16:08:41 by abrun            ###   ########.fr       */
+/*   Created: 2021/11/17 17:39:49 by abrun             #+#    #+#             */
+/*   Updated: 2021/11/17 18:20:26 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*prompt_msg(void)
+int	ft_cd(char **newargv)
 {
-	char	*cmd_line;
+	if (ft_matlen(newargv) != 2)
+		return (0);
+	if (newargv[1][0] != '~') 
+		chdir(newargv[1]);
+	else
+	{
+		chdir(getenv("HOME"));
+		newargv[1] += 2;
+		chdir(newargv[1]);
+		newargv[1] -= 2;
+	}
 
-	rl_on_new_line();
-	cmd_line = readline("\033[0;32m->  \033[0;34mMinishell \033[0;m");
-	add_history(cmd_line);
-	return (cmd_line);
+	// TODO: changer la valeur de la variable PWD et OLDPWD de env
+	return (1);
 }

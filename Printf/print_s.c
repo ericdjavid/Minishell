@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt_msg.c                                       :+:      :+:    :+:   */
+/*   print_s.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/17 13:36:34 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/17 16:08:41 by abrun            ###   ########.fr       */
+/*   Created: 2021/11/09 08:20:54 by abrun             #+#    #+#             */
+/*   Updated: 2021/11/17 16:57:18 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "printf.h"
 
-char	*prompt_msg(void)
+int	print_s(char *arg, int fd)
 {
-	char	*cmd_line;
+	int	len;
 
-	rl_on_new_line();
-	cmd_line = readline("\033[0;32m->  \033[0;34mMinishell \033[0;m");
-	add_history(cmd_line);
-	return (cmd_line);
+	if (!arg)
+		return (0);
+	len = ft_strlen(arg);
+	write(fd, arg, len);
+	return (len);
 }

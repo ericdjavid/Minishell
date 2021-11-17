@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt_msg.c                                       :+:      :+:    :+:   */
+/*   print_d.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/17 13:36:34 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/17 16:08:41 by abrun            ###   ########.fr       */
+/*   Created: 2021/11/08 15:08:22 by abrun             #+#    #+#             */
+/*   Updated: 2021/11/17 16:57:30 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "printf.h"
 
-char	*prompt_msg(void)
+int	print_d(int arg, int fd)
 {
-	char	*cmd_line;
+	char	*itoa;
+	size_t	len;
 
-	rl_on_new_line();
-	cmd_line = readline("\033[0;32m->  \033[0;34mMinishell \033[0;m");
-	add_history(cmd_line);
-	return (cmd_line);
+	itoa = ft_itoa(arg);
+	if (!itoa)
+		return (-1);
+	len = ft_strlen(itoa);
+	write(fd, itoa, len);
+	return (len);
 }
