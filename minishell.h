@@ -95,4 +95,9 @@ int		ft_split_len(char **split);
 void	ft_dup2(int newfd, int oldfd);
 
 void	ft_close_fd(int fd);
+
+		// EXPORT.C
+
+
+int		ft_export(char **newarg);
 #endif

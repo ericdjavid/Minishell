@@ -20,6 +20,8 @@ int	ft_builtins(char **newargv)
 		return (ft_pwd(newargv));
 	else if (!ft_strncmp(newargv[0], "cd", ft_strlen(newargv[0])))
 		return (ft_cd(newargv));
+	else if (!ft_strncmp(newargv[0], "export", ft_strlen(newargv[0])))
+		return (ft_export(newargv));
 	return (0);
 }
 
@@ -30,6 +32,8 @@ int	is_builtins(char *newargv)
 	else if (!ft_strncmp(newargv, "pwd", ft_strlen(newargv)))
 		return (1);
 	else if (!ft_strncmp(newargv, "cd", ft_strlen(newargv)))
+		return (1);
+	else if (!ft_strncmp(newargv, "export", ft_strlen(newargv)))
 		return (1);
 	return (0);
 }
