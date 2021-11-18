@@ -6,17 +6,18 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:02:04 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/18 14:23:11 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/18 14:45:11 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_read_input(char **newargv, char **paths, int *fds)
+int	ft_read_input(char **newargv, char **paths, int *fds, void *is_last, int fd_save)
 {
 	char	*heredoc;
 	int		ret;
 	char	**new;
+	pid_t	child_pid;
 
 	(void)fds;
 	ret = 1;
@@ -27,20 +28,38 @@ int	ft_read_input(char **newargv, char **paths, int *fds)
 	heredoc = get_heredoc(newargv[1]);
 	if (!heredoc)
 		return (0);
-	write(0, heredoc, ft_strlen(heredoc));
+	write(fd_save, heredoc, ft_strlen(heredoc));
 	new = init_new(newargv, paths);
-	if (access(new[0], X_OK))
+	if (pipe(fds) == -1)
+		return (0);
+	child_pid = fork();
+	if (child_pid == -1)
+		return (0);
+	if (child_pid == 0)
 	{
-		ft_printf_fd(2, "minishell: %s: command not found\n",
-				new[0]);
-		ret = 127;
-		exit(127);
-	}
-	else if (execve(new[0], new, NULL) == -1)
-	{
-		perror("nonono");
-		ret = 1;
-		exit (1);
+		if (!is_last)
+			ft_dup2(fds[1], STDOUT_FILENO);
+		ft_dup2(fd_save, STDIN_FILENO);
+		ft_close_fd(fd_save);
+		ft_close_fd(fds[0]);
+		if (ft_builtins(new))
+		{
+			ret = 1;
+			exit(1);
+		}
+		if (access(new[0], X_OK))
+		{
+			ft_printf_fd(2, "minishell: %s: command not found\n",
+					new[0]);
+			ret = 127;
+			exit(127);
+		}
+		else if (execve(new[0], new, NULL) == -1)
+		{
+			perror("nonono");
+			ret = 1;
+			exit (1);
+		}
 	}
 	return (ret);
 }
@@ -92,7 +111,7 @@ char	**init_new(char **newargv, char **paths)
 		c++;
 	}
 	if (!is_builtins(new[0]))
-			new[0] = init_cmd_path(new[0], paths);
+		new[0] = init_cmd_path(new[0], paths);
 	new[c - 2] = 0;
 	return (new);
 }

@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/18 14:22:20 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/18 14:45:14 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	ft_cmd(char ***newargv, char **paths)
 	fd_save = 0;
 	while (newargv[n_newargv])
 	{
-		if (ft_read_input(newargv[n_newargv], paths, fds))
+		if (ft_read_input(newargv[n_newargv], paths, fds,
+			newargv[n_newargv + 1]))
 		{
 			ret = 1;
 			ft_close_fd(fds[1]);
