@@ -1,0 +1,47 @@
+readline : readline will read a line from the terminal and return it, using
+       prompt as a prompt.  If prompt is NULL or the empty string, no
+       prompt is issued.  The line returned is allocated with malloc(3);
+       the caller must free it when finished.  The line returned has the
+       final newline removed, so only the text of the line remains.
+
+
+rl_clear_history: clear the history
+rl_on_new_line : move into new empty lreadline
+rl_replace_line : 
+rl_redisplay : change what is displayed on screen to reflect the current contents of rl_line_buffer
+add_history : 
+access : 
+open : 
+read : 
+close : 
+fork : 
+wait : 
+waitpid : 
+wait3 : 
+wait4 : 
+signal : 
+sigaction : 
+kill exit : 
+getcwd : 
+chdir : 
+stat : 
+lstat : 
+fstat : 
+unlink : 
+execve : 
+dup : 
+dup2 : 
+pipe : 
+opendir : 
+readdir : 
+closedir : 
+strerror : 
+perror : 
+isatty   : 
+ttyname : 
+ttyslot : 
+ioctl : 
+getenv : 
+tcsetattr : 
+tcgetattr : 
+tgete : 

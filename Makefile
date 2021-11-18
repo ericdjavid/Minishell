@@ -16,7 +16,7 @@ CFLAGS	= -Wall -Werror -Wextra
 FLAGS	= -lreadline -L/Users/$(UNAME)/.brew/Cellar/readline/8.1/lib/ -I/Users/$(UNAME)/.brew/Cellar/readline/8.1/include
 
 %.o: %.c
-			gcc $(CFLAGS) $(INC) -o $@ -c $?
+			gcc -g $(CFLAGS) $(INC) -o $@ -c $?
 
 all:	$(NAME)
 
@@ -28,7 +28,7 @@ lib:
 	make -C Libft
 
 $(NAME):	lib $(OBJS) $(OBJS_P)
-		gcc $(CFLAGS) $(OBJS) $(OBJS_P) $(FLAGS) -o $(NAME) Libft/libft.a
+		gcc -g $(CFLAGS) $(OBJS) $(OBJS_P) $(FLAGS) -o $(NAME) Libft/libft.a
 
 clean:
 		$(RM) $(OBJS) $(OBJS_P)

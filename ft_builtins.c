@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+// TODO: fix the SIGSEV when pressing ENTER
 int	ft_builtins(char **newargv)
 {
 	if (!ft_strncmp(newargv[0], "echo", ft_strlen(newargv[0])))
