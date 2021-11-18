@@ -6,26 +6,27 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:02:04 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/18 12:52:09 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/18 14:23:11 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_read_input(char **newargv, char **paths)
+int	ft_read_input(char **newargv, char **paths, int *fds)
 {
 	char	*heredoc;
 	int		ret;
 	char	**new;
 
+	(void)fds;
 	ret = 1;
 	if (ft_strncmp(newargv[0], "<<", ft_strlen(newargv[0])))
-		return (-1);
+		return (0);
 	if (ft_matlen(newargv) < 3)
-		return (-1);
+		return (0);
 	heredoc = get_heredoc(newargv[1]);
 	if (!heredoc)
-		return (-1);
+		return (0);
 	write(0, heredoc, ft_strlen(heredoc));
 	new = init_new(newargv, paths);
 	if (access(new[0], X_OK))
@@ -36,7 +37,11 @@ int	ft_read_input(char **newargv, char **paths)
 		exit(127);
 	}
 	else if (execve(new[0], new, NULL) == -1)
+	{
+		perror("nonono");
 		ret = 1;
+		exit (1);
+	}
 	return (ret);
 }
 
@@ -76,10 +81,8 @@ char	**init_new(char **newargv, char **paths)
 	if (!new)
 		return (0);
 	c = 2;
-	print_matc(newargv);
 	while (newargv[c])
 	{
-		printf("newargv : %s\n", ft_strdup(newargv[c]));
 		new[c - 2] = ft_strdup(newargv[c]);
 		if (!new[c - 2])
 		{
