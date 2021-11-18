@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/17 17:55:58 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/18 10:40:02 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,11 @@ int	exec_cmd(char *cmd_line, char **paths)
 	newargv = ft_split(cmd_line, 32);
 	if (!newargv)
 		return (0);
-
-	//	On execute les commandes codées par nous
-	if (ft_builtins(newargv))
+	if(ft_pipe(cmd_line, paths) > 0)
+	{
+		ret = 0;
+	} 
+	else if (ft_builtins(newargv))
 	{
 		ret = 0;
 	}
@@ -83,6 +85,6 @@ int	ft_non_builtins(char **newargv)
 			ret = 1;
 	}
 	else
-		wait(NULL);
+		while ((wait(NULL)) > 0);
 	return (ret);
 }

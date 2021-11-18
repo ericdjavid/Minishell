@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*   free_3dim_matc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/17 17:39:49 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/17 18:13:49 by abrun            ###   ########.fr       */
+/*   Created: 2021/10/06 18:12:16 by abrun             #+#    #+#             */
+/*   Updated: 2021/10/13 12:53:13 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	ft_cd(char **newargv)
+void	free_3dim_matc(char ***matc)
 {
-	if (ft_matlen(newargv) != 2)
-		return (0);
-	if (newargv[1][0] != '~') 
-		chdir(newargv[1]);
-	else
+	int	n;
+
+	n = 0;
+	while (matc[n])
 	{
-		chdir(getenv("HOME"));
-		newargv[1] += 2;
-		chdir(newargv[1]);
-		newargv[1] -= 2;
+		free_matc(matc[n]);
+		n++;
 	}
-	return (1);
+	free(matc);
 }

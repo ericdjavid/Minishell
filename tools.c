@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/17 17:32:46 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/17 17:36:24 by abrun            ###   ########.fr       */
+/*   Created: 2021/11/18 09:24:21 by abrun             #+#    #+#             */
+/*   Updated: 2021/11/18 09:25:17 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_pwd(char **newargv)
+void	ft_dup2(int newfd, int oldfd)
 {
-	char	buf[1024];
+	if (dup2(newfd, oldfd) == -1)
+	{
+		perror("La fonction dup2 a echoue");
+		exit(EXIT_FAILURE);
+	}
+}
 
-	if (ft_matlen(newargv) != 1)
-		return (0);
-	ft_printf_fd(1, "%s\n", getcwd(buf, 1024));
-	return (1);
+void	ft_close_fd(int fd)
+{
+	if (close(fd) == -1)
+	{
+		perror("La fonction close a echoue");
+		exit(EXIT_FAILURE);
+	}
 }

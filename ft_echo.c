@@ -6,11 +6,13 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:14 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/17 16:10:35 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/18 10:43:38 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+	// TODO: faire les echos avec '$var' et "$var"
 
 int	ft_echo(char **newargv)
 {

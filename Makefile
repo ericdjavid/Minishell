@@ -1,7 +1,7 @@
 NAME	= minishell
 
 SRCS	= minishell.c open_term.c init_paths.c exec_cmd.c prompt_msg.c \
-ft_builtins.c ft_echo.c ft_pwd.c ft_cd.c
+ft_builtins.c ft_echo.c ft_pwd.c ft_cd.c init_newargv.c ft_pipe.c tools.c
 
 SRCS_P	= convert_hexa.c ft_printf_fd.c print_d.c print_s.c print_x.c tools.c
 
@@ -11,10 +11,12 @@ _SRCS_P	= ${addprefix Printf/, ${SRCS_P}}
 
 OBJS_P	= $(_SRCS_P:.c=.o)
 
-FLAGS	= -Wall -Werror -Wextra
+CFLAGS	= -Wall -Werror -Wextra
+
+FLAGS	= -lreadline -L/Users/$(UNAME)/.brew/Cellar/readline/8.1/lib/ -I/Users/$(UNAME)/.brew/Cellar/readline/8.1/include
 
 %.o: %.c
-			cc $(FLAGS) $(INC) -o $@ -c $?
+			gcc $(CFLAGS) $(INC) -o $@ -c $?
 
 all:	$(NAME)
 
@@ -26,7 +28,7 @@ lib:
 	make -C Libft
 
 $(NAME):	lib $(OBJS) $(OBJS_P)
-		gcc $(FLAGS) -lreadline $(OBJS) $(OBJS_P) -o $(NAME) Libft/libft.a
+		gcc $(CFLAGS) $(OBJS) $(OBJS_P) $(FLAGS) -o $(NAME) Libft/libft.a
 
 clean:
 		$(RM) $(OBJS) $(OBJS_P)

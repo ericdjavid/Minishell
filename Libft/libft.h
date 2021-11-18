@@ -6,7 +6,7 @@
 /*   By: abrun <abrun@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:18:03 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/17 14:56:34 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/18 09:21:06 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,8 @@ void	ft_strcat(char *dst, const char *str);
 char	**ft_split(char *s, char c);
 
 int		ft_matlen(char **mat);
+
+void	free_3dim_matc(char ***matc);
+
+int		ft_strchr(const char *str, int chr);
 #endif

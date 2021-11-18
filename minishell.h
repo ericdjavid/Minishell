@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/17 17:44:12 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/18 10:33:52 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h>
 
 
 		//	OPEN_TERM.C
@@ -73,4 +74,29 @@ int		ft_pwd(char **newargv);
 		//	FT_CD.C
 
 int		ft_cd(char **newargv);
+
+
+		//	FT_PIPE.C
+
+int		ft_pipe(char *cmd_line, char **paths);
+
+int		get_n_cmd(char *cmd_line);
+
+int		ft_cmd_1(char **newargv, int *fds);
+
+int		ft_cmd_n(char ***newargv);
+
+
+		//	INIT_NEWARGV.C
+
+char	***init_newargv(char *cmd_line, char **paths);
+
+int		ft_split_len(char **split);
+
+
+		//	TOOLS.C
+
+void	ft_dup2(int newfd, int oldfd);
+
+void	ft_close_fd(int fd);
 #endif
