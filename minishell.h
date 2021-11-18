@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/18 11:27:27 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/18 12:40:17 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int		ft_cd(char **newargv);
 
 		//	FT_CMD.C
 
-int		ft_cmd(char ***newargv);
+int		ft_cmd(char ***newargv, char **paths);
 
 int		get_n_cmd(char *cmd_line);
 
@@ -95,4 +95,15 @@ int		ft_split_len(char **split);
 void	ft_dup2(int newfd, int oldfd);
 
 void	ft_close_fd(int fd);
+
+
+		//	FT_READ_INPUT.C
+
+int		ft_read_input(char **newargv, char **paths);
+
+char	*get_heredoc(char *lim);
+
+char	**init_new(char **newargv, char **paths);
+
+int		init_param_heredoc(char *lim, char **buf, char **heredoc, int *ret);
 #endif

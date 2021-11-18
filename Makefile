@@ -1,7 +1,8 @@
 NAME	= minishell
 
 SRCS	= minishell.c open_term.c init_paths.c exec_cmd.c prompt_msg.c \
-ft_builtins.c ft_echo.c ft_pwd.c ft_cd.c init_newargv.c ft_cmd.c tools.c
+ft_builtins.c ft_echo.c ft_pwd.c ft_cd.c init_newargv.c ft_cmd.c tools.c \
+ft_read_input.c
 
 SRCS_P	= convert_hexa.c ft_printf_fd.c print_d.c print_s.c print_x.c tools.c
 

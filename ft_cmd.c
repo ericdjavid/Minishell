@@ -6,13 +6,13 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/18 11:28:32 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/18 12:41:33 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_cmd(char ***newargv)
+int	ft_cmd(char ***newargv, char **paths)
 {
 	pid_t	child_pid;
 	int		n_newargv;
@@ -38,6 +38,11 @@ int	ft_cmd(char ***newargv)
 			ft_close_fd(fd_save);
 			ft_close_fd(fds[0]);
 			if (ft_builtins(newargv[n_newargv]))
+			{
+				ret = 1;
+				exit(1);
+			}
+			else if (ft_read_input(newargv[n_newargv], paths))
 			{
 				ret = 1;
 				exit(1);
