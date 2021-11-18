@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:56:08 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/18 10:49:48 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/18 11:13:32 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ char	***init_newargv(char *cmd_line, char **paths)
 			split++;
 			c_2++;
 		}
-		newargv[c_1][0] = init_cmd_path(newargv[c_1][0], paths);
+		if (!is_builtins(newargv[c_1][0]))
+			newargv[c_1][0] = init_cmd_path(newargv[c_1][0], paths);
 		if (c_1 + 1 < n_cmd)
 			free(*split);
 		split++;

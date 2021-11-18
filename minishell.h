@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/18 10:33:52 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/18 11:27:27 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ int		exec_cmd(char *cmd_line, char **paths);
 
 char	*init_cmd_path(char *cmd, char **paths);
 
-int		ft_non_builtins(char **newargv);
-
 
 		//	PROMPT_MSG.C
 
@@ -57,6 +55,8 @@ char	*prompt_msg(void);
 		//	FT_BUILTINS.C
 
 int		ft_builtins(char **newargv);
+
+int		is_builtins(char *newargv);
 
 
 		//	FT_ECHO.C
@@ -76,15 +76,11 @@ int		ft_pwd(char **newargv);
 int		ft_cd(char **newargv);
 
 
-		//	FT_PIPE.C
+		//	FT_CMD.C
 
-int		ft_pipe(char *cmd_line, char **paths);
+int		ft_cmd(char ***newargv);
 
 int		get_n_cmd(char *cmd_line);
-
-int		ft_cmd_1(char **newargv, int *fds);
-
-int		ft_cmd_n(char ***newargv);
 
 
 		//	INIT_NEWARGV.C
