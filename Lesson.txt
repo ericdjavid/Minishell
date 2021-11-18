@@ -4,7 +4,6 @@ readline : readline will read a line from the terminal and return it, using
        the caller must free it when finished.  The line returned has the
        final newline removed, so only the text of the line remains.
 
-
 rl_clear_history: clear the history
 rl_on_new_line : move into new empty lreadline
 rl_replace_line : 

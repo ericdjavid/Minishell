@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	ft_cmd(char ***newargv, char **paths)
+int	ft_cmd(char ***newargv, char **paths, t_control *list)
 {
 	pid_t	child_pid;
 	int		n_newargv;
@@ -46,7 +46,7 @@ int	ft_cmd(char ***newargv, char **paths)
 				ft_dup2(fd_save, STDIN_FILENO);
 				ft_close_fd(fd_save);
 				ft_close_fd(fds[0]);
-				if (ft_builtins(newargv[n_newargv]))
+				if (ft_builtins(newargv[n_newargv], list))
 				{
 					ret = 1;
 					exit(1);

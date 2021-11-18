@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	exec_cmd(char *cmd_line, char **paths)
+int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 {
 	int		ret;
 	char	***newargv;
@@ -21,7 +21,7 @@ int	exec_cmd(char *cmd_line, char **paths)
 	newargv = init_newargv(cmd_line, paths);
 	if (!newargv)
 		return (-1);
-	ret = ft_cmd(newargv, paths);
+	ret = ft_cmd(newargv, paths, list);
 	if (!ret)
 		return (-1);
 	return (ret);

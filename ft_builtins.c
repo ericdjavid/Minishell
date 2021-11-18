@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 // TODO: fix the SIGSEV when pressing ENTER
-int	ft_builtins(char **newargv)
+int	ft_builtins(char **newargv, t_control *list)
 {
 	if (!ft_strncmp(newargv[0], "echo", ft_strlen(newargv[0])))
 		return (ft_echo(newargv));
@@ -21,7 +21,7 @@ int	ft_builtins(char **newargv)
 	else if (!ft_strncmp(newargv[0], "cd", ft_strlen(newargv[0])))
 		return (ft_cd(newargv));
 	else if (!ft_strncmp(newargv[0], "export", ft_strlen(newargv[0])))
-		return (ft_export(newargv));
+		return (ft_export(list));
 	return (0);
 }
 

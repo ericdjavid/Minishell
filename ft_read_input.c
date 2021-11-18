@@ -17,6 +17,7 @@ int	ft_read_input(char **newargv, char **paths, int *fds)
 	char	*heredoc;
 	int		ret;
 	char	**new;
+	pid_t	child_pid;
 
 	(void)fds;
 	ret = 1;
