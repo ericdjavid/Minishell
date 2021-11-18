@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/18 11:28:34 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/18 14:05:43 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	exec_cmd(char *cmd_line, char **paths)
 	newargv = init_newargv(cmd_line, paths);
 	if (!newargv)
 		return (-1);
-	ret = ft_cmd(newargv);
+	ret = ft_cmd(newargv, paths);
 	if (!ret)
 		return (-1);
 	return (ret);

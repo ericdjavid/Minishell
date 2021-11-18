@@ -6,7 +6,7 @@
 /*   By: abrun <abrun@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:18:03 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/18 09:21:06 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/18 12:15:58 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,8 @@ int		ft_matlen(char **mat);
 void	free_3dim_matc(char ***matc);
 
 int		ft_strchr(const char *str, int chr);
+
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
+
+char	*ft_strjoin_free(char *s1, const char *s2);
 #endif
