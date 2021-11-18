@@ -96,6 +96,10 @@ void	ft_dup2(int newfd, int oldfd);
 
 void	ft_close_fd(int fd);
 
+		// EXPORT.C
+
+
+int		ft_export(char **newarg);
 
 		//	FT_READ_INPUT.C
 
