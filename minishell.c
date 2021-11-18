@@ -12,23 +12,24 @@
 
 #include "minishell.h"
 
-int	main(int ac, char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	char		*cmd_line;
 	char		**paths;
     t_control   *list;
-	// int			i;
+	int			i;
 
+	(void)av;
 	if (ac != 1)
 		return (1);
-    // if (!list)
-	// 	return (-1);
-	// i = -1;
-    // while (envp[++i])
-	// 	add_end_list(envp[i], list);	
+    list = ft_init();
+    if (!list)
+		return (-1);
+	i = -1;
+    while (envp[++i])
+		add_end_list(envp[i], list);	
 	paths = init_paths(envp); 
 	cmd_line = prompt_msg();
-    list = ft_init();
 	while (cmd_line)
 	{
 		// TODO: faire avec des pipes multiples
