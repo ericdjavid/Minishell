@@ -1,50 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipe.c                                          :+:      :+:    :+:   */
+/*   ft_cmd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/18 10:49:27 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/18 11:27:12 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_pipe(char *cmd_line, char **paths)
-{
-	char	***newargv;
-	int		ret;
-
-	if (!ft_strchr(cmd_line, '|'))
-		return (0);
-	newargv = init_newargv(cmd_line, paths);
-	if (!newargv)
-		return (-1);
-	ret = ft_cmd_n(newargv);
-	if (!ret)
-		return (-1);
-	return (ret);
-}
-
-int	get_n_cmd(char *cmd_line)
-{
-	int	n_cmd;
-	int	c;
-
-	n_cmd = 1;
-	c = 0;
-	while (cmd_line[c])
-	{
-		if (cmd_line[c] == '|')
-			n_cmd++;
-		c++;
-	}
-	return (n_cmd);
-}
-
-int	ft_cmd_n(char ***newargv)
+int	ft_cmd(char ***newargv)
 {
 	pid_t	child_pid;
 	int		n_newargv;
@@ -69,11 +37,17 @@ int	ft_cmd_n(char ***newargv)
 			ft_dup2(fd_save, STDIN_FILENO);
 			ft_close_fd(fd_save);
 			ft_close_fd(fds[0]);
-			if (access(newargv[n_newargv][0], X_OK))
+			if (ft_builtins(newargv[n_newargv]))
+			{
+				ret = 1;
+				exit(1);
+			}
+			else if (access(newargv[n_newargv][0], X_OK))
 			{
 				ft_printf_fd(2, "minishell: %s: command not found\n",
 						newargv[n_newargv][0]);
 				ret = 127;
+				exit(127);
 			}
 			else if (execve(newargv[n_newargv][0], newargv[n_newargv],
 						NULL) == -1)
@@ -88,4 +62,20 @@ int	ft_cmd_n(char ***newargv)
 		n_newargv++;
 	}
 	return(ret);
+}
+
+int	get_n_cmd(char *cmd_line)
+{
+	int	n_cmd;
+	int	c;
+
+	n_cmd = 1;
+	c = 0;
+	while (cmd_line[c])
+	{
+		if (cmd_line[c] == '|')
+			n_cmd++;
+		c++;
+	}
+	return (n_cmd);
 }
