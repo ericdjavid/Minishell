@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:58:06 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/19 20:55:08 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/19 21:21:16 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,29 @@ int	ft_redirection(char ***newargv, int n_n)
 {
 	int	c;
 	int	fd;
+	int	config;
 
 	c = 0;
+	config = 2;
 	while (newargv[n_n][c])
 	{
-		if (!ft_strncmp(newargv[n_n][c], ">", ft_strlen(newargv[n_n][c])))
+		if (!ft_strncmp(newargv[n_n][c], ">", ft_strlen(newargv[n_n][c]))
+			|| !ft_strncmp(newargv[n_n][c], "<", ft_strlen(newargv[n_n][c])))
 		{
+			if (newargv[n_n][c][0] == '>')
+				config = 3;
 			fd = get_outfd(newargv[n_n][c + 1]);
 			if (fd < 0)
 				return (fd);
 			newargv[n_n] = get_new_redir(newargv[n_n]);
 			if (!newargv[n_n])
 				return (0);
-			ft_dup2(fd, STDOUT_FILENO);
+			if (config == 3)
+				ft_dup2(fd, STDOUT_FILENO);
+			else
+				ft_dup2(fd, STDIN_FILENO);
 			ft_close_fd(fd);
-			return (2);
+			return (config);
 		}
 		c++;
 	}
@@ -79,13 +87,14 @@ char	**get_new_redir(char **newargv)
 	c_2 = 0;
 	while (newargv[c])
 	{
+		if (newargv[c] && (!ft_strncmp(newargv[c], ">", ft_strlen(newargv[c]))
+				|| !ft_strncmp(newargv[c], "<", ft_strlen(newargv[c]))))
+			c += 2;
 		new[c_2] = ft_strdup(newargv[c]);
 		if (!new[c_2])
 			return (free_redirection(newargv, new));
 		c_2++;
 		c++;
-		if (newargv[c] && !ft_strncmp(newargv[c], ">", ft_strlen(newargv[c])))
-			c += 2;
 	}
 	new[c_2] = 0;
 	free_matc(newargv);
