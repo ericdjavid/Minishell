@@ -6,12 +6,12 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:42:20 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/18 11:11:24 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/19 18:24:25 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-// TODO: fix the SIGSEV when pressing ENTER
+
 int	ft_builtins(char **newargv)
 {
 	if (!ft_strncmp(newargv[0], "echo", ft_strlen(newargv[0])))

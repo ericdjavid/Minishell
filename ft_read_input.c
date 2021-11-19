@@ -6,21 +6,19 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:02:04 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/19 17:57:13 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/19 19:54:57 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_read_input(char ***newargv, int n_newargv)
+int	ft_read_input(char ***newargv, int n_newargv, char **paths)
 {
 	char	*heredoc;
 	int		c;
 	int		fds[2];
 
 	c = 0;
-	if (pipe(fds) == -1)
-		return (0);
 	while (newargv[n_newargv][c])
 	{
 		if (!ft_strncmp(newargv[n_newargv][c], "<<",
@@ -31,11 +29,14 @@ int	ft_read_input(char ***newargv, int n_newargv)
 			heredoc = get_heredoc(newargv[n_newargv][c + 1]);
 			if (!heredoc)
 				return (0);
+			if (pipe(fds) == -1)
+				return (0);
 			ft_dup2(fds[0], STDIN_FILENO);
 			write(fds[1], heredoc, ft_strlen(heredoc));
 			ft_close_fd(fds[1]);
 			ft_close_fd(fds[0]);
-			newargv[n_newargv] = get_newargv_rdin(newargv[n_newargv], c);
+			newargv[n_newargv] = get_newargv_rdin(newargv[n_newargv],
+					c, paths);
 			if (!newargv[n_newargv])
 				return (0);
 			return (2);
@@ -70,10 +71,11 @@ char	*get_heredoc(char *lim)
 	return (heredoc);
 }
 
-char	**get_newargv_rdin(char **newargv, int c)
+char	**get_newargv_rdin(char **newargv, int c, char **paths)
 {
 	char	**new;
 	int		c_2;
+	int		c_3;
 
 	new = malloc(sizeof(char *) *(ft_matlen(newargv) - 1));
 	if (!new)
@@ -82,30 +84,38 @@ char	**get_newargv_rdin(char **newargv, int c)
 		return (0);
 	}
 	c_2 = 0;
-	while (newargv[c_2] && c_2 < c)
-	{
-		new[c_2] = ft_strdup(newargv[c_2]);
-		if (!new[c_2])
-		{
-			free_matc(new);
-			free_matc(newargv);
-			return (0);
-		}
-		c_2++;
-	}
-	c_2 += 2;
+	c_3 = 0;
 	while (newargv[c_2])
 	{
-		new[c_2 - 2] = ft_strdup(newargv[c_2]);
-		if (!new[c_2 - 2])
-		{
-			free_matc(new);
-			free_matc(newargv);
+		if (c_2 == c)
+			c_2 += 2;
+		new[c_3] = ft_strdup_rdin(newargv[c_2], newargv, new);
+		if (!new[c_3])
 			return (0);
+		if (c_3 == c)
+		{
+			new[c_3] = init_cmd_path(new[c_3], paths);
+			if (!new[c_3])
+				return (0);
 		}
 		c_2++;
+		c_3++;
 	}
-	new[c_2 - 2] = 0;
+	new[c_3] = 0;
 	free_matc(newargv);
 	return (new);
+}
+
+char	*ft_strdup_rdin(char *s, char **mat1, char **mat2)
+{
+	char	*res;
+
+	res = ft_strdup(s);
+	if (!res)
+	{
+		free_matc(mat1);
+		free_matc(mat2);
+		return (0);
+	}
+	return (res);
 }

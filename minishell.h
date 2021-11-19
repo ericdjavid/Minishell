@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/19 17:48:44 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/19 19:48:57 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,11 @@ int		get_n_cmd(char *cmd_line);
 
 char	***init_newargv(char *cmd_line, char **paths);
 
-int		ft_split_len(char **split);
+char	***init_param_in(char ***split, char *cmd_line, int *c_1, int *c_spl);
+
+int		ft_split_len(char **split, int c_spl);
+
+char	***free_init_new(char ***newargv, char **split);
 
 
 		//	TOOLS.C
@@ -99,11 +103,13 @@ void	ft_close_fd(int fd);
 
 		//	FT_READ_INPUT.C
 
-int		ft_read_input(char ***newargv, int n_newargv);
+int		ft_read_input(char ***newargv, int n_newargv, char **paths);
 
 char	*get_heredoc(char *lim);
 
 int		init_param_heredoc(char *lim, char **buf, char **heredoc, int *ret);
 
-char	**get_newargv_rdin(char **newargv, int c);
+char	**get_newargv_rdin(char **newargv, int c, char **paths);
+
+char	*ft_strdup_rdin(char *s, char **mat1, char **mat2);
 #endif
