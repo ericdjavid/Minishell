@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/18 14:39:34 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/19 15:02:39 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,11 @@ void	ft_close_fd(int fd);
 
 		//	FT_READ_INPUT.C
 
-int		ft_read_input(char **newargv, char **paths, int *fds, void *is_last, int fd_save);
+int		ft_read_input(char ***newargv, int n_newargv);
 
 char	*get_heredoc(char *lim);
 
-char	**init_new(char **newargv, char **paths);
-
 int		init_param_heredoc(char *lim, char **buf, char **heredoc, int *ret);
+
+char	**get_newargv_rdin(char **newargv, int c);
 #endif

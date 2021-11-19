@@ -6,7 +6,7 @@
 /*   By: abrun <abrun@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 12:18:58 by abrun             #+#    #+#             */
-/*   Updated: 2021/10/11 16:53:51 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/19 14:31:35 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ char	*ft_strjoin_free(char *s1, const char *s2)
 	counter = -1;
 	while (++counter < s1_len)
 		strjoin[counter] = s1[counter];
-	free(s1);
+	if (s1)
+		free(s1);
 	while (counter - s1_len < s2_len)
 	{
 		strjoin[counter] = s2[counter - s1_len];
