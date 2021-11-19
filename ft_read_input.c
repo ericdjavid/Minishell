@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:02:04 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/19 15:26:39 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/19 17:56:40 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ int	ft_read_input(char ***newargv, int n_newargv)
 {
 	char	*heredoc;
 	int		c;
-	int		fd;
+	int		fds[2];
 
 	c = 0;
-	fd = 0;
+	if (pipe(fds) == -1)
+		return (0);
 	while (newargv[n_newargv][c])
 	{
 		if (!ft_strncmp(newargv[n_newargv][c], "<<",
@@ -30,9 +31,10 @@ int	ft_read_input(char ***newargv, int n_newargv)
 			heredoc = get_heredoc(newargv[n_newargv][c + 1]);
 			if (!heredoc)
 				return (0);
-			ft_dup2(fd, STDIN_FILENO);
-			ft_close_fd(fd);
-			write(fd, heredoc, ft_strlen(heredoc));
+			ft_dup2(fds[0], STDIN_FILENO);
+			write(fds[1], heredoc, ft_strlen(heredoc));
+			ft_close_fd(fds[1]);
+			ft_close_fd(fds[0]);
 			newargv[n_newargv] = get_newargv_rdin(newargv[n_newargv], c);
 			if (!newargv[n_newargv])
 				return (0);
@@ -49,17 +51,22 @@ char	*get_heredoc(char *lim)
 	char	*buf;
 	int		ret;
 
-	heredoc = NULL;
+	heredoc = malloc(1);
+	if (!heredoc)
+		return (0);
+	heredoc[0] = 0;
 	ret = 1;
 	while (ret)
 	{
 		buf = readline("> ");
 		if (ft_strncmp(buf, lim, ft_strlen(lim)))
-			heredoc = ft_strjoin_free(heredoc, buf);
+			heredoc = ft_strjoin_free_n(heredoc, buf);
 		else
 			ret = 0;
-		free(buf);
+		if (buf)
+			free(buf);
 	}
+	heredoc[ft_strlen(heredoc)] = 0;
 	return (heredoc);
 }
 
