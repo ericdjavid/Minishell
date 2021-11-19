@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/19 18:29:22 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/19 20:53:56 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,26 @@ int	ft_cmd(char ***newargv, char **paths)
 				ft_dup2(fd_save, STDIN_FILENO);
 				ft_close_fd(fd_save);
 			}
-			if (newargv[n_newargv + 1])
+			ret = ft_redirection(newargv, n_newargv);
+			if (ret != 2 && newargv[n_newargv + 1])
 				ft_dup2(fds[1], STDOUT_FILENO);
 			ft_close_fd(fds[0]);
-			if (ft_builtins(newargv[n_newargv]))
+			if (ret > 0 && ft_builtins(newargv[n_newargv]))
 			{
 				ret = 1;
 				exit(1);
 			}
-			else if (access(newargv[n_newargv][0], X_OK))
+			else if (ret > 0 && access(newargv[n_newargv][0], X_OK))
 			{
 				ft_printf_fd(2, "minishell: %s: command not found\n",
 						newargv[n_newargv][0]);
 				ret = 127;
 				exit(127);
 			}
-			else if (execve(newargv[n_newargv][0], newargv[n_newargv],
-						NULL) == -1)
+			else if (ret > 0 && execve(newargv[n_newargv][0],
+				newargv[n_newargv], NULL) == -1)
 				ret = 1;
+			exit(ret);
 		}
 		else
 		{

@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/19 19:48:57 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/19 20:52:13 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 
 
 		//	OPEN_TERM.C
@@ -112,4 +114,15 @@ int		init_param_heredoc(char *lim, char **buf, char **heredoc, int *ret);
 char	**get_newargv_rdin(char **newargv, int c, char **paths);
 
 char	*ft_strdup_rdin(char *s, char **mat1, char **mat2);
+
+
+		//	FT_REDIRECTION.C
+
+int		ft_redirection(char ***newargv, int n_n);
+
+int		get_outfd(char *file);
+
+char	**get_new_redir(char **newargv);
+
+char	**free_redirection(char **newargv, char **new);
 #endif
