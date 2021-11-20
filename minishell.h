@@ -127,6 +127,10 @@ void 	add_end_list(char *str, t_control *list);
 
 char 	*add_str(char *str);
 
+		// FT_ENV.C
+
+int 	ft_env(t_control *list);
+
 		//	FT_READ_INPUT.C
 
 int		ft_read_input(char **newargv, char **paths, int *fds);

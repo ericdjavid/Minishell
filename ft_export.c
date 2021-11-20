@@ -93,3 +93,10 @@ int ft_export(t_control *list)
     free_all(list);
     return (0);
 }
+
+int ft_env(t_control *list)
+{
+    ft_print_export(list->first);
+    free_all(list);
+    return (0);
+}

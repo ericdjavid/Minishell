@@ -22,6 +22,8 @@ int	ft_builtins(char **newargv, t_control *list)
 		return (ft_cd(newargv));
 	else if (!ft_strncmp(newargv[0], "export", ft_strlen(newargv[0])))
 		return (ft_export(list));
+	else if (!ft_strncmp(newargv[0], "env", ft_strlen(newargv[0])))
+		return (ft_env(list));
 	return (0);
 }
 
@@ -34,6 +36,8 @@ int	is_builtins(char *newargv)
 	else if (!ft_strncmp(newargv, "cd", ft_strlen(newargv)))
 		return (1);
 	else if (!ft_strncmp(newargv, "export", ft_strlen(newargv)))
+		return (1);
+	else if (!ft_strncmp(newargv, "env", ft_strlen(newargv)))
 		return (1);
 	return (0);
 }
