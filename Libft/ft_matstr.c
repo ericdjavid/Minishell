@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tools.c                                            :+:      :+:    :+:   */
+/*   ft_matstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/18 09:24:21 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/21 20:45:16 by abrun            ###   ########.fr       */
+/*   Created: 2021/11/21 18:38:51 by abrun             #+#    #+#             */
+/*   Updated: 2021/11/21 18:48:10 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	ft_dup2(int newfd, int oldfd)
+int	ft_matstr(char **mat, const char *str)
 {
-	if (dup2(newfd, oldfd) == -1)
-	{
-		perror("La fonction dup2 a echoue");
-		exit(EXIT_FAILURE);
-	}
-}
+	int	c;
 
-void	ft_close_fd(int fd)
-{
-	if (fd == 0 || fd == 1)
-		return ;
-	if (close(fd) == -1)
+	c = 0;
+	while (mat[c])
 	{
-		perror("La fonction close a echoue");
-		exit(EXIT_FAILURE);
+		if (ft_strnstr(mat[c], str, ft_strlen(mat[c])))
+			return (c);
+		c++;
 	}
+	return (-1);
 }
