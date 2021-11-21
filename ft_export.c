@@ -102,20 +102,52 @@ void    ft_print_export(t_element *first)
     return ; 
 }
 
-/*
-liste toutes les variables d’environnement dans l’ordre ascii. 
-*/
-int ft_export(t_control *list)
+t_element *swap_first(t_element *elem)
 {
+    t_element *tmp;
 
-    ft_print_export(list->first_export);
-    free_all(list);
-    return (1);
+    if (!elem)
+        return (NULL);
+    tmp = elem->next;
+    elem->next = tmp->next; 
+    tmp->next = elem;
+    elem = tmp;
+    printf(RED"tmp is now \n|%s|\n and next is \n|%s|\n",tmp->str, tmp->next->str);
+    return (tmp);
 }
 
-/* env is a shell command for Unix and Unix-like operating systems. It is used to either print a list of environment variables or run another utility in an altered environment without having to modify the currently existing environment. */
+/* Liste toutes les variables d’environnement dans l’ordre ascii. 
+sous la forme : declare -x nom=”valeur” ou declare -x nom */
+int ft_export(t_control *list)
+{
+    //be able to be piped
+    // t_element *tmp;   
+    
+    // tmp = list->first_export;
+
+    // ft_print_export(list->first_export);
+    list->first_export = swap_elem(list->first_export);
+    printf("first is |%s|\n", list->first_export->str);
+    // printf("first letter is of tmp is |%c| with value |%d| and tmp->next is |%c| value |%d|", tmp->str[0],tmp->str[0], tmp->next->str[0], tmp->next->str[0]);
+
+    // while (tmp->next)
+    // {
+    //     // printf("first letter is |%d| and the other is |%d|", tmp->str[0], tmp->next->str[0]);
+    //     if (tmp->str[0] < tmp->next->str[0])
+    //     {
+    //         swap_elem(tmp);
+    //     }
+    //     tmp = tmp->next;
+    // }
+    // ft_print_export(list->first_export);
+    free_all(list);
+    return (FAILURE);
+}
+
+/* liste toutes les variables d’environnement dans un ordre random. sous la forme : nom=valeur */
 int ft_env(t_control *list)
 {
+    //be able to be piped
     ft_print_export(list->first_env);
     free_all(list);
     return (1);

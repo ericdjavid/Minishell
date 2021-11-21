@@ -1,3 +1,14 @@
+# Colors
+C_GREY		=	\e[1;30m
+C_RED		=	\e[1;31m
+C_GREEN		=	\e[1;32m
+C_YELLOW	=	\e[1;33m
+C_BLUE		=	\e[1;34m
+C_PURPLE	=	\e[1;35m
+C_CYAN		=	\e[1;36m
+C_WHITE		=	\e[1;37m
+C_END		=	\e[0m
+
 NAME	= minishell
 
 SRCS	= minishell.c open_term.c init_paths.c exec_cmd.c prompt_msg.c \
@@ -26,10 +37,17 @@ RM		= rm -rf
 INC		= -I includes/
 
 lib:	
-	make -C Libft
+	@make -C Libft
 
 $(NAME):	lib $(OBJS) $(OBJS_P)
 		gcc -g $(CFLAGS) $(OBJS) $(OBJS_P) $(FLAGS) -o $(NAME) Libft/libft.a
+
+skiperror: lib $(OBJS) $(OBJS_P)
+	@echo "$<[$(C_CYAN)Compiling skipping errors$(C_END)]"
+	@gcc -g $(OBJS) $(OBJS_P) $(FLAGS) -o $(NAME) Libft/libft.a
+	@rm -rf *.o
+	@echo "$<[$(C_YELLOW)Cleaning .o files$(C_END)]"
+	@echo "$<[$(C_GREEN)OK$(C_END)]"
 
 clean:
 		$(RM) $(OBJS) $(OBJS_P)
@@ -39,5 +57,7 @@ fclean:		clean
 			make fclean -C Libft
 
 re:		fclean all
+
+reskiperror: fclean skiperror
 
 .PHONY:		all clean fclean re
