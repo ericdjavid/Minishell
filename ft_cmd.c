@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/21 21:03:26 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/21 21:14:34 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,12 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 {
 	pid_t	child_pid;
 	int		n_newargv;
-	int		fd_save;
 	int		fds[2];
-	int		ret[2];
+	int		*ret;
 	int		status;
+	int		fd_save;
 
 	(void)paths;
-	ret[0] = 1;
-	ret[1] = 1;
 	n_newargv = 0;
 	fd_save = 0;
 	while (newargv[n_newargv])
@@ -35,22 +33,7 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 			return (0);
 		if (child_pid == 0)
 		{
-			ret[0] = ft_read_input(newargv, n_newargv, paths);
-			ret[1] = ft_redirection(newargv, n_newargv);
-			newargv[n_newargv][0] =
-				init_cmd_path(newargv[n_newargv][0], paths);
-			if (!ret[0] || !ret[1])
-				return (0);
-			else if (ret[0] == 1 && ret[1] != 2 && ret[1] != 5
-					&& (ft_matlen(newargv[n_newargv]) > 1
-					|| n_newargv > 0))
-			{
-				ft_dup2(fd_save, STDIN_FILENO);
-				ft_close_fd(fd_save);
-			}
-			if (ret[1] != 3 && ret[1] != 5 && newargv[n_newargv + 1])
-				ft_dup2(fds[1], STDOUT_FILENO);
-			ft_close_fd(fds[0]);
+			ret = ft_manage_fds(newargv, n_newargv, paths, fds, fd_save);
 			if (ret[1] > 0 && ft_builtins(newargv[n_newargv], list))
 			{
 				ret[1] = 1;
@@ -77,7 +60,7 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 		}
 		n_newargv++;
 	}
-	return(ret[1]);
+	return(1);
 }
 
 int	get_n_cmd(char *cmd_line)

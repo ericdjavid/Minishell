@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/21 20:50:21 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/21 21:14:15 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,4 +166,9 @@ char	**free_redirection(char **newargv, char **new);
 void free_all(t_control *control);
 
 void free_elms(t_element *first);
+
+
+		//	FT_MANAGE_FDS.C
+
+int		*ft_manage_fds(char ***newargv, int n_n, char **paths, int *fds, int fd_save);
 #endif
