@@ -12,46 +12,38 @@
 
 #include "minishell.h"
 
-int	ft_read_input(char **newargv, char **paths, int *fds)
+int	ft_read_input(char ***newargv, int n_newargv, char **paths)
 {
 	char	*heredoc;
-	int		ret;
-	char	**new;
-	pid_t	child_pid;
+	int		c;
+	int		fds[2];
 
-	(void)fds;
-	ret = 1;
-	if (ft_strncmp(newargv[0], "<<", ft_strlen(newargv[0])))
-		return (0);
-	if (ft_matlen(newargv) < 3)
-		return (0);
-	heredoc = get_heredoc(newargv[1]);
-	if (!heredoc)
-		return (0);
-	write(0, heredoc, ft_strlen(heredoc));
-	new = init_new(newargv, paths);
-	if (pipe(fds) == -1)
-		return (0);
-	child_pid = fork();
-	if (child_pid == -1)
-		return (0);
-	if (child_pid == 0)
+	c = 0;
+	while (newargv[n_newargv][c])
 	{
-		if (access(new[0], X_OK))
+		if (!ft_strncmp(newargv[n_newargv][c], "<<",
+				ft_strlen(newargv[n_newargv][c])))
 		{
-			ft_printf_fd(2, "minishell: %s: command not found\n",
-					new[0]);
-			ret = 127;
-			exit(127);
+			if (!newargv[n_newargv][c + 1])
+				return (0);
+			heredoc = get_heredoc(newargv[n_newargv][c + 1]);
+			if (!heredoc)
+				return (0);
+			if (pipe(fds) == -1)
+				return (0);
+			ft_dup2(fds[0], STDIN_FILENO);
+			write(fds[1], heredoc, ft_strlen(heredoc));
+			ft_close_fd(fds[1]);
+			ft_close_fd(fds[0]);
+			newargv[n_newargv] = get_newargv_rdin(newargv[n_newargv],
+					c, paths);
+			if (!newargv[n_newargv])
+				return (0);
+			return (2);
 		}
-		else if (execve(new[0], new, NULL) == -1)
-		{
-			perror("nonono");
-			ret = 1;
-			exit (1);
-		}
+		c++;
 	}
-	return (ret);
+	return (1);
 }
 
 char	*get_heredoc(char *lim)
@@ -59,68 +51,71 @@ char	*get_heredoc(char *lim)
 	char	*heredoc;
 	char	*buf;
 	int		ret;
-	int		lim_len;
 
-	lim_len = init_param_heredoc(lim, &buf, &heredoc, &ret);
-	if (!lim_len)
+	heredoc = malloc(1);
+	if (!heredoc)
 		return (0);
-	write(STDOUT_FILENO, "> ", 2);
-	while (ret > 0 || ret == -2)
+	heredoc[0] = 0;
+	ret = 1;
+	while (ret)
 	{
-		if (ret != -2 && ft_strnstr(buf, "\n", lim_len))
-			write(STDOUT_FILENO, "> ", 2);
-		ret = read(STDOUT_FILENO, buf, lim_len);
-		buf[ret] = 0;
-		if (ft_strncmp(buf, lim, lim_len))
-			heredoc = ft_strjoin_free(heredoc, buf);
+		buf = readline("> ");
+		if (ft_strncmp(buf, lim, ft_strlen(lim)))
+			heredoc = ft_strjoin_free_n(heredoc, buf);
 		else
 			ret = 0;
+		if (buf)
+			free(buf);
 	}
-	read(STDOUT_FILENO, buf, 1);
-	free(buf);
+	heredoc[ft_strlen(heredoc)] = 0;
 	return (heredoc);
 }
 
-char	**init_new(char **newargv, char **paths)
+char	**get_newargv_rdin(char **newargv, int c, char **paths)
 {
 	char	**new;
-	int		c;
+	int		c_2;
+	int		c_3;
 
-	new = malloc(sizeof(char *) * (ft_matlen(newargv) - 1));
+	new = malloc(sizeof(char *) *(ft_matlen(newargv) - 1));
 	if (!new)
-		return (0);
-	c = 2;
-	while (newargv[c])
 	{
-		new[c - 2] = ft_strdup(newargv[c]);
-		if (!new[c - 2])
-		{
-			free_matc(new);
-			return (0);
-		}
-		c++;
+		free_matc(newargv);
+		return (0);
 	}
-	if (!is_builtins(new[0]))
-		new[0] = init_cmd_path(new[0], paths);
-	new[c - 2] = 0;
+	c_2 = 0;
+	c_3 = 0;
+	while (newargv[c_2])
+	{
+		if (c_2 == c)
+			c_2 += 2;
+		new[c_3] = ft_strdup_rdin(newargv[c_2], newargv, new);
+		if (!new[c_3])
+			return (0);
+		if (c_3 == c)
+		{
+			new[c_3] = init_cmd_path(new[c_3], paths);
+			if (!new[c_3])
+				return (0);
+		}
+		c_2++;
+		c_3++;
+	}
+	new[c_3] = 0;
+	free_matc(newargv);
 	return (new);
 }
 
-int	init_param_heredoc(char *lim, char **buf, char **heredoc, int *ret)
+char	*ft_strdup_rdin(char *s, char **mat1, char **mat2)
 {
-	int	lim_len;
+	char	*res;
 
-	lim_len = ft_strlen(lim);
-	*buf = malloc(lim_len + 1);
-	if (!*buf)
-		return (0);
-	*heredoc = malloc(1);
-	if (!*heredoc)
+	res = ft_strdup(s);
+	if (!res)
 	{
-		free(*buf);
+		free_matc(mat1);
+		free_matc(mat2);
 		return (0);
 	}
-	**heredoc = 0;
-	*ret = -2;
-	return (lim_len);
+	return (res);
 }

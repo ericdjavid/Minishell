@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/18 14:23:13 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/19 20:52:13 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 
 		//	MACROS
 #define FAILURE -1
@@ -106,7 +108,11 @@ int		get_n_cmd(char *cmd_line);
 
 char	***init_newargv(char *cmd_line, char **paths);
 
-int		ft_split_len(char **split);
+char	***init_param_in(char ***split, char *cmd_line, int *c_1, int *c_spl);
+
+int		ft_split_len(char **split, int c_spl);
+
+char	***free_init_new(char ***newargv, char **split);
 
 
 		//	TOOLS.C
@@ -133,13 +139,26 @@ int 	ft_env(t_control *list);
 
 		//	FT_READ_INPUT.C
 
-int		ft_read_input(char **newargv, char **paths, int *fds);
+int		ft_read_input(char ***newargv, int n_newargv, char **paths);
 
 char	*get_heredoc(char *lim);
 
-char	**init_new(char **newargv, char **paths);
-
 int		init_param_heredoc(char *lim, char **buf, char **heredoc, int *ret);
+
+char	**get_newargv_rdin(char **newargv, int c, char **paths);
+
+char	*ft_strdup_rdin(char *s, char **mat1, char **mat2);
+
+
+		//	FT_REDIRECTION.C
+
+int		ft_redirection(char ***newargv, int n_n);
+
+int		get_outfd(char *file);
+
+char	**get_new_redir(char **newargv);
+
+char	**free_redirection(char **newargv, char **new);
 
 		//	FREE GARBAGE COLLECTOR
 
