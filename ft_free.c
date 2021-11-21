@@ -29,9 +29,9 @@ void free_elms(t_element *first)
 
 void free_all(t_control *control)
 {
-    if (control->first)
-        free_elms(control->first);
-    if (control)
-        free(control);
+    if (control->first_env)
+        free_elms(control->first_env);
+    if (control->first_export)
+        free_elms(control->first_export);
     return ;
 }

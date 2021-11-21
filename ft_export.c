@@ -32,18 +32,18 @@ char *add_str(char *str)
     
 }
 
-void add_end_list(char *str, t_control *list)
+void add_end_list(char *str, t_element *first)
 {
     t_element *tmp;
     t_element *tmp2;
 
-    if (!(list->first->str))
+    if (!(first->str))
     {
-        list->first->str = add_str(str);
-        list->first->next = NULL;
+        first->str = add_str(str);
+        first->next = NULL;
         return ;
     }
-    tmp = list->first;
+    tmp = first;
     while (tmp->next)
         tmp = tmp->next;
     tmp2 = malloc(sizeof(*tmp));
@@ -53,19 +53,37 @@ void add_end_list(char *str, t_control *list)
    return; 
 }
 
-t_control *ft_init()
+t_element *ft_init()
 {
-    t_control *list; 
     t_element *first;
 
-    list = malloc(sizeof(*list)); 
     first = malloc(sizeof(*first));
-    if (!list || !first)
+    if (!first)
         return (NULL);
-    list->first = first;
     first->str = NULL;
     first->next = NULL;
-    return (list);
+    return (first);
+}
+
+int ft_init_list(t_control *list, char **envp)
+{
+    int i;
+    t_element *first_env;
+    t_element *first_export;
+
+    first_env = ft_init();
+    first_export = ft_init();
+    if (!first_export || !first_env)
+        return (FAILURE);
+    list->first_env = first_env;
+    list->first_export = first_export;
+	i = -1;
+    while (envp[++i])
+    {
+		add_end_list(envp[i], list->first_export);	
+		add_end_list(envp[i], list->first_env);	
+    }
+    return (SUCCESS);
 }
 
 void    ft_print_export(t_element *first)
@@ -89,14 +107,16 @@ liste toutes les variables d’environnement dans l’ordre ascii.
 */
 int ft_export(t_control *list)
 {
-    ft_print_export(list->first);
+
+    ft_print_export(list->first_export);
     free_all(list);
     return (1);
 }
 
+/* env is a shell command for Unix and Unix-like operating systems. It is used to either print a list of environment variables or run another utility in an altered environment without having to modify the currently existing environment. */
 int ft_env(t_control *list)
 {
-    ft_print_export(list->first);
+    ft_print_export(list->first_env);
     free_all(list);
     return (1);
 }

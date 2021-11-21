@@ -24,7 +24,7 @@
 # include <fcntl.h>
 
 		//	MACROS
-#define FAILURE -1
+#define FAILURE 1
 #define SUCCESS 0
 #define PINK "\033[95m"
 #define END "\033[0m"
@@ -40,7 +40,9 @@ typedef struct s_element
 
 typedef struct s_control
 {
-    t_element *first;
+    t_element *first_env;
+    t_element *first_export;
+	// t_element *first_export;
 } t_control;
 
 		//	OPEN_TERM.C
@@ -127,11 +129,13 @@ int 	ft_export(t_control *list);
 
 void    ft_print_export(t_element *first);
 
-t_control *ft_init();
+t_element *ft_init();
 
-void 	add_end_list(char *str, t_control *list);
+void	add_end_list(char *str, t_element *first);
 
 char 	*add_str(char *str);
+
+int		ft_init_list(t_control *list, char **envp);
 
 		// FT_ENV.C
 
