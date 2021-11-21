@@ -23,6 +23,25 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
+		//	MACROS
+#define FAILURE -1
+#define SUCCESS 0
+#define PINK "\033[95m"
+#define END "\033[0m"
+#define YELLOW "\033[93m"
+#define RED "\033[91m"
+
+		// STRUCTURES
+typedef struct s_element
+{
+    char *str;
+    struct s_element *next;
+} t_element;
+
+typedef struct s_control
+{
+    t_element *first;
+} t_control;
 
 		//	OPEN_TERM.C
 
@@ -44,7 +63,7 @@ char	*ft_add_one_path(char *line, int *count);
 
 		//	EXEC_CMD.C
 
-int		exec_cmd(char *cmd_line, char **paths);
+int		exec_cmd(char *cmd_line, char **paths, t_control *list);
 
 char	*init_cmd_path(char *cmd, char **paths);
 
@@ -56,7 +75,7 @@ char	*prompt_msg(void);
 
 		//	FT_BUILTINS.C
 
-int		ft_builtins(char **newargv);
+int		ft_builtins(char **newargv, t_control *list);
 
 int		is_builtins(char *newargv);
 
@@ -80,7 +99,7 @@ int		ft_cd(char **newargv);
 
 		//	FT_CMD.C
 
-int		ft_cmd(char ***newargv, char **paths);
+int		ft_cmd(char ***newargv, char **paths, t_control *list);
 
 int		get_n_cmd(char *cmd_line);
 
@@ -102,6 +121,21 @@ void	ft_dup2(int newfd, int oldfd);
 
 void	ft_close_fd(int fd);
 
+		// EXPORT.C
+
+int 	ft_export(t_control *list);
+
+void    ft_print_export(t_element *first);
+
+t_control *ft_init();
+
+void 	add_end_list(char *str, t_control *list);
+
+char 	*add_str(char *str);
+
+		// FT_ENV.C
+
+int 	ft_env(t_control *list);
 
 		//	FT_READ_INPUT.C
 
@@ -125,4 +159,10 @@ int		get_outfd(char *file);
 char	**get_new_redir(char **newargv);
 
 char	**free_redirection(char **newargv, char **new);
+
+		//	FREE GARBAGE COLLECTOR
+
+void free_all(t_control *control);
+
+void free_elms(t_element *first);
 #endif

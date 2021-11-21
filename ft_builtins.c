@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_builtins(char **newargv)
+// TODO: fix the SIGSEV when pressing ENTER
+int	ft_builtins(char **newargv, t_control *list)
 {
 	if (!ft_strncmp(newargv[0], "echo", ft_strlen(newargv[0])))
 		return (ft_echo(newargv));
@@ -20,6 +20,10 @@ int	ft_builtins(char **newargv)
 		return (ft_pwd(newargv));
 	else if (!ft_strncmp(newargv[0], "cd", ft_strlen(newargv[0])))
 		return (ft_cd(newargv));
+	else if (!ft_strncmp(newargv[0], "export", ft_strlen(newargv[0])))
+		return (ft_export(list));
+	else if (!ft_strncmp(newargv[0], "env", ft_strlen(newargv[0])))
+		return (ft_env(list));
 	return (0);
 }
 
@@ -30,6 +34,10 @@ int	is_builtins(char *newargv)
 	else if (!ft_strncmp(newargv, "pwd", ft_strlen(newargv)))
 		return (1);
 	else if (!ft_strncmp(newargv, "cd", ft_strlen(newargv)))
+		return (1);
+	else if (!ft_strncmp(newargv, "export", ft_strlen(newargv)))
+		return (1);
+	else if (!ft_strncmp(newargv, "env", ft_strlen(newargv)))
 		return (1);
 	return (0);
 }

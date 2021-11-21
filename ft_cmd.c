@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	ft_cmd(char ***newargv, char **paths)
+int	ft_cmd(char ***newargv, char **paths, t_control *list)
 {
 	pid_t	child_pid;
 	int		n_newargv;
