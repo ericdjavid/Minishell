@@ -6,7 +6,7 @@
 /*   By: edjavid <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:28:28 by edjavid           #+#    #+#             */
-/*   Updated: 2021/11/18 12:28:31 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/11/21 16:49:08 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,12 @@ int ft_export(t_control *list)
 {
     ft_print_export(list->first);
     free_all(list);
-    return (0);
+    return (1);
 }
 
 int ft_env(t_control *list)
 {
     ft_print_export(list->first);
     free_all(list);
-    return (0);
+    return (1);
 }

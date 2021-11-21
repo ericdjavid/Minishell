@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/19 21:21:14 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/21 16:48:28 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 			if (ret[1] != 3 && newargv[n_newargv + 1])
 				ft_dup2(fds[1], STDOUT_FILENO);
 			ft_close_fd(fds[0]);
-			if (ret[1] > 0 && ft_builtins(newargv[n_newargv]))
+			if (ret[1] > 0 && ft_builtins(newargv[n_newargv], list))
 			{
 				ret[1] = 1;
 				exit(1);
