@@ -6,29 +6,17 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 20:59:11 by abrun             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/11/22 12:53:28 by abrun            ###   ########.fr       */
-=======
-/*   Updated: 2021/11/21 21:15:40 by abrun            ###   ########.fr       */
->>>>>>> 8df2b04543abcf03a9b5c99081f57b8ad0d3d4b4
+/*   Updated: 2021/11/22 13:19:38 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-<<<<<<< HEAD
 int	*ft_manage_fds(char ***newargv, int n_n, char **paths, int **fds)
 {
 	int	*ret;
 
 	ret = init_ret();
-=======
-int	*ft_manage_fds(char ***newargv, int n_n, char **paths, int *fds, int fd_save)
-{
-	int	*ret;
-
-	ret = malloc(sizeof(int) * 2);
->>>>>>> 8df2b04543abcf03a9b5c99081f57b8ad0d3d4b4
 	if (!ret)
 		return (0);
 	ret[0] = ft_read_input(newargv, n_n, paths);
@@ -36,16 +24,9 @@ int	*ft_manage_fds(char ***newargv, int n_n, char **paths, int *fds, int fd_save
 	ft_printf_fd(2, "ret_0 : %d | ret_1 : %d\n", ret[0], ret[1]);
 	newargv[n_n][0] = init_cmd_path(newargv[n_n][0], paths);
 	if (!ret[0] || !ret[1])
-<<<<<<< HEAD
 		return (0);
 	else if (check_ret_stdin(ret)
 			&& (ft_matlen(newargv[n_n]) > 1 || n_n > 0))
-=======
-		exit (1);
-	else if (ret[0] == 1 && ret[1] != 2 && ret[1] != 5
-			&& (ft_matlen(newargv[n_n]) > 1
-				|| n_n > 0))
->>>>>>> 8df2b04543abcf03a9b5c99081f57b8ad0d3d4b4
 	{
 		ft_dup2(fds[1][0], STDIN_FILENO);
 		ft_close_fd(fds[1][0]);
