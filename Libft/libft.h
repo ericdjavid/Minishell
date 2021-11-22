@@ -6,7 +6,7 @@
 /*   By: abrun <abrun@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:18:03 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/22 12:51:02 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/22 15:08:14 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,6 @@ char	*ft_strjoin_free_n(char *s1, const char *s2);
 int		ft_matstr(char **mat, const char *str);
 
 void	free_mati(int **mati, int m_len);
+
+void	ft_putnbr_fd(long long int nb, int fd);
 #endif

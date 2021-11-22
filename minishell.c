@@ -6,11 +6,13 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:31:49 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/21 17:23:46 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/22 15:30:50 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	status = 0;
 
 int	main(int ac, char **av, char **envp)
 {
@@ -37,5 +39,5 @@ int	main(int ac, char **av, char **envp)
 		cmd_line = prompt_msg();
 	}
 	free_matc(paths);
-	return (0);
+	return (status);
 }

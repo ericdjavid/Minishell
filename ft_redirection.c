@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:58:06 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/22 12:56:49 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/22 15:46:39 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_redirection(char ***newargv, int n_n)
 		{
 			fd = get_outfd(newargv[n_n][c + 1], config);
 			if (fd < 0)
-				return (fd);
+				return (0);
 			newargv[n_n] = get_new_redir(newargv[n_n], c);
 			if (!newargv[n_n])
 				return (0);
@@ -70,6 +70,7 @@ int	get_outfd(char *file, int config)
 	if (!file)
 	{
 		ft_printf_fd(2, "minishell: syntax error near unexpected token newline\n");
+		status = 258;
 		return (-2);
 	}
 	if (!access(file, F_OK))
@@ -81,7 +82,10 @@ int	get_outfd(char *file, int config)
 		else if (config == 4 && !access(file, W_OK))
 			outfd = open(file, O_WRONLY | O_APPEND);
 		else
+		{
 			ft_printf_fd(2, "minishell: %s: Permission denied\n", file);
+			status = 1;
+		}
 	}
 	else
 	{

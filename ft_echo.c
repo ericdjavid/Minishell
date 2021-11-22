@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:14 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/18 11:09:07 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/22 15:47:44 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,14 @@ void	write_newargv(char **newargv, int c)
 	ret = c;
 	while (newargv[c])
 	{
-		write(1, newargv[c], ft_strlen(newargv[c]));
+		if (!ft_strncmp(newargv[c], "$?", ft_strlen(newargv[c])))
+			ft_putnbr_fd(status, 1);
+		else
+			write(1, newargv[c], ft_strlen(newargv[c]));
 		c++;
 		if (newargv[c])
 			write(1, " ", 1);
 	}
 	if (ret == 1)
-		write(1, "t\n", 2);
+		write(1, "\n", 1);
 }
