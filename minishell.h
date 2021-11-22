@@ -6,7 +6,11 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/11/22 12:51:55 by abrun            ###   ########.fr       */
+=======
+/*   Updated: 2021/11/21 21:14:15 by abrun            ###   ########.fr       */
+>>>>>>> 8df2b04543abcf03a9b5c99081f57b8ad0d3d4b4
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,9 +189,13 @@ void free_elms(t_element *first);
 
 		//	FT_MANAGE_FDS.C
 
+<<<<<<< HEAD
 int		*ft_manage_fds(char ***newargv, int n_n, char **paths, int **fds);
 
 int		check_ret_stdin(int *ret);
 
 int	check_ret_stdout(int *ret);
+=======
+int		*ft_manage_fds(char ***newargv, int n_n, char **paths, int *fds, int fd_save);
+>>>>>>> 8df2b04543abcf03a9b5c99081f57b8ad0d3d4b4
 #endif

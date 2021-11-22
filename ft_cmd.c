@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/22 12:50:16 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/22 13:16:43 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 		}
 		n_newargv++;
 	}
-	return(ret[1]);
+	return(1);
 }
 
 int	*init_ret(void)
