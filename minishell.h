@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/21 20:50:21 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/22 12:51:55 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_control
 {
     t_element *first;
 } t_control;
+
 
 		//	OPEN_TERM.C
 
@@ -102,6 +103,10 @@ int		ft_cd(char **newargv);
 
 int		ft_cmd(char ***newargv, char **paths, t_control *list);
 
+int		*init_ret(void);
+
+int		**init_fds(void);
+
 int		get_n_cmd(char *cmd_line);
 
 
@@ -122,6 +127,7 @@ void	ft_dup2(int newfd, int oldfd);
 
 void	ft_close_fd(int fd);
 
+
 		// EXPORT.C
 
 int 	ft_export(t_control *list);
@@ -134,9 +140,11 @@ void 	add_end_list(char *str, t_control *list);
 
 char 	*add_str(char *str);
 
+
 		// FT_ENV.C
 
 int 	ft_env(t_control *list);
+
 
 		//	FT_READ_INPUT.C
 
@@ -155,15 +163,31 @@ char	*ft_strdup_rdin(char *s, char **mat1, char **mat2);
 
 int		ft_redirection(char ***newargv, int n_n);
 
+int		which_redirection(char *s);
+
 int		get_outfd(char *file, int config);
 
 char	**get_new_redir(char **newargv, int redir);
 
 char	**free_redirection(char **newargv, char **new);
 
+int		*assign_config(int *ret, int config);
+
+int		exit_redirection(int *ret);
+
+
 		//	FREE GARBAGE COLLECTOR
 
 void free_all(t_control *control);
 
 void free_elms(t_element *first);
+
+
+		//	FT_MANAGE_FDS.C
+
+int		*ft_manage_fds(char ***newargv, int n_n, char **paths, int **fds);
+
+int		check_ret_stdin(int *ret);
+
+int	check_ret_stdout(int *ret);
 #endif

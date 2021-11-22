@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:58:06 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/21 20:58:57 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/22 12:56:49 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,39 +17,49 @@ int	ft_redirection(char ***newargv, int n_n)
 	int	c;
 	int	fd;
 	int	config;
-	int	ret;
+	int	*ret;
 
 	c = 0;
-	ret = 0;
+	ret = malloc(sizeof(int) * 3);
+	while (c < 3)
+		ret[c++] = 0;
+	c = 0;
 	while (newargv[n_n][c])
 	{
-		if (!ft_strncmp(newargv[n_n][c], ">", ft_strlen(newargv[n_n][c]))
-			|| !ft_strncmp(newargv[n_n][c], "<", ft_strlen(newargv[n_n][c])))
+		config = which_redirection(newargv[n_n][c]);
+		if (config)
 		{
-			if (newargv[n_n][c][0] == '>')
-				config = 3;
-			else
-				config = 2;
 			fd = get_outfd(newargv[n_n][c + 1], config);
 			if (fd < 0)
 				return (fd);
 			newargv[n_n] = get_new_redir(newargv[n_n], c);
 			if (!newargv[n_n])
 				return (0);
-			if (config == 3)
+			if (config == 3 || config == 4)
 				ft_dup2(fd, STDOUT_FILENO);
 			else
 				ft_dup2(fd, STDIN_FILENO);
 			ft_close_fd(fd);
-			if (ret != config && ret < 5)
-				ret += config;
-			c--;
+			ret = assign_config(ret, config);
 		}
-		c++;
+		else
+			c++;
 	}
-	if (ret)
-		return (ret);
-	return (1);
+	return (exit_redirection(ret));
+}
+
+int	which_redirection(char *s)
+{
+	size_t	s_len;
+
+	s_len = ft_strlen(s);
+	if (!ft_strncmp(s, ">", s_len))
+		return (3);
+	else if (!ft_strncmp(s, "<", s_len))
+		return (2);
+	else if (!ft_strncmp(s, ">>", s_len))
+		return (4);
+	return (0);
 }
 
 int	get_outfd(char *file, int config)
@@ -68,6 +78,8 @@ int	get_outfd(char *file, int config)
 			outfd = open(file, O_TRUNC | O_WRONLY);
 		else if (config == 2 && !access(file, R_OK))
 			outfd = open(file, O_TRUNC | O_RDONLY);
+		else if (config == 4 && !access(file, W_OK))
+			outfd = open(file, O_WRONLY | O_APPEND);
 		else
 			ft_printf_fd(2, "minishell: %s: Permission denied\n", file);
 	}
@@ -113,4 +125,32 @@ char	**free_redirection(char **newargv, char **new)
 	free_matc(newargv);
 	free_matc(new);
 	return (0);
+}
+
+int	*assign_config(int *ret, int config)
+{
+	if (config == 2)
+		ret[0] = 1;
+	if (config == 3)
+		ret[1] = 1;
+	if (config == 4)
+		ret[2] = 1;
+	return (ret);
+}
+
+int	exit_redirection(int *ret)
+{
+	int	c;
+	int	value;
+
+	c = 0;
+	value = 0;
+	while (c < 3)
+	{
+		value += (ret[c] * (c + 2));
+		c++;
+	}
+	if (!value)
+		return (1);
+	return (value);
 }
