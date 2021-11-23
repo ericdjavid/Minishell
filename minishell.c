@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:31:49 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/23 09:41:50 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/23 14:43:32 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,13 @@ int	main(int ac, char **av, char **envp)
 void	ft_minishell(char **paths, t_control *list)
 {
 	char			*cmd_line;
-	struct sigaction	sa;
 	int				ret;
 
 	ret = 1;
-	sa.sa_handler = signal_handler;
+	signal(SIGINT, &sigint_handler);
 	while (ret || cmd_line)
 	{
 		cmd_line = prompt_msg();
-		if (sigaction(SIGINT, &sa, NULL) < 0)
-		{
-			ft_printf_fd(2, "Sigaction failed\n");
-			status = 3;
-			return ;
-		}
 		if (cmd_line)
 		{
 			exec_cmd(cmd_line, paths, list);
@@ -62,16 +55,17 @@ void	ft_minishell(char **paths, t_control *list)
 	}
 }
 
-void	signal_handler(int sig)
+void	sigint_handler(int sig)
 {
 	int	stop;
+	int	child;
 
-	(void)sig;
-//	while (waitpid(-1, &status, WUNTRACED) > 0);
-	ft_printf_fd(2, "status_handler : %d\n", WEXITSTATUS(status));
-	stop = WIFSIGNALED(status);
-	if (!stop)
+	stop = WIFSIGNALED(sig);
+	child = WTERMSIG(SIGCHLD);
+	ft_printf_fd(2, "\nstop : %d\nchild : %d\n", stop, child);
+	if ((stop && !child))
 	{
+		rl_clear_history();
 		ft_printf_fd(1, "\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);

@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/23 08:46:57 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/23 14:07:07 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ typedef struct s_control
 
 void	ft_minishell(char **paths, t_control *list);
 
-void	signal_handler(int sig);
+void	sigint_handler(int sig);
+
+void	sigchld_handler(int sig);
 
 
 		//	INIT_PATHS.C

@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/23 09:41:52 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/23 14:43:35 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 			return (0);
 		if (child_pid == 0)
 		{
+			status = -1;
 			ret = ft_manage_fds(newargv, n_newargv, paths, fds);
 			if (!ret)
 				exit(status);
@@ -58,9 +59,7 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 		{
 			ft_close_fd(fds[0][1]);
 			while (wait(&status) > 0);
-			ft_printf_fd(2, "stoped by signal : %d\n", WIFSIGNALED(status));
 			status = WEXITSTATUS(status);
-			ft_printf_fd(2, "status : %d\n", status);
 			fds[1][0] = fds[0][0];
 		}
 		n_newargv++;

@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:36:34 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/19 19:02:50 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/23 14:34:04 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	*prompt_msg(void)
 {
 	char	*cmd_line;
 
-	// rl_on_new_line();
 	cmd_line = readline("\033[0;32m->  \033[0;34mMinishell \033[0;m");
 	if (!cmd_line)
 		write(1, "exit\n", 5); 
