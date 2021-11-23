@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/22 16:06:29 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/23 09:41:52 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,9 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 		{
 			ft_close_fd(fds[0][1]);
 			while (wait(&status) > 0);
-			if (status == 512)
-				status = 258;
-			else
-				status = WEXITSTATUS(status);
+			ft_printf_fd(2, "stoped by signal : %d\n", WIFSIGNALED(status));
+			status = WEXITSTATUS(status);
+			ft_printf_fd(2, "status : %d\n", status);
 			fds[1][0] = fds[0][0];
 		}
 		n_newargv++;

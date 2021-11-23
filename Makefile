@@ -1,6 +1,6 @@
 NAME	= minishell
 
-SRCS	= minishell.c open_term.c init_paths.c exec_cmd.c prompt_msg.c \
+SRCS	= minishell.c init_paths.c exec_cmd.c prompt_msg.c \
 ft_builtins.c ft_echo.c ft_pwd.c ft_cd.c init_newargv.c ft_cmd.c tools.c \
 ft_read_input.c ft_export.c ft_free.c ft_redirection.c ft_manage_fds.c
 

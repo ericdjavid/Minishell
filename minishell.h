@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/22 14:58:36 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/23 08:46:57 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ typedef struct s_control
 } t_control;
 
 
-		//	OPEN_TERM.C
+		//	MINISHELL.C
 
-int		open_term(void);
+void	ft_minishell(char **paths, t_control *list);
 
-char	**init_xterm(void);
+void	signal_handler(int sig);
 
 
 		//	INIT_PATHS.C
