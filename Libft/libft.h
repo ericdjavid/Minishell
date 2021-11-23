@@ -6,7 +6,7 @@
 /*   By: abrun <abrun@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:18:03 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/19 17:00:27 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/21 18:48:21 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,6 @@ int		ft_strchr(const char *str, int chr);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 
 char	*ft_strjoin_free_n(char *s1, const char *s2);
+
+int		ft_matstr(char **mat, const char *str);
 #endif

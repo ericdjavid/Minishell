@@ -1,36 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_matstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/17 09:31:49 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/21 17:23:46 by abrun            ###   ########.fr       */
+/*   Created: 2021/11/21 18:38:51 by abrun             #+#    #+#             */
+/*   Updated: 2021/11/21 18:48:10 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **envp)
+int	ft_matstr(char **mat, const char *str)
 {
-	char		*cmd_line;
-	char		**paths;
-    t_control   list;
+	int	c;
 
-	(void)av;
-	if (ac != 1)
-		return (1);
-	if (ft_init_list(&list, envp))
-		return (-1);
-	paths = init_paths(envp); 
-	cmd_line = prompt_msg();
-	while (cmd_line)
+	c = 0;
+	while (mat[c])
 	{
-		exec_cmd(cmd_line, paths, &list);
-		free(cmd_line);
-		cmd_line = prompt_msg();
+		if (ft_strnstr(mat[c], str, ft_strlen(mat[c])))
+			return (c);
+		c++;
 	}
-	free_matc(paths);
-	return (0);
+	return (-1);
 }

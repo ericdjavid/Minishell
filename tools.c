@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 09:24:21 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/18 09:25:17 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/21 20:45:16 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	ft_dup2(int newfd, int oldfd)
 
 void	ft_close_fd(int fd)
 {
+	if (fd == 0 || fd == 1)
+		return ;
 	if (close(fd) == -1)
 	{
 		perror("La fonction close a echoue");

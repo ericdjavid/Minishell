@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/19 20:52:13 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/21 20:50:21 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 #define END "\033[0m"
 #define YELLOW "\033[93m"
 #define RED "\033[91m"
+
 
 		// STRUCTURES
 typedef struct s_element
@@ -158,9 +159,9 @@ char	*ft_strdup_rdin(char *s, char **mat1, char **mat2);
 
 int		ft_redirection(char ***newargv, int n_n);
 
-int		get_outfd(char *file);
+int		get_outfd(char *file, int config);
 
-char	**get_new_redir(char **newargv);
+char	**get_new_redir(char **newargv, int redir);
 
 char	**free_redirection(char **newargv, char **new);
 

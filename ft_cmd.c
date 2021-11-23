@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/21 16:48:28 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/21 21:03:26 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 	int		fd_save;
 	int		fds[2];
 	int		ret[2];
+	int		status;
 
 	(void)paths;
 	ret[0] = 1;
@@ -36,16 +37,18 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 		{
 			ret[0] = ft_read_input(newargv, n_newargv, paths);
 			ret[1] = ft_redirection(newargv, n_newargv);
+			newargv[n_newargv][0] =
+				init_cmd_path(newargv[n_newargv][0], paths);
 			if (!ret[0] || !ret[1])
 				return (0);
-			else if (ret[0] == 1 && ret[1] != 2
+			else if (ret[0] == 1 && ret[1] != 2 && ret[1] != 5
 					&& (ft_matlen(newargv[n_newargv]) > 1
 					|| n_newargv > 0))
 			{
 				ft_dup2(fd_save, STDIN_FILENO);
 				ft_close_fd(fd_save);
 			}
-			if (ret[1] != 3 && newargv[n_newargv + 1])
+			if (ret[1] != 3 && ret[1] != 5 && newargv[n_newargv + 1])
 				ft_dup2(fds[1], STDOUT_FILENO);
 			ft_close_fd(fds[0]);
 			if (ret[1] > 0 && ft_builtins(newargv[n_newargv], list))
@@ -60,15 +63,16 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 				ret[1] = 127;
 				exit(127);
 			}
-			else if (ret[1] > 0 && execve(newargv[n_newargv][0],
-				newargv[n_newargv], NULL) == -1)
-				ret[1] = 1;
-			exit(ret[1]);
+			else if (ret[1] > 0)
+				execve(newargv[n_newargv][0],
+					newargv[n_newargv], NULL);
+			status = 1;
+			exit(status);
 		}
 		else
 		{
 			ft_close_fd(fds[1]);
-			while (wait(NULL) > 0);
+			while (waitpid(child_pid, &status, 0) > 0);
 			fd_save = fds[0];
 		}
 		n_newargv++;
