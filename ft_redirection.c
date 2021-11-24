@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:58:06 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/24 16:44:17 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/24 18:31:34 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,22 @@ int	ft_redirection(char ***newargv, int n_n)
 	int	config;
 	int	*ret;
 
+	(void)n_n;
 	c = 0;
 	ret = malloc(sizeof(int) * 3);
 	while (c < 3)
 		ret[c++] = 0;
 	c = 0;
-	while (newargv[n_n][c])
+	while ((*newargv)[c])
 	{
-		config = which_redirection(newargv[n_n][c]);
+		config = which_redirection((*newargv)[c]);
 		if (config)
 		{
-			fd = get_outfd(newargv[n_n][c + 1], config);
+			fd = get_outfd((*newargv)[c + 1], config);
 			if (fd < 0)
 				return (0);
-			newargv[n_n] = get_new_redir(newargv[n_n], c);
-			if (!newargv[n_n])
+			*newargv = get_new_redir(*newargv, c);
+			if (!(*newargv))
 				return (0);
 			if (config == 3 || config == 4)
 				ft_dup2(fd, STDOUT_FILENO);

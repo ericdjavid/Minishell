@@ -6,21 +6,23 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 20:59:11 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/24 16:59:56 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/24 18:31:36 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	*ft_manage_fds(char ***newargv, int n_n, char **paths, int **fds)
+int	*ft_manage_fds(char ***newargv, char **paths, int **fds)
 {
 	int	*ret;
 
 	ret = init_ret();
 	if (!ret)
 		return (0);
+	print_matc(*newargv);
 	ret[0] = ft_read_input(newargv, n_n, paths);
 	ret[1] = ft_redirection(newargv, n_n);
+	print_matc(*newargv);
 	newargv[n_n][0] = init_cmd_path(newargv[n_n][0], paths);
 	if (!ret[0] || !ret[1])
 		return (0);

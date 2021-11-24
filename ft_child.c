@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:44:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/24 16:51:54 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/24 17:08:43 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,16 @@ int	ft_child(char ***newargv, int n_newargv, char **paths, t_control *list, int 
 	ret = ft_manage_fds(newargv, n_newargv, paths, fds);
 	if (!ret)
 		exit(status);
-	else if (ft_builtins(newargv[n_newargv], list));
+	else if (ft_builtins(newargv[n_newargv], list))
+		;
 	else if (access(newargv[n_newargv][0], X_OK))
 	{
 		ft_printf_fd(2, "minishell: %s: command not found\n",
-				newargv[n_newargv][0]);
+			newargv[n_newargv][0]);
 		status = 127;
 	}
 	else if (execve(newargv[n_newargv][0],
-				newargv[n_newargv], NULL) < 0)
+		newargv[n_newargv], NULL) < 0)
 		status = 1;
 	free(ret);
 	exit(status);

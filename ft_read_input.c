@@ -6,20 +6,20 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:02:04 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/24 16:58:21 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/24 17:17:25 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_read_input(char ***newargv, int n_newargv, char **paths)
+int	ft_read_input(char ***newargv, char **paths)
 {
 	char	*heredoc;
 	int		c;
 	int		fds[2];
 
 	c = 0;
-	while (newargv[n_newargv][c])
+	while (newargv[c])
 	{
 		if (!ft_strncmp(newargv[n_newargv][c], "<<",
 				ft_strlen(newargv[n_newargv][c])))
@@ -35,7 +35,7 @@ int	ft_read_input(char ***newargv, int n_newargv, char **paths)
 			write(fds[1], heredoc, ft_strlen(heredoc));
 			ft_close_fd(fds[1]);
 			ft_close_fd(fds[0]);
-			newargv[n_newargv] = get_newargv_rdin(newargv[n_newargv],
+			newargv[n_newargv] = get_(*newargv)rdin(newargv[n_newargv],
 					c, paths);
 			if (!newargv[n_newargv])
 				return (0);
