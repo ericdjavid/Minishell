@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/23 14:07:07 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/24 15:00:22 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ typedef struct s_control
 		//	MINISHELL.C
 
 void	ft_minishell(char **paths, t_control *list);
+
+void	sigquit_handler(int sig);
 
 void	sigint_handler(int sig);
 
@@ -110,6 +112,8 @@ int		ft_cmd(char ***newargv, char **paths, t_control *list);
 int		*init_ret(void);
 
 int		**init_fds(void);
+
+int		status_free(int **fds);
 
 int		get_n_cmd(char *cmd_line);
 
@@ -193,5 +197,10 @@ int		*ft_manage_fds(char ***newargv, int n_n, char **paths, int **fds);
 
 int		check_ret_stdin(int *ret);
 
-int	check_ret_stdout(int *ret);
+int		check_ret_stdout(int *ret);
+
+
+		//	FT_CHILD.C
+
+int	ft_child(char ***newargv, int n_newargv, char **paths, t_control *list, int **fds);
 #endif

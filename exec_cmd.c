@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/21 20:41:49 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/24 15:18:04 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 	if (!newargv)
 		return (-1);
 	ret = ft_cmd(newargv, paths, list);
-	if (!ret)
-		return (-1);
 	free_3dim_matc(newargv);
 	return (ret);
 }

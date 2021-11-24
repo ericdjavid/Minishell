@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:02:04 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/21 21:03:30 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/24 14:26:23 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char	*get_heredoc(char *lim)
 		return (0);
 	heredoc[0] = 0;
 	ret = 1;
+	status = 9;
 	while (ret)
 	{
 		buf = readline("> ");

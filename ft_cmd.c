@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/23 14:43:35 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/24 15:18:50 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,14 @@
 
 int	ft_cmd(char ***newargv, char **paths, t_control *list)
 {
-	pid_t	child_pid;
 	int		n_newargv;
 	int		**fds;
-	int		*ret;
+	pid_t	child_pid;
 
 	n_newargv = 0;
 	fds = init_fds();
 	if (!fds)
 		return (0);
-	ret = init_ret();
-	if (!ret)
-	{
-		free_mati(fds, 2);
-		return (0);
-	}
 	while (newargv[n_newargv])
 	{
 		if (pipe(fds[0]) == -1)
@@ -37,34 +30,16 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 		if (child_pid == -1)
 			return (0);
 		if (child_pid == 0)
-		{
-			status = -1;
-			ret = ft_manage_fds(newargv, n_newargv, paths, fds);
-			if (!ret)
-				exit(status);
-			else if (ft_builtins(newargv[n_newargv], list))
-				exit(status);
-			else if (access(newargv[n_newargv][0], X_OK))
-			{
-				ft_printf_fd(2, "minishell: %s: command not found\n",
-						newargv[n_newargv][0]);
-				status = 127;
-			}
-			else if (execve(newargv[n_newargv][0],
-					newargv[n_newargv], NULL) < 0)
-				status = 1;
-			exit(status);
-		}
-		else
-		{
-			ft_close_fd(fds[0][1]);
-			while (wait(&status) > 0);
+			if (!(ft_child(newargv, n_newargv, paths, list, fds)))
+				return (status_free(fds));
+		ft_close_fd(fds[0][1]);
+		while (wait(&status) > 0);
+		if (WIFEXITED(status))
 			status = WEXITSTATUS(status);
-			fds[1][0] = fds[0][0];
-		}
+		fds[1][0] = fds[0][0];
 		n_newargv++;
 	}
-	return (1);
+	return (status_free(fds));
 }
 
 int	*init_ret(void)
@@ -101,6 +76,12 @@ int	**init_fds(void)
 	}
 	fds[1][0] = 0;
 	return (fds);
+}
+
+int	status_free(int **fds)
+{
+	free_mati(fds, 2);
+	return (status);
 }
 
 int	get_n_cmd(char *cmd_line)

@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:31:49 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/23 14:43:32 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/24 15:18:18 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	ft_minishell(char **paths, t_control *list)
 
 	ret = 1;
 	signal(SIGINT, &sigint_handler);
+	signal(SIGQUIT, &sigquit_handler);
 	while (ret || cmd_line)
 	{
 		cmd_line = prompt_msg();
@@ -55,15 +56,30 @@ void	ft_minishell(char **paths, t_control *list)
 	}
 }
 
+void	sigquit_handler(int sig)
+{
+	int	stat;
+
+	(void)sig;
+	stat = 0;
+	waitpid(-1, &stat, 0);
+	if (!stat && status != 9)
+	{
+		status = 131;
+		return ;
+	}
+	else
+		ft_printf_fd(1, "\n");
+}
+
 void	sigint_handler(int sig)
 {
-	int	stop;
-	int	child;
+	int	stat;
 
-	stop = WIFSIGNALED(sig);
-	child = WTERMSIG(SIGCHLD);
-	ft_printf_fd(2, "\nstop : %d\nchild : %d\n", stop, child);
-	if ((stop && !child))
+	(void)sig;
+	stat = 0;
+	waitpid(-1, &stat, 0);
+	if (!stat && status != 9)
 	{
 		rl_clear_history();
 		ft_printf_fd(1, "\n");
@@ -71,5 +87,11 @@ void	sigint_handler(int sig)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+	else if (!stat && status == 9)
+	{
+		exit(130);
+	}
+	else
+		ft_printf_fd(1, "\n");
 	status = 130;
 }
