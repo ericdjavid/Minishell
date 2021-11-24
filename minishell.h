@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/24 15:00:22 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/24 16:47:48 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ int		ft_split_len(char **split, int c_spl);
 
 char	***free_init_new(char ***newargv, char **split);
 
+int		is_syntax_er_spl(char **split);
+
 
 		//	TOOLS.C
 
@@ -202,5 +204,5 @@ int		check_ret_stdout(int *ret);
 
 		//	FT_CHILD.C
 
-int	ft_child(char ***newargv, int n_newargv, char **paths, t_control *list, int **fds);
+int		ft_child(char ***newargv, int n_newargv, char **paths, t_control *list, int **fds);
 #endif

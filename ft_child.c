@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:44:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/24 15:18:51 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/24 16:51:54 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@ int	ft_child(char ***newargv, int n_newargv, char **paths, t_control *list, int 
 {
 	int		*ret;
 
-	ret = init_ret();
-	if (!ret)
-		return (0);
 	ret = ft_manage_fds(newargv, n_newargv, paths, fds);
 	if (!ret)
 		exit(status);
@@ -32,6 +29,6 @@ int	ft_child(char ***newargv, int n_newargv, char **paths, t_control *list, int 
 	else if (execve(newargv[n_newargv][0],
 				newargv[n_newargv], NULL) < 0)
 		status = 1;
+	free(ret);
 	exit(status);
-	return (0);
 }

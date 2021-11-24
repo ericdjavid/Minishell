@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:58:06 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/22 15:46:39 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/24 16:44:17 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ int	exit_redirection(int *ret)
 		value += (ret[c] * (c + 2));
 		c++;
 	}
+	free(ret);
 	if (!value)
 		return (1);
 	return (value);

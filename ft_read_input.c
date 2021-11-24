@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:02:04 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/24 14:26:23 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/24 16:58:21 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,19 @@ char	*get_heredoc(char *lim)
 	while (ret)
 	{
 		buf = readline("> ");
+		if (!buf)
+		{
+			ft_printf_fd(2, "minishell: warning: here-document at line %d delimited by end-of-file (wanted `l')\n", ret, lim);
+			return (heredoc);
+		}
 		if (ft_strncmp(buf, lim, ft_strlen(lim)))
 			heredoc = ft_strjoin_free_n(heredoc, buf);
 		else
 			ret = 0;
 		if (buf)
 			free(buf);
+		if (ret)
+			ret++;
 	}
 	heredoc[ft_strlen(heredoc)] = 0;
 	return (heredoc);

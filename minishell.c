@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:31:49 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/24 15:18:18 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/24 16:59:04 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	sigquit_handler(int sig)
 		status = 131;
 		return ;
 	}
-	else
+	else if (status != 9)
 		ft_printf_fd(1, "\n");
 }
 
@@ -76,22 +76,24 @@ void	sigint_handler(int sig)
 {
 	int	stat;
 
-	(void)sig;
-	stat = 0;
-	waitpid(-1, &stat, 0);
-	if (!stat && status != 9)
+	if (sig == 2)
 	{
-		rl_clear_history();
-		ft_printf_fd(1, "\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		stat = 0;
+		waitpid(-1, &stat, 0);
+		if (!stat && status != 9)
+		{
+			rl_clear_history();
+			ft_printf_fd(1, "\n");
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+		}
+		else if (!stat && status == 9)
+		{
+			exit(130);
+		}
+		else
+			ft_printf_fd(1, "\n");
+		status = 130;
 	}
-	else if (!stat && status == 9)
-	{
-		exit(130);
-	}
-	else
-		ft_printf_fd(1, "\n");
-	status = 130;
 }
