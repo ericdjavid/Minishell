@@ -30,7 +30,8 @@
 #define END "\033[0m"
 #define YELLOW "\033[93m"
 #define RED "\033[91m"
-
+#define DEAL_EXPORT 1
+#define DEAL_ENV 0
 
 		// STRUCTURES
 typedef enum s_bool
@@ -50,7 +51,9 @@ typedef struct s_control
 {
     t_element	*first_env;
     t_element	*first_export;
+    t_element	*first_env_var;
 	int			size;
+	int			size_env;
 }	t_control;
 
 		//	OPEN_TERM.C
@@ -133,7 +136,7 @@ void			ft_close_fd(int fd);
 
 		// EXPORT.C
 
-int 		ft_export(t_control *list);
+int			ft_export(t_control *list, char **newargv);
 
 void    	ft_print_export(t_element *first);
 

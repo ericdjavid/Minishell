@@ -71,14 +71,18 @@ int ft_init_list(t_control *list, char **envp)
     int i;
     t_element *first_env;
     t_element *first_export;
+    t_element *first_env_var;
 
     first_env = ft_init();
     first_export = ft_init();
-    if (!first_export || !first_env)
+    first_env_var = ft_init();
+    if ((!first_export) || (!first_env) || (!first_env_var))
         return (FAILURE);
     list->first_env = first_env;
     list->first_export = first_export;
+    list->first_env_var = first_env_var;
     list->size = 0;
+    list->size_env = 0;
 	i = -1;
     while (envp[++i])
     {
@@ -94,6 +98,8 @@ void    ft_print_export(t_element *first)
     t_element *tmp;
 
     tmp = first;
+    if (!first)
+        return ;
     while (tmp)
     {
         ft_printf_fd(1,"%s\n", tmp->str);
@@ -105,23 +111,76 @@ void    ft_print_export(t_element *first)
     return ; 
 }
 
+void ft_add_new_var(t_control  *list)
+{
+    // if (!list->size_env)
+    //     return ;
+    // if (type == DEAL_EXPORT)
+    // {
+    //     return ;
+    // }
+    t_element *elm;
+
+    elm = list->first_env_var;
+    if (!elm)
+        return ;
+    while(elm)
+    {
+        add_end_list(elm->str, list->first_export);
+        add_end_list(elm->str, list->first_env);
+        if (elm->next == NULL)
+            break ;
+        elm = elm->next;
+    } 
+    return ;
+}
+
+int ft_get_new_var(t_control *list, char **newargv)
+{
+    int i;
+
+    i = 0;
+    while (newargv[++i])
+    {
+        list->size_env++;
+        add_end_list(newargv[i], list->first_env_var);
+        add_end_list(newargv[i], list->first_env);
+        add_end_list(newargv[i], list->first_export);
+    }
+    ft_print_export(list->first_env_var);
+    return (1);
+}
+
 /* Liste toutes les variables d’environnement dans l’ordre ascii. 
 sous la forme : declare -x nom=”valeur” ou declare -x nom */
-int ft_export(t_control *list)
+//TODO: add "declare -x [var]"
+int ft_export(t_control *list, char **newargv)
 {
+    int i = 0;
+    
+    if (newargv[++i])
+        return (ft_get_new_var(list, newargv));
+    //TODO: add env_var
+    printf(RED"ok\n" END);
     add_index(list->first_export);
     while (check_order(list) == FALSE)
         order_ascii(list);
+    // ft_add_new_var(list);
     ft_print_export(list->first_export);
+    // ft_print_export(list->first_env_var);
     free_all(list);
-    return (FAILURE);
+    return (1);
 }
 
 /* liste toutes les variables d’environnement dans un ordre random. sous la forme : nom=valeur */
 int ft_env(t_control *list)
 {
-    //be able to be piped
+    //TODO: add env_var
+    // ft_add_new_var(list);
     ft_print_export(list->first_env);
+    // ft_print_export(list->first_env_var);
+
+    //TODO: free after
     free_all(list);
     return (1);
 }
