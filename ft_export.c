@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 char *add_str(char *str)
 {
     char    *tmp;
@@ -49,6 +48,7 @@ void add_end_list(char *str, t_element *first)
     tmp2 = malloc(sizeof(*tmp));
     tmp2->str = add_str(str);
     tmp2->next = NULL;
+    tmp2->index = 0;
     tmp->next = tmp2;
    return; 
 }
@@ -62,6 +62,7 @@ t_element *ft_init()
         return (NULL);
     first->str = NULL;
     first->next = NULL;
+    first->index = 0;
     return (first);
 }
 
@@ -77,9 +78,11 @@ int ft_init_list(t_control *list, char **envp)
         return (FAILURE);
     list->first_env = first_env;
     list->first_export = first_export;
+    list->size = 0;
 	i = -1;
     while (envp[++i])
     {
+        list->size++;
 		add_end_list(envp[i], list->first_export);	
 		add_end_list(envp[i], list->first_env);	
     }
@@ -102,44 +105,14 @@ void    ft_print_export(t_element *first)
     return ; 
 }
 
-t_element *swap_first(t_element *elem)
-{
-    t_element *tmp;
-
-    if (!elem)
-        return (NULL);
-    tmp = elem->next;
-    elem->next = tmp->next; 
-    tmp->next = elem;
-    elem = tmp;
-    printf(RED"tmp is now \n|%s|\n and next is \n|%s|\n",tmp->str, tmp->next->str);
-    return (tmp);
-}
-
 /* Liste toutes les variables d’environnement dans l’ordre ascii. 
 sous la forme : declare -x nom=”valeur” ou declare -x nom */
 int ft_export(t_control *list)
 {
-    //be able to be piped
-    // t_element *tmp;   
-    
-    // tmp = list->first_export;
-
-    // ft_print_export(list->first_export);
-    // list->first_export = swap_elem(list->first_export);
-    // printf("first is |%s|\n", list->first_export->str);
-    // printf("first letter is of tmp is |%c| with value |%d| and tmp->next is |%c| value |%d|", tmp->str[0],tmp->str[0], tmp->next->str[0], tmp->next->str[0]);
-
-    // while (tmp->next)
-    // {
-    //     // printf("first letter is |%d| and the other is |%d|", tmp->str[0], tmp->next->str[0]);
-    //     if (tmp->str[0] < tmp->next->str[0])
-    //     {
-    //         swap_elem(tmp);
-    //     }
-    //     tmp = tmp->next;
-    // }
-    // ft_print_export(list->first_export);
+    add_index(list->first_export);
+    while (check_order(list) == FALSE)
+        order_ascii(list);
+    ft_print_export(list->first_export);
     free_all(list);
     return (FAILURE);
 }
