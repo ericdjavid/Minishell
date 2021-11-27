@@ -126,8 +126,8 @@ int ft_export(t_control *list)
     // tmp = list->first_export;
 
     // ft_print_export(list->first_export);
-    list->first_export = swap_elem(list->first_export);
-    printf("first is |%s|\n", list->first_export->str);
+    // list->first_export = swap_elem(list->first_export);
+    // printf("first is |%s|\n", list->first_export->str);
     // printf("first letter is of tmp is |%c| with value |%d| and tmp->next is |%c| value |%d|", tmp->str[0],tmp->str[0], tmp->next->str[0], tmp->next->str[0]);
 
     // while (tmp->next)
