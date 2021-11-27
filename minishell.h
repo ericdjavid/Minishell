@@ -33,141 +33,154 @@
 
 
 		// STRUCTURES
+typedef enum s_bool
+{
+	FALSE,
+	TRUE
+}	t_bool;
+
 typedef struct s_element
 {
-    char *str;
-    struct s_element *next;
-} t_element;
+    char				*str;
+	int					index;
+    struct s_element	*next;
+}	t_element;
 
 typedef struct s_control
 {
-    t_element *first_env;
-    t_element *first_export;
-	// t_element *first_export;
-} t_control;
+    t_element	*first_env;
+    t_element	*first_export;
+	int			size;
+}	t_control;
 
 		//	OPEN_TERM.C
 
-int		open_term(void);
+int				open_term(void);
 
-char	**init_xterm(void);
+char			**init_xterm(void);
 
 
 		//	INIT_PATHS.C
 
-char	**init_paths(char **envp);
+char			**init_paths(char **envp);
 
-char	**fill_paths(char *line, int count);
+char			**fill_paths(char *line, int count);
 
-int		get_path_len(char *line, int count);
+int				get_path_len(char *line, int count);
 
-char	*ft_add_one_path(char *line, int *count);
+char			*ft_add_one_path(char *line, int *count);
 
 
 		//	EXEC_CMD.C
 
-int		exec_cmd(char *cmd_line, char **paths, t_control *list);
+int				exec_cmd(char *cmd_line, char **paths, t_control *list);
 
-char	*init_cmd_path(char *cmd, char **paths);
+char			*init_cmd_path(char *cmd, char **paths);
 
 
 		//	PROMPT_MSG.C
 
-char	*prompt_msg(void);
+char			*prompt_msg(void);
 
 
 		//	FT_BUILTINS.C
 
-int		ft_builtins(char **newargv, t_control *list);
+int				ft_builtins(char **newargv, t_control *list);
 
-int		is_builtins(char *newargv);
+int				is_builtins(char *newargv);
 
 
 		//	FT_ECHO.C
 
-int		ft_echo(char **newargv);
+int				ft_echo(char **newargv);
 
-void	write_newargv(char **newargv, int c);
+void			write_newargv(char **newargv, int c);
 
 
 		//	FT_PWD.C
 
-int		ft_pwd(char **newargv);
+int				ft_pwd(char **newargv);
 
 
 		//	FT_CD.C
 
-int		ft_cd(char **newargv);
+int				ft_cd(char **newargv);
 
 
 		//	FT_CMD.C
 
-int		ft_cmd(char ***newargv, char **paths, t_control *list);
+int				ft_cmd(char ***newargv, char **paths, t_control *list);
 
-int		get_n_cmd(char *cmd_line);
+int				get_n_cmd(char *cmd_line);
 
 
 		//	INIT_NEWARGV.C
 
-char	***init_newargv(char *cmd_line, char **paths);
+char			***init_newargv(char *cmd_line, char **paths);
 
-char	***init_param_in(char ***split, char *cmd_line, int *c_1, int *c_spl);
+char			***init_param_in(char ***split, char *cmd_line, int *c_1, int *c_spl);
 
-int		ft_split_len(char **split, int c_spl);
+int				ft_split_len(char **split, int c_spl);
 
-char	***free_init_new(char ***newargv, char **split);
+char			***free_init_new(char ***newargv, char **split);
 
 
 		//	TOOLS.C
 
-void	ft_dup2(int newfd, int oldfd);
+void			ft_dup2(int newfd, int oldfd);
 
-void	ft_close_fd(int fd);
+void			ft_close_fd(int fd);
 
 		// EXPORT.C
 
-int 	ft_export(t_control *list);
+int 		ft_export(t_control *list);
 
-void    ft_print_export(t_element *first);
+void    	ft_print_export(t_element *first);
 
-t_element *ft_init();
+t_element 	*ft_init();
 
-void	add_end_list(char *str, t_element *first);
+void		add_end_list(char *str, t_element *first);
 
-char 	*add_str(char *str);
+char 		*add_str(char *str);
 
-int		ft_init_list(t_control *list, char **envp);
+int			ft_init_list(t_control *list, char **envp);
+
+t_bool		check_order(t_control *list);
+
+int			order_ascii(t_control *list);
+
+void 		add_index(t_element *elem);
 
 		// FT_ENV.C
 
-int 	ft_env(t_control *list);
+int 		ft_env(t_control *list);
 
 		//	FT_READ_INPUT.C
 
-int		ft_read_input(char ***newargv, int n_newargv, char **paths);
+int			ft_read_input(char ***newargv, int n_newargv, char **paths);
 
-char	*get_heredoc(char *lim);
+char		*get_heredoc(char *lim);
 
-int		init_param_heredoc(char *lim, char **buf, char **heredoc, int *ret);
+int			init_param_heredoc(char *lim, char **buf, char **heredoc, int *ret);
 
-char	**get_newargv_rdin(char **newargv, int c, char **paths);
+char		**get_newargv_rdin(char **newargv, int c, char **paths);
 
-char	*ft_strdup_rdin(char *s, char **mat1, char **mat2);
+char		*ft_strdup_rdin(char *s, char **mat1, char **mat2);
 
 
 		//	FT_REDIRECTION.C
 
-int		ft_redirection(char ***newargv, int n_n);
+int			ft_redirection(char ***newargv, int n_n);
 
-int		get_outfd(char *file, int config);
+int			get_outfd(char *file, int config);
 
-char	**get_new_redir(char **newargv, int redir);
+char		**get_new_redir(char **newargv, int redir);
 
-char	**free_redirection(char **newargv, char **new);
+char		**free_redirection(char **newargv, char **new);
 
 		//	FREE GARBAGE COLLECTOR
 
-void free_all(t_control *control);
+void		free_all(t_control *control);
 
-void free_elms(t_element *first);
+void		free_elms(t_element *first);
 #endif
