@@ -154,6 +154,8 @@ int			order_ascii(t_control *list);
 
 void 		add_index(t_element *elem);
 
+int			ft_get_new_var(t_control *list, char **newargv);
+
 		// FT_ENV.C
 
 int 		ft_env(t_control *list);
@@ -169,6 +171,8 @@ int			init_param_heredoc(char *lim, char **buf, char **heredoc, int *ret);
 char		**get_newargv_rdin(char **newargv, int c, char **paths);
 
 char		*ft_strdup_rdin(char *s, char **mat1, char **mat2);
+
+t_element *add_end_list2(char *str, t_element *first);
 
 
 		//	FT_REDIRECTION.C

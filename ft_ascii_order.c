@@ -19,7 +19,7 @@ int add_beg(t_control *list, char *str)
     new = malloc(sizeof(*new));
     if (!new)
         return (FAILURE);
-    new->str = strdup(str);
+    new->str = ft_strdup(str);
     new->next = list->first_export;
     new->index = 1;
     list->first_export = new;
