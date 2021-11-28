@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:31:49 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/24 16:59:04 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/28 17:26:46 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_minishell(char **paths, t_control *list)
 
 	ret = 1;
 	signal(SIGINT, &sigint_handler);
-	signal(SIGQUIT, &sigquit_handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (ret || cmd_line)
 	{
 		cmd_line = prompt_msg();
@@ -56,26 +56,11 @@ void	ft_minishell(char **paths, t_control *list)
 	}
 }
 
-void	sigquit_handler(int sig)
-{
-	int	stat;
-
-	(void)sig;
-	stat = 0;
-	waitpid(-1, &stat, 0);
-	if (!stat && status != 9)
-	{
-		status = 131;
-		return ;
-	}
-	else if (status != 9)
-		ft_printf_fd(1, "\n");
-}
-
 void	sigint_handler(int sig)
 {
 	int	stat;
 
+	ft_printf_fd(2, "hey sig : %d\n", sig);
 	if (sig == 2)
 	{
 		stat = 0;

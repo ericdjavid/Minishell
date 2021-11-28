@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 15:08:22 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/17 16:57:30 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/28 16:44:08 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ int	print_d(int arg, int fd)
 		return (-1);
 	len = ft_strlen(itoa);
 	write(fd, itoa, len);
+	free(itoa);
 	return (len);
 }

@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/24 15:18:50 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/28 17:22:26 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 	int		**fds;
 	pid_t	child_pid;
 
-	n_newargv = 0;
+	n_newargv = 1;
 	fds = init_fds();
 	if (!fds)
 		return (0);
@@ -30,12 +30,14 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 		if (child_pid == -1)
 			return (0);
 		if (child_pid == 0)
-			if (!(ft_child(newargv, n_newargv, paths, list, fds)))
+			if (!(ft_child(&newargv[n_newargv], paths, list, fds)))
 				return (status_free(fds));
 		ft_close_fd(fds[0][1]);
 		while (wait(&status) > 0);
 		if (WIFEXITED(status))
 			status = WEXITSTATUS(status);
+		if (status == 131)
+			write(1, "\n", 1);
 		fds[1][0] = fds[0][0];
 		n_newargv++;
 	}

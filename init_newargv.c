@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:56:08 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/24 16:17:57 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/28 16:33:05 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	***init_param_in(char ***split, char *cmd_line, int *c_1, int *c)
 {
 	char	***newargv;
 
-	newargv = malloc(sizeof(char **) * (get_n_cmd(cmd_line) + 1));
+	newargv = malloc(sizeof(char **) * (get_n_cmd(cmd_line) + 2));
 	if (!newargv)
 		return (0);
 	*split = ft_split(cmd_line, 32);
@@ -54,7 +54,8 @@ char	***init_param_in(char ***split, char *cmd_line, int *c_1, int *c)
 		free(newargv);
 		return (0);
 	}
-	*c_1 = 0;
+	newargv[0] = 0;
+	*c_1 = 1;
 	*c = 0;
 	return (newargv);
 }

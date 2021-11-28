@@ -6,20 +6,19 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:58:06 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/24 18:31:34 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/28 15:50:42 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_redirection(char ***newargv, int n_n)
+int	ft_redirection(char ***newargv)
 {
 	int	c;
 	int	fd;
 	int	config;
 	int	*ret;
 
-	(void)n_n;
 	c = 0;
 	ret = malloc(sizeof(int) * 3);
 	while (c < 3)

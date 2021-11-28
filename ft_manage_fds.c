@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 20:59:11 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/24 18:31:36 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/28 16:40:09 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,18 @@ int	*ft_manage_fds(char ***newargv, char **paths, int **fds)
 	ret = init_ret();
 	if (!ret)
 		return (0);
-	print_matc(*newargv);
-	ret[0] = ft_read_input(newargv, n_n, paths);
-	ret[1] = ft_redirection(newargv, n_n);
-	print_matc(*newargv);
-	newargv[n_n][0] = init_cmd_path(newargv[n_n][0], paths);
+	ret[0] = ft_read_input(newargv, paths);
+	ret[1] = ft_redirection(newargv);
+	(*newargv)[0] = init_cmd_path((*newargv)[0], paths);
 	if (!ret[0] || !ret[1])
 		return (0);
 	else if (check_ret_stdin(ret)
-			&& (ft_matlen(newargv[n_n]) > 1 || n_n > 0))
+			&& ((ft_matlen((*newargv)) > 1) || *(newargv - 1)))
 	{
 		ft_dup2(fds[1][0], STDIN_FILENO);
 		ft_close_fd(fds[1][0]);
 	}
-	if (check_ret_stdout(ret) && newargv[n_n + 1])
+	if (check_ret_stdout(ret) && *(newargv + 1))
 		ft_dup2(fds[0][1], STDOUT_FILENO);
 	ft_close_fd(fds[0][0]);
 	return (ret);
