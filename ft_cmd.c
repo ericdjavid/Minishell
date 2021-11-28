@@ -34,6 +34,8 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 			&& newargv[n_newargv][1])
         	ft_get_new_var(list, newargv[n_newargv]);
 			//TODO: redirection in stdin
+			//TODO: free
+
 		child_pid = fork();
 		if (child_pid == -1)
 			return (0);

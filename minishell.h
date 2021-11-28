@@ -142,9 +142,11 @@ void    	ft_print_export(t_element *first, t_bool bool);
 
 t_element 	*ft_init();
 
-void		add_end_list(char *str, t_element *first);
+void		add_end_list(char *str, t_element *first, int type);
 
 char 		*add_str(char *str);
+
+char 		*add_str2(char *str, int type);
 
 int			ft_init_list(t_control *list, char **envp);
 
@@ -172,7 +174,7 @@ char		**get_newargv_rdin(char **newargv, int c, char **paths);
 
 char		*ft_strdup_rdin(char *s, char **mat1, char **mat2);
 
-t_element *add_end_list2(char *str, t_element *first);
+// t_element *add_end_list2(char *str, t_element *first);
 
 
 		//	FT_REDIRECTION.C
