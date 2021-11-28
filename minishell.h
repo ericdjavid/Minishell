@@ -138,7 +138,7 @@ void			ft_close_fd(int fd);
 
 int			ft_export(t_control *list, char **newargv);
 
-void    	ft_print_export(t_element *first);
+void    	ft_print_export(t_element *first, t_bool bool);
 
 t_element 	*ft_init();
 

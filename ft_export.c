@@ -120,7 +120,7 @@ int ft_init_list(t_control *list, char **envp)
     return (SUCCESS);
 }
 
-void    ft_print_export(t_element *first)
+void    ft_print_export(t_element *first, t_bool bool)
 {
     t_element *tmp;
 
@@ -129,6 +129,8 @@ void    ft_print_export(t_element *first)
         return ;
     while (tmp)
     {
+        if (bool == TRUE)
+            ft_printf_fd(1, "export ");
         ft_printf_fd(1,"%s\n", tmp->str);
         if (tmp->next)
             tmp = tmp->next;
@@ -201,7 +203,7 @@ int ft_export(t_control *list, char **newargv)
     (void)newargv;
     ft_add_new_var(list, DEAL_EXPORT);
 
-    ft_print_export(list->first_export);
+    ft_print_export(list->first_export, TRUE);
 
     //TODO : declare -x [var]
     free_all(list);
@@ -214,7 +216,7 @@ int ft_env(t_control *list)
     //TODO: add env_var
     // ft_add_new_var(list);
     ft_add_new_var(list, DEAL_ENV);
-    ft_print_export(list->first_env);
+    ft_print_export(list->first_env, FALSE);
     // ft_print_export(list->first_env_var);
 
     //TODO: free after
