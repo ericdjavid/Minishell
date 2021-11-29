@@ -19,7 +19,7 @@ int add_beg(t_control *list, char *str)
     new = malloc(sizeof(*new));
     if (!new)
         return (FAILURE);
-    new->str = strdup(str);
+    new->str = ft_strdup(str);
     new->next = list->first_export;
     new->index = 1;
     list->first_export = new;
@@ -31,6 +31,7 @@ int swap_elem(int pos1, int pos2, t_control *list)
 {
     t_element *tmp;
     t_element *node1, *node2, *prev1, *prev2;
+    t_element *tmp1;
     int i = 0;
 
     prev1 = NULL;
@@ -43,7 +44,6 @@ int swap_elem(int pos1, int pos2, t_control *list)
         return SUCCESS;
     if (pos1 <= 0 || pos1 > list->size || pos2 <= 0 || pos2 > list->size)
         return FAILURE;
-
     while (tmp && ++i <= list->size)
     {
         if (tmp->index == pos1 - 1)
@@ -60,8 +60,6 @@ int swap_elem(int pos1, int pos2, t_control *list)
         prev1->next = node2;
     if (prev2 != NULL)
         prev2->next = node1;
-
-    t_element *tmp1;
     if (node2->next == NULL)
     {
         tmp1 = node1->next;
@@ -91,19 +89,19 @@ t_bool is_ascii_ordered(char *str1, char *str2)
         while (str1[i] == str2[i])
             i++;
         if (str1[i] > str2[i])
-            return FALSE;
-        return TRUE;
+            return (FALSE);
+        return (TRUE);
     }
     if (!str2[i])
-        return TRUE;
-    return FALSE;
+        return (TRUE);
+    return (FALSE);
 }
 
 int order_ascii(t_control *list)
 {
     t_element   *tmp;
-    tmp = list->first_export;
 
+    tmp = list->first_export;
     while (1)
     {
         if (tmp == NULL || tmp->next == NULL)
