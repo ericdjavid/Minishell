@@ -16,7 +16,6 @@ int	status = 0;
 
 int	main(int ac, char **av, char **envp)
 {
-	char		*cmd_line;
 	char		**paths;
     t_control   list;
 
@@ -26,7 +25,7 @@ int	main(int ac, char **av, char **envp)
 	if (ft_init_list(&list, envp))
 		return (-1);
 	paths = init_paths(envp); 
-	ft_minishell(paths, list);
+	ft_minishell(paths, &list);
 	free_matc(paths);
 	return (status);
 }
