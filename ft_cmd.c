@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/21 21:03:26 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/28 17:22:26 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,17 @@
 
 int	ft_cmd(char ***newargv, char **paths, t_control *list)
 {
-	pid_t	child_pid;
 	int		n_newargv;
-	int		fd_save;
-	int		fds[2];
-	int		ret[2];
-	int		status;
+	int		**fds;
+	pid_t	child_pid;
 
-	(void)paths;
-	ret[0] = 1;
-	ret[1] = 1;
-	n_newargv = 0;
-	fd_save = 0;
+	n_newargv = 1;
+	fds = init_fds();
+	if (!fds)
+		return (0);
 	while (newargv[n_newargv])
 	{
-		if (pipe(fds) == -1)
+		if (pipe(fds[0]) == -1)
 			return (0);
 		if (!ft_strncmp(newargv[n_newargv][0], "export", ft_strlen(newargv[n_newargv][0]))
 			&& newargv[n_newargv][1])
@@ -40,50 +36,60 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 		if (child_pid == -1)
 			return (0);
 		if (child_pid == 0)
-		{
-			ret[0] = ft_read_input(newargv, n_newargv, paths);
-			ret[1] = ft_redirection(newargv, n_newargv);
-			newargv[n_newargv][0] =
-				init_cmd_path(newargv[n_newargv][0], paths);
-			if (!ret[0] || !ret[1])
-				return (0);
-			else if (ret[0] == 1 && ret[1] != 2 && ret[1] != 5
-					&& (ft_matlen(newargv[n_newargv]) > 1
-					|| n_newargv > 0))
-			{
-				ft_dup2(fd_save, STDIN_FILENO);
-				ft_close_fd(fd_save);
-			}
-			if (ret[1] != 3 && ret[1] != 5 && newargv[n_newargv + 1])
-				ft_dup2(fds[1], STDOUT_FILENO);
-			ft_close_fd(fds[0]);
-			if (ret[1] > 0 && ft_builtins(newargv[n_newargv], list))
-			{
-				ret[1] = 1;
-				exit(1);
-			}
-			else if (ret[1] > 0 && access(newargv[n_newargv][0], X_OK))
-			{
-				ft_printf_fd(2, "minishell: %s: command not found\n",
-						newargv[n_newargv][0]);
-				ret[1] = 127;
-				exit(127);
-			}
-			else if (ret[1] > 0)
-				execve(newargv[n_newargv][0],
-					newargv[n_newargv], NULL);
-			status = 1;
-			exit(status);
-		}
-		else
-		{
-			ft_close_fd(fds[1]);
-			while (waitpid(child_pid, &status, 0) > 0);
-			fd_save = fds[0];
-		}
+			if (!(ft_child(&newargv[n_newargv], paths, list, fds)))
+				return (status_free(fds));
+		ft_close_fd(fds[0][1]);
+		while (wait(&status) > 0);
+		if (WIFEXITED(status))
+			status = WEXITSTATUS(status);
+		if (status == 131)
+			write(1, "\n", 1);
+		fds[1][0] = fds[0][0];
 		n_newargv++;
 	}
-	return(ret[1]);
+	return (status_free(fds));
+}
+
+int	*init_ret(void)
+{
+	int	*ret;
+
+	ret = malloc(sizeof(int) * 2);
+	if (!ret)
+		return (0);
+	ret[0] = 1;
+	ret[1] = 1;
+	return (ret);
+}
+
+int	**init_fds(void)
+{
+	int	**fds;
+
+	fds = malloc(sizeof(int *) * 2);
+	if (!fds)
+		return (0);
+	fds[0] = malloc(sizeof(int) * 2);
+	if (!fds[0])
+	{
+		free(fds);
+		return (0);
+	}
+	fds[1] = malloc(sizeof(int));
+	if (!fds[1])
+	{
+		free(fds[0]);
+		free(fds);
+		return (0);
+	}
+	fds[1][0] = 0;
+	return (fds);
+}
+
+int	status_free(int **fds)
+{
+	free_mati(fds, 2);
+	return (status);
 }
 
 int	get_n_cmd(char *cmd_line)

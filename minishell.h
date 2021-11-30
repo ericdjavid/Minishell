@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/21 20:50:21 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/28 17:24:56 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 #define END "\033[0m"
 #define YELLOW "\033[93m"
 #define RED "\033[91m"
+
+extern int	status;
+
 #define DEAL_EXPORT 1
 #define DEAL_ENV 0
 
@@ -56,12 +59,12 @@ typedef struct s_control
 	int			size_env;
 }	t_control;
 
-		//	OPEN_TERM.C
 
-int				open_term(void);
+		//	MINISHELL.C
 
-char			**init_xterm(void);
+void	ft_minishell(char **paths, t_control *list);
 
+void	sigint_handler(int sig);
 
 		//	INIT_PATHS.C
 
@@ -79,6 +82,8 @@ char			*ft_add_one_path(char *line, int *count);
 int				exec_cmd(char *cmd_line, char **paths, t_control *list);
 
 char			*init_cmd_path(char *cmd, char **paths);
+
+void	free_newargv(char ***matc);
 
 
 		//	PROMPT_MSG.C
@@ -114,7 +119,13 @@ int				ft_cd(char **newargv);
 
 int				ft_cmd(char ***newargv, char **paths, t_control *list);
 
-int				get_n_cmd(char *cmd_line);
+int		*init_ret(void);
+
+int		**init_fds(void);
+
+int		status_free(int **fds);
+
+int		get_n_cmd(char *cmd_line);
 
 
 		//	INIT_NEWARGV.C
@@ -127,12 +138,15 @@ int				ft_split_len(char **split, int c_spl);
 
 char			***free_init_new(char ***newargv, char **split);
 
+int				is_syntax_er_spl(char **split);
+
 
 		//	TOOLS.C
 
 void			ft_dup2(int newfd, int oldfd);
 
 void			ft_close_fd(int fd);
+
 
 		// EXPORT.C
 
@@ -158,13 +172,15 @@ void 		add_index(t_element *elem);
 
 int			ft_get_new_var(t_control *list, char **newargv);
 
+
 		// FT_ENV.C
 
 int 		ft_env(t_control *list);
 
+
 		//	FT_READ_INPUT.C
 
-int			ft_read_input(char ***newargv, int n_newargv, char **paths);
+int		ft_read_input(char ***newargv, char **paths);
 
 char		*get_heredoc(char *lim);
 
@@ -179,7 +195,9 @@ char		*ft_strdup_rdin(char *s, char **mat1, char **mat2);
 
 		//	FT_REDIRECTION.C
 
-int			ft_redirection(char ***newargv, int n_n);
+int		ft_redirection(char ***newargv);
+
+int		which_redirection(char *s);
 
 int			get_outfd(char *file, int config);
 
@@ -187,9 +205,28 @@ char		**get_new_redir(char **newargv, int redir);
 
 char		**free_redirection(char **newargv, char **new);
 
+int		*assign_config(int *ret, int config);
+
+int		exit_redirection(int *ret);
+
+
 		//	FREE GARBAGE COLLECTOR
 
 void		free_all(t_control *control);
 
-void		free_elms(t_element *first);
+void free_elms(t_element *first);
+
+
+		//	FT_MANAGE_FDS.C
+
+int		*ft_manage_fds(char ***newargv, char **paths, int **fds);
+
+int		check_ret_stdin(int *ret);
+
+int		check_ret_stdout(int *ret);
+
+
+		//	FT_CHILD.C
+
+int		ft_child(char ***newargv, char **paths, t_control *list, int **fds);
 #endif
