@@ -6,27 +6,27 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:02:04 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/21 21:03:30 by abrun            ###   ########.fr       */
+/*   Updated: 2021/11/28 15:45:03 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_read_input(char ***newargv, int n_newargv, char **paths)
+int	ft_read_input(char ***newargv, char **paths)
 {
 	char	*heredoc;
 	int		c;
 	int		fds[2];
 
 	c = 0;
-	while (newargv[n_newargv][c])
+	while ((*newargv)[c])
 	{
-		if (!ft_strncmp(newargv[n_newargv][c], "<<",
-				ft_strlen(newargv[n_newargv][c])))
+		if (!ft_strncmp((*newargv)[c], "<<",
+				ft_strlen((*newargv)[c])))
 		{
-			if (!newargv[n_newargv][c + 1])
+			if (!(*newargv)[c + 1])
 				return (0);
-			heredoc = get_heredoc(newargv[n_newargv][c + 1]);
+			heredoc = get_heredoc((*newargv)[c + 1]);
 			if (!heredoc)
 				return (0);
 			if (pipe(fds) == -1)
@@ -35,9 +35,8 @@ int	ft_read_input(char ***newargv, int n_newargv, char **paths)
 			write(fds[1], heredoc, ft_strlen(heredoc));
 			ft_close_fd(fds[1]);
 			ft_close_fd(fds[0]);
-			newargv[n_newargv] = get_newargv_rdin(newargv[n_newargv],
-					c, paths);
-			if (!newargv[n_newargv])
+			(*newargv) = get_newargv_rdin((*newargv), c, paths);
+			if (!(*newargv))
 				return (0);
 			return (2);
 		}
@@ -57,15 +56,23 @@ char	*get_heredoc(char *lim)
 		return (0);
 	heredoc[0] = 0;
 	ret = 1;
+	status = 9;
 	while (ret)
 	{
 		buf = readline("> ");
+		if (!buf)
+		{
+			ft_printf_fd(2, "minishell: warning: here-document at line %d delimited by end-of-file (wanted `l')\n", ret, lim);
+			return (heredoc);
+		}
 		if (ft_strncmp(buf, lim, ft_strlen(lim)))
 			heredoc = ft_strjoin_free_n(heredoc, buf);
 		else
 			ret = 0;
 		if (buf)
 			free(buf);
+		if (ret)
+			ret++;
 	}
 	heredoc[ft_strlen(heredoc)] = 0;
 	return (heredoc);

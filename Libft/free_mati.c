@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_d.c                                          :+:      :+:    :+:   */
+/*   free_mati.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 15:08:22 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/28 16:44:08 by abrun            ###   ########.fr       */
+/*   Created: 2021/10/06 15:43:15 by abrun             #+#    #+#             */
+/*   Updated: 2021/10/13 10:32:13 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
+#include "libft.h"
 
-int	print_d(int arg, int fd)
+void	free_mati(int **mati, int m_len)
 {
-	char	*itoa;
-	size_t	len;
+	int		n;
 
-	itoa = ft_itoa(arg);
-	if (!itoa)
-		return (-1);
-	len = ft_strlen(itoa);
-	write(fd, itoa, len);
-	free(itoa);
-	return (len);
+	n = 0;
+	while (n < m_len)
+	{
+		free(mati[n]);
+		n++;
+	}
+	free(mati);
 }
