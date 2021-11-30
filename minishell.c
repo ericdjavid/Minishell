@@ -16,19 +16,15 @@ int	status = 0;
 
 int	main(int ac, char **av, char **envp)
 {
-	char			**paths;
-	t_control  	 	*list;
-	int				i;
+	char		*cmd_line;
+	char		**paths;
+    t_control   list;
 
 	(void)av;
 	if (ac != 1)
 		return (1);
-	list = ft_init();
-	if (!list)
+	if (ft_init_list(&list, envp))
 		return (-1);
-	i = -1;
-	while (envp[++i])
-		add_end_list(envp[i], list);	
 	paths = init_paths(envp); 
 	ft_minishell(paths, list);
 	free_matc(paths);
