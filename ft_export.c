@@ -218,9 +218,15 @@ int ft_add_new_var(t_control  *list, int type)
     return (SUCCESS);
 }
 
+// EXPORT BUGS
+//TODO: when creating already existing env it should modify it and not create another one
+
+//TODO: when creating a new env with " ", bad behavior (double quotes)
+
+//TODO: problem with spacing 
+
 /* Liste toutes les variables d’environnement dans l’ordre ascii. 
 sous la forme : declare -x nom=”valeur” ou declare -x nom */
-//TODO: add "declare -x [var]"
 int ft_export(t_control *list, char **newargv)
 {
     (void)newargv;

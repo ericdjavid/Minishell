@@ -147,6 +147,8 @@ void			ft_dup2(int newfd, int oldfd);
 
 void			ft_close_fd(int fd);
 
+void			ft_is_dollar(char **str, t_control *control);
+
 
 		// EXPORT.C
 
@@ -168,8 +170,6 @@ t_bool		check_order(t_control *list);
 
 int			order_ascii(t_control *list);
 
-void 		add_index(t_element *elem);
-
 int			ft_get_new_var(t_control *list, char **newargv);
 
 
@@ -190,7 +190,6 @@ char		**get_newargv_rdin(char **newargv, int c, char **paths);
 
 char		*ft_strdup_rdin(char *s, char **mat1, char **mat2);
 
-// t_element *add_end_list2(char *str, t_element *first);
 
 
 		//	FT_REDIRECTION.C
@@ -209,12 +208,17 @@ int		*assign_config(int *ret, int config);
 
 int		exit_redirection(int *ret);
 
+		// FT_LINKED_LISTS
+
+char	 *is_in_list(t_element *first, char *str);
+
+void 	add_index(t_element *elem);
 
 		//	FREE GARBAGE COLLECTOR
 
 void		free_all(t_control *control);
 
-void free_elms(t_element *first);
+void		free_elms(t_element *first);
 
 
 		//	FT_MANAGE_FDS.C

@@ -32,6 +32,8 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 			//TODO: redirection in stdin
 			//TODO: free
 
+		ft_is_dollar(newargv[n_newargv], list);
+		//TODO: replace char*
 		child_pid = fork();
 		if (child_pid == -1)
 			return (0);
