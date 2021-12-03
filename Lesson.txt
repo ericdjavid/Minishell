@@ -1,3 +1,5 @@
+ALLOWED FUNCTIONS
+-----------------
 readline : readline will read a line from the terminal and return it, using
        prompt as a prompt.  If prompt is NULL or the empty string, no
        prompt is issued.  The line returned is allocated with malloc(3);
@@ -9,12 +11,12 @@ rl_on_new_line : move into new empty lreadline
 rl_replace_line : 
 rl_redisplay : change what is displayed on screen to reflect the current contents of rl_line_buffer
 add_history : 
-access : 
-open : 
-read : 
-close : 
-fork : 
-wait : 
+access : try to access the path of cmd 
+open : open a file
+read : read a file descriptor
+close : close file descriptor
+fork : fork processes 
+wait : wait some time
 waitpid : 
 wait3 : 
 wait4 : 
@@ -28,8 +30,8 @@ lstat :
 fstat : 
 unlink : 
 execve : 
-dup : 
-dup2 : 
+dup : duplicates file descriptor
+dup2 : duplicates file descriptor 
 pipe : 
 opendir : 
 readdir : 
@@ -40,7 +42,13 @@ isatty   :
 ttyname : 
 ttyslot : 
 ioctl : 
-getenv : 
+getenv : function searches the environment list to find the environment variable
+       name, and returns a pointer to the corresponding value string.
 tcsetattr : 
 tcgetattr : 
 tgete : 
+
+
+ressources
+----------
+SHELL LANGUAGE : https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html
