@@ -179,7 +179,6 @@ int ft_get_new_var(t_control *list, char **newargv)
         if (list->first_env_var->str == NULL)
         {
             list->first_env_var->str = ft_strdup(newargv[i]);
-            printf(PINK "** added str |%s|\n"END, newargv[i]);
             continue ;
         }
         while (tmp->next != NULL)
@@ -188,7 +187,6 @@ int ft_get_new_var(t_control *list, char **newargv)
         if (!new)
             return (FAILURE);
         new->str = ft_strdup(newargv[i]);
-        printf(RED "** added str |%s|\n"END, newargv[i]);
         new->next = NULL;
         new->index = i;   
         tmp->next = new;
