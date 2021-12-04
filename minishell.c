@@ -35,27 +35,26 @@ void	ft_minishell(char **paths, t_control *list)
 	char			*cmd_line;
 	int				ret;
 
-	ret = 1;
 	signal(SIGINT, &sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
-	while (ret || cmd_line)
+	cmd_line = prompt_msg();
+	ret = exec_cmd(cmd_line, paths, list);
+	while (ret > 0 && cmd_line)
 	{
+		free(cmd_line);
 		cmd_line = prompt_msg();
-		if (cmd_line)
-		{
-			exec_cmd(cmd_line, paths, list);
-			free(cmd_line);
-		}
-		if (ret)
-			ret = 0;
+		ret = exec_cmd(cmd_line, paths, list);
 	}
+	if (cmd_line)
+		free(cmd_line);
+	if (ret < 0)
+		ft_printf_fd(2, "Un malloc a echoue !\n");
 }
 
 void	sigint_handler(int sig)
 {
 	int	stat;
 
-	ft_printf_fd(2, "hey sig : %d\n", sig);
 	if (sig == 2)
 	{
 		stat = 0;
