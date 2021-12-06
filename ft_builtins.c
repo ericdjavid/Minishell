@@ -24,7 +24,10 @@ int	ft_builtins(char **newargv, t_control *list)
 	else if (!ft_strncmp(newargv[0], "cd", len_0))
 		return (ft_cd(newargv));
 	else if (!ft_strncmp(newargv[0], "export", len_0))
-		return (ft_export(list, newargv));
+		if (!newargv[1])
+			return (ft_export(list, newargv));
+		else
+			return (1);
 	else if (!ft_strncmp(newargv[0], "env", len_0))
 		return (ft_env(list));
 	else if (ft_matlen(newargv) == 1

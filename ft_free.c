@@ -21,6 +21,7 @@ void free_elms(t_element *first)
     {
         first = first->next;
         free(tmp->str);
+        free(tmp->var_name);
         free(tmp);
         tmp = first;
     } 

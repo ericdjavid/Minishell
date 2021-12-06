@@ -12,6 +12,25 @@
 
 #include "minishell.h"
 
+t_bool	ft_is_in_list(t_element *first, char *str)
+{
+	t_element *tmp;
+
+	tmp = first;
+	if (!tmp || tmp->str == NULL)
+		return (FALSE);
+	while (tmp)
+	{
+		if (ft_strnstr(tmp->str, str, ft_strlen(tmp->str)))
+			return (TRUE);
+		if (tmp->next == NULL)
+			break ;
+		tmp = tmp->next;
+	}
+	return (FALSE);
+	
+}
+
 void	ft_dup2(int newfd, int oldfd)
 {
 	if (dup2(newfd, oldfd) == -1)

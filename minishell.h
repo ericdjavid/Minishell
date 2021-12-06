@@ -46,6 +46,7 @@ typedef enum s_bool
 typedef struct s_element
 {
     char				*str;
+	char				*var_name;
 	int					index;
     struct s_element	*next;
 }	t_element;
@@ -149,6 +150,8 @@ void			ft_close_fd(int fd);
 
 void			ft_is_dollar(char **str, t_control *control);
 
+t_bool			ft_is_in_list(t_element *first, char *str);
+
 
 		// EXPORT.C
 
@@ -160,7 +163,7 @@ t_element 	*ft_init();
 
 int			add_end_list(char *str, t_element *first, int type);
 
-char 		*add_str(char *str);
+char 		*add_var_name(char *str);
 
 char 		*add_str2(char *str, int type);
 

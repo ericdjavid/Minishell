@@ -12,17 +12,28 @@
 
 #include "minishell.h"
 
-char *add_str(char *str)
+char *add_var_name(char *str)
 {
     char    *tmp;
     int     i;
         
     i = 0;
-    tmp = malloc(sizeof(char) * ft_strlen(str) + 1);
-    if (!tmp)
-        return NULL;
+    if(str == NULL)
+        return (NULL);
     while (str[i] != '\0')
     {
+        if (str[i] == '=')
+            break ;
+        i++;
+    }
+    tmp = malloc(sizeof(char) * (i + 1));
+    if (!tmp)
+        return NULL;
+    i = 0;
+    while(str[i] != '\0')
+    {
+        if (str[i] == '=')
+            break ;
         tmp[i] = str[i];
         i++;
     }
@@ -100,6 +111,7 @@ int add_end_list(char *str, t_element *first, int type)
     if (!(first->str))
     {
         first->str = str_new;
+        first->var_name = add_var_name(str_new);
         first->next = NULL;
         return (SUCCESS);
     }
@@ -108,6 +120,7 @@ int add_end_list(char *str, t_element *first, int type)
         tmp = tmp->next;
     tmp2 = malloc(sizeof(*tmp));
     tmp2->str = str_new;
+    tmp2->var_name = add_var_name(str_new);
     tmp2->next = NULL;
     tmp2->index = 0;
     tmp->next = tmp2;
@@ -122,6 +135,7 @@ t_element *ft_init()
     if (!first)
         return (NULL);
     first->str = NULL;
+    first->var_name = NULL;
     first->next = NULL;
     first->index = 0;
     return (first);
@@ -187,10 +201,11 @@ int ft_get_new_var(t_control *list, char **newargv)
     tmp = list->first_env_var;
     while (newargv[++i])
     {
-    //TODO: IF VAR ALREADY EXISTS, modify value
-    //TODO: IF NAME ALREADY EXIST, do nothing
-    //TODO: IF VALUE AFFECTED TO VAR with same name, modify it
-    //TODO: CANNOT START WITH NUMBER
+        //TODO: IF VAR ALREADY EXISTS, modify value
+        //TODO: IF VALUE AFFECTED TO VAR with same name, modify it
+        //TODO: CANNOT START WITH NUMBER
+        if (ft_is_in_list(list->first_env_var, newargv[i]) == TRUE)
+            continue ;
         list->size_env++;
         if (list->first_env_var->str == NULL)
         {
@@ -237,10 +252,9 @@ int ft_add_new_var(t_control  *list, int type)
 }
 
 // EXPORT BUGS
-//TODO: when creating already existing env it should modify it and not create another one
-
 
 //TODO: problem with spacing 
+//TODO: IF NAME ALREADY EXIST, do nothing
 
 /* Liste toutes les variables d’environnement dans l’ordre ascii. 
 sous la forme : declare -x nom=”valeur” ou declare -x nom */
