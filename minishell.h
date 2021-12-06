@@ -158,7 +158,7 @@ void    	ft_print_export(t_element *first, t_bool bool);
 
 t_element 	*ft_init();
 
-void		add_end_list(char *str, t_element *first, int type);
+int			add_end_list(char *str, t_element *first, int type);
 
 char 		*add_str(char *str);
 

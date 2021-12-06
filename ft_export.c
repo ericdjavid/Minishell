@@ -30,6 +30,7 @@ char *add_str(char *str)
     return (tmp);
 }
 
+//TODO: when creating a new env with " ", bad behavior (double quotes)
 char *add_str2(char *str, int type)
 {
     char    *tmp;
@@ -40,19 +41,26 @@ char *add_str2(char *str, int type)
     i = 0;
     j = 0;
     is_equal = FALSE;
-    if (type == DEAL_EXPORT)
+    tmp = NULL;
+    while (str[i])
     {
-        while (str[i])
-        {
-            if (str[i] == '=')
-                is_equal = TRUE;
-            i++;
-        } 
+        if (str[i] == '=')
+            is_equal = TRUE;
+        i++;
     }
+    if (type == DEAL_ENV && is_equal == FALSE)
+        return (NULL);
     if (is_equal == TRUE && type == DEAL_EXPORT)
         tmp = malloc(sizeof(char) * ft_strlen(str) + 1 + 2);
-    else
+    // if (ft_get_quotes(str) > 0)
+    // {
+    //     str = move_quotes(str);
+    //     tmp = malloc(sizeof(char) * ft_strlen(str) + 1);
+    // }
+    if (!tmp)
         tmp = malloc(sizeof(char) * ft_strlen(str) + 1);
+    // else
+        // tmp = malloc(sizeof(char) * ft_strlen(str) + 1);
     if (!tmp)
         return NULL;
     i = 0;
@@ -80,26 +88,30 @@ char *add_str2(char *str, int type)
     
 }
 
-void add_end_list(char *str, t_element *first, int type)
+int add_end_list(char *str, t_element *first, int type)
 {
-    t_element *tmp;
-    t_element *tmp2;
+    t_element   *tmp;
+    t_element   *tmp2;
+    char        *str_new;
 
+    str_new = add_str2(str, type);
+    if (!str_new)
+        return (FAILURE);
     if (!(first->str))
     {
-        first->str = add_str2(str, type);
+        first->str = str_new;
         first->next = NULL;
-        return ;
+        return (SUCCESS);
     }
     tmp = first;
     while (tmp->next)
         tmp = tmp->next;
     tmp2 = malloc(sizeof(*tmp));
-    tmp2->str = add_str2(str, type);
+    tmp2->str = str_new;
     tmp2->next = NULL;
     tmp2->index = 0;
     tmp->next = tmp2;
-    return ;
+    return (SUCCESS);
 }
 
 t_element *ft_init()
@@ -175,6 +187,10 @@ int ft_get_new_var(t_control *list, char **newargv)
     tmp = list->first_env_var;
     while (newargv[++i])
     {
+    //TODO: IF VAR ALREADY EXISTS, modify value
+    //TODO: IF NAME ALREADY EXIST, do nothing
+    //TODO: IF VALUE AFFECTED TO VAR with same name, modify it
+    //TODO: CANNOT START WITH NUMBER
         list->size_env++;
         if (list->first_env_var->str == NULL)
         {
@@ -205,9 +221,13 @@ int ft_add_new_var(t_control  *list, int type)
     {
         //TODO: add " " if =
         if (type == DEAL_EXPORT)
+        {
             add_end_list(tmp->str, list->first_export, DEAL_EXPORT);
+        }
         else
+        {
             add_end_list(tmp->str, list->first_env, 0);
+        }
         if (tmp->next)
             tmp = tmp->next;
         else
@@ -219,7 +239,6 @@ int ft_add_new_var(t_control  *list, int type)
 // EXPORT BUGS
 //TODO: when creating already existing env it should modify it and not create another one
 
-//TODO: when creating a new env with " ", bad behavior (double quotes)
 
 //TODO: problem with spacing 
 
@@ -238,13 +257,9 @@ int ft_export(t_control *list, char **newargv)
 /* liste toutes les variables d’environnement dans un ordre random. sous la forme : nom=valeur */
 int ft_env(t_control *list)
 {
-    //TODO: add env_var
-    // ft_add_new_var(list);
     ft_add_new_var(list, DEAL_ENV);
     ft_print_export(list->first_env, FALSE);
-    // ft_print_export(list->first_env_var);
 
-    //TODO: free after
     free_all(list);
     return (1);
 }

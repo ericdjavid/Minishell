@@ -33,5 +33,7 @@ void free_all(t_control *control)
         free_elms(control->first_env);
     if (control->first_export)
         free_elms(control->first_export);
+    if (control->first_env_var)
+        free_elms(control->first_env_var);
     return ;
 }

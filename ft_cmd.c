@@ -30,7 +30,6 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 		if (!ft_strncmp(newargv[n_newargv][0], "export", ft_strlen(newargv[n_newargv][0]))
 			&& newargv[n_newargv][1])
         	ft_get_new_var(list, newargv[n_newargv]);
-			//TODO: free
 
 		ft_is_dollar(newargv[n_newargv], list);
 		child_pid = fork();

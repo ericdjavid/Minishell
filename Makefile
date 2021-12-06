@@ -52,6 +52,7 @@ skiperror: lib $(OBJS) $(OBJS_P)
 
 clean:
 		$(RM) $(OBJS) $(OBJS_P)
+		make fclean -C Libft
 
 fclean:		clean
 			$(RM) $(NAME)
