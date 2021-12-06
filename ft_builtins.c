@@ -14,16 +14,22 @@
 
 int	ft_builtins(char **newargv, t_control *list)
 {
-	if (!ft_strncmp(newargv[0], "echo", ft_strlen(newargv[0])))
+	size_t	len_0;
+
+	len_0 = ft_strlen(newargv[0]);
+	if (!ft_strncmp(newargv[0], "echo", len_0))
 		return (ft_echo(newargv));
-	else if (!ft_strncmp(newargv[0], "pwd", ft_strlen(newargv[0])))
+	else if (!ft_strncmp(newargv[0], "pwd", len_0))
 		return (ft_pwd(newargv));
-	else if (!ft_strncmp(newargv[0], "cd", ft_strlen(newargv[0])))
+	else if (!ft_strncmp(newargv[0], "cd", len_0))
 		return (ft_cd(newargv));
-	else if (!ft_strncmp(newargv[0], "export", ft_strlen(newargv[0])))
+	else if (!ft_strncmp(newargv[0], "export", len_0))
 		return (ft_export(list, newargv));
-	else if (!ft_strncmp(newargv[0], "env", ft_strlen(newargv[0])))
+	else if (!ft_strncmp(newargv[0], "env", len_0))
 		return (ft_env(list));
+	else if (ft_matlen(newargv) == 1
+			&& !ft_strncmp(newargv[0], "exit", len_0))
+		return (1);
 	return (0);
 }
 

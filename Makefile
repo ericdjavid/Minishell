@@ -41,7 +41,6 @@ lib:
 
 $(NAME):	lib $(OBJS) $(OBJS_P)
 		gcc -g $(CFLAGS) $(OBJS) $(OBJS_P) $(FLAGS) -o $(NAME) Libft/libft.a
-		make clean
 
 skiperror: lib $(OBJS) $(OBJS_P)
 	@echo "$<[$(C_CYAN)Compiling skipping errors$(C_END)]"
