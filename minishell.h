@@ -150,7 +150,9 @@ void			ft_close_fd(int fd);
 
 void			ft_is_dollar(char **str, t_control *control);
 
-t_bool			ft_is_in_list(t_control *list, char *str);
+t_element		*ft_is_in_list(t_control *list, char *str);
+
+t_element		*check_in_list(t_element *first, char *str);
 
 
 		// EXPORT.C

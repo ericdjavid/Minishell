@@ -199,15 +199,20 @@ int ft_get_new_var(t_control *list, char **newargv)
     t_element *tmp;
 
     i = 0;
-    tmp = list->first_env_var;
     while (newargv[++i])
     {
-        //TODO: IF VAR ALREADY EXISTS, modify value
-        //TODO: IF VALUE AFFECTED TO VAR with same name, modify it
         //TODO: CANNOT START WITH NUMBER
-        if (ft_is_in_list(list, newargv[i]) == TRUE)
+        //TODO: if no values, do not modify existing value
+        //TODO: check with quotes, empty quotes, and only =
+            //if only =, do not modify values
+        tmp = ft_is_in_list(list, newargv[i]);
+        if (tmp)
         {
-            printf(RED"is in list\n"END);
+            //if there is no =, continue 
+            free(tmp->str);
+            tmp->str = ft_strdup(newargv[i]);
+            
+            printf(RED"New str is %s\n"END, tmp->str);
             continue ;
         }
         list->size_env++;
@@ -217,6 +222,7 @@ int ft_get_new_var(t_control *list, char **newargv)
             list->first_env_var->var_name = add_var_name(list->first_env_var->str);
             continue ;
         }
+        tmp = list->first_env_var;
         while (tmp->next != NULL)
             tmp = tmp->next;
         new = malloc(sizeof(*new));

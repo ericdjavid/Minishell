@@ -29,7 +29,7 @@ char *get_new_var_str(char *str)
 	return (str2);
 }
 
-t_bool	check_in_list(t_element *first, char *str)
+t_element	*check_in_list(t_element *first, char *str)
 {
 	t_element *tmp;
 
@@ -40,45 +40,43 @@ t_bool	check_in_list(t_element *first, char *str)
 	{
 		printf(PINK"%s\n"END, tmp->var_name);
 		if (ft_strncmp(str, tmp->var_name, ft_strlen(str)) == 0)
-			return (TRUE);
+			return (tmp);
 		if (tmp->next == NULL)
 			break ;
 		tmp = tmp->next;
 	}
-	return (FALSE);
+	return (NULL);
 	
 }
 
-t_bool	ft_is_in_list(t_control *list, char *str)
+t_element	*ft_is_in_list(t_control *list, char *str)
 {
 	char *str2;
+	t_element *tmp1;
+	t_element *tmp2;
 
 	str2 = NULL;
 	str2 = get_new_var_str(str);
-	if (check_in_list(list->first_export, str2) == TRUE
-		|| check_in_list(list->first_env_var, str2) == TRUE)
+	tmp1 = check_in_list(list->first_export, str2);
+	if (tmp1)
 	{
-		free(str2);
-		return (TRUE);
+		tmp2 = check_in_list(list->first_env, str2);
+		free(tmp2->str);
+		tmp2->str = ft_strdup(str);
+		if (str2)
+			free(str2);
+		return (tmp1);
+	}
+	tmp2 = check_in_list(list->first_env_var, str2);
+	if (tmp2)
+	{
+		if (str2)
+			free(str2);
+		return (tmp2);
 	}
 	if (str2)
 		free(str2);
-	return (FALSE);
-	// while (tmp)
-	// {
-	// 	printf("%s\n", tmp->var_name);
-	// 	if (ft_strncmp(str2, tmp->var_name, ft_strlen(str2)) == 0 
-	// 		|| ft_strncmp(str2, tmp->var_name, ft_strlen(str2)) == 0)
-	// 	{
-	// 		free(str2);
-	// 		return (TRUE);
-	// 	}
-	// 	if (tmp->next == NULL)
-	// 		break ;
-	// 	tmp = tmp->next;
-	// }
-	// free(str2);
-	// return (FALSE);	
+	return (NULL);
 }
 
 void	ft_dup2(int newfd, int oldfd)
