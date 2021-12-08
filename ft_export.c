@@ -183,6 +183,7 @@ void    ft_print_export(t_element *first, t_bool bool)
         if (bool == TRUE)
             ft_printf_fd(1, "export ");
         ft_printf_fd(1,"%s\n", tmp->str);
+        ft_printf_fd(1,"%s\n", tmp->var_name);
         if (tmp->next)
             tmp = tmp->next;
         else
@@ -204,12 +205,16 @@ int ft_get_new_var(t_control *list, char **newargv)
         //TODO: IF VAR ALREADY EXISTS, modify value
         //TODO: IF VALUE AFFECTED TO VAR with same name, modify it
         //TODO: CANNOT START WITH NUMBER
-        if (ft_is_in_list(list->first_env_var, newargv[i]) == TRUE)
+        if (ft_is_in_list(list, newargv[i]) == TRUE)
+        {
+            printf(RED"is in list\n"END);
             continue ;
+        }
         list->size_env++;
         if (list->first_env_var->str == NULL)
         {
             list->first_env_var->str = ft_strdup(newargv[i]);
+            list->first_env_var->var_name = add_var_name(list->first_env_var->str);
             continue ;
         }
         while (tmp->next != NULL)
@@ -218,6 +223,7 @@ int ft_get_new_var(t_control *list, char **newargv)
         if (!new)
             return (FAILURE);
         new->str = ft_strdup(newargv[i]);
+        new->var_name = add_var_name(new->str);
         new->next = NULL;
         new->index = i;   
         tmp->next = new;

@@ -48,7 +48,6 @@ char    *ft_get_parsed_env(char *str)
         i++;
     }
     tmp[i] = '\0';
-    // printf("new str is |%s|\n", tmp);
     return (tmp);
 }
 
@@ -63,7 +62,6 @@ char *is_in_list(t_element *first, char *str)
     while (tmp)
     {
         wip_str = ft_get_parsed_env(tmp->str);
-        // printf(YELLOW"wip str is %s"END, wip_str);
         if (ft_strncmp(wip_str, new_str, ft_strlen(wip_str)) == 0)
         {
             free(wip_str);
