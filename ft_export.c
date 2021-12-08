@@ -41,6 +41,38 @@ char *add_var_name(char *str)
     return (tmp);
 }
 
+char    *ft_remove_quotes(char *str)
+{
+    int     i;
+    int     j;
+    char    *str2;
+    int     nb;
+
+    i = -1;
+    nb = 0;
+    if (!str)
+        return (NULL);
+    while (str[++i])
+    {
+        if(str[i] == '\"')
+            nb++;
+    }
+    str2 = malloc(sizeof(char) * (ft_strlen(str) - nb + 1));
+    i = -1;
+    j = 0;
+    while (str[++i])
+    {
+        if (str[i] == '\"')
+            continue;
+        str2[j] = str[i];
+        j++;
+    }
+    str2[j] = '\0';
+    // free(str);
+    return(str2);
+}
+
+//Suppress the double quotes before =
 //TODO: when creating a new env with " ", bad behavior (double quotes)
 char *add_str2(char *str, int type)
 {
@@ -183,7 +215,7 @@ void    ft_print_export(t_element *first, t_bool bool)
         if (bool == TRUE)
             ft_printf_fd(1, "export ");
         ft_printf_fd(1,"%s\n", tmp->str);
-        ft_printf_fd(1,"%s\n", tmp->var_name);
+        // ft_printf_fd(1,"%s\n", tmp->var_name);
         if (tmp->next)
             tmp = tmp->next;
         else
@@ -197,28 +229,32 @@ int ft_get_new_var(t_control *list, char **newargv)
     int i;
     t_element *new;
     t_element *tmp;
+    char *retreat;
 
     i = 0;
     while (newargv[++i])
     {
         //TODO: CANNOT START WITH NUMBER
-        //TODO: if no values, do not modify existing value
         //TODO: check with quotes, empty quotes, and only =
             //if only =, do not modify values
-        tmp = ft_is_in_list(list, newargv[i]);
+        retreat = ft_remove_quotes(newargv[i]);
+        // printf(YELLOW"new str is %s\n"END, retreat);
+        tmp = ft_is_in_list(list, retreat);
         if (tmp)
         {
-            //if there is no =, continue 
+            if(!ft_strchr(retreat, '='))
+                continue ;
             free(tmp->str);
-            tmp->str = ft_strdup(newargv[i]);
-            
-            printf(RED"New str is %s\n"END, tmp->str);
+            tmp->str = ft_strdup(retreat);
+            free(retreat);
+
+            // printf(RED"New str is %s\n"END, tmp->str);
             continue ;
         }
         list->size_env++;
         if (list->first_env_var->str == NULL)
         {
-            list->first_env_var->str = ft_strdup(newargv[i]);
+            list->first_env_var->str = ft_strdup(retreat);
             list->first_env_var->var_name = add_var_name(list->first_env_var->str);
             continue ;
         }
@@ -228,7 +264,7 @@ int ft_get_new_var(t_control *list, char **newargv)
         new = malloc(sizeof(*new));
         if (!new)
             return (FAILURE);
-        new->str = ft_strdup(newargv[i]);
+        new->str = ft_strdup(retreat);
         new->var_name = add_var_name(new->str);
         new->next = NULL;
         new->index = i;   

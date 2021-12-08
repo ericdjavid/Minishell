@@ -177,6 +177,7 @@ int			order_ascii(t_control *list);
 
 int			ft_get_new_var(t_control *list, char **newargv);
 
+char    *ft_remove_quotes(char *str);
 
 		// FT_ENV.C
 

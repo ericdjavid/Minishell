@@ -25,7 +25,6 @@ char *get_new_var_str(char *str)
 	while (str[++i] != '\0' && str[i] != '=')
 		str2[i] = str[i];
 	str2[i] = '\0';
-	printf("new str is |%s|\n", str2);
 	return (str2);
 }
 
@@ -38,15 +37,14 @@ t_element	*check_in_list(t_element *first, char *str)
 		return (FALSE);
 	while (tmp)
 	{
-		printf(PINK"%s\n"END, tmp->var_name);
+		// printf(PINK"%s\n"END, tmp->var_name);
 		if (ft_strncmp(str, tmp->var_name, ft_strlen(str)) == 0)
 			return (tmp);
 		if (tmp->next == NULL)
 			break ;
 		tmp = tmp->next;
 	}
-	return (NULL);
-	
+	return (NULL);	
 }
 
 t_element	*ft_is_in_list(t_control *list, char *str)
