@@ -221,7 +221,7 @@ void    ft_print_export(t_element *first, t_bool bool)
         else
             break ;
     }
-    return ; 
+    return ;
 }
 
 int ft_get_new_var(t_control *list, char **newargv)
@@ -314,7 +314,6 @@ int ft_export(t_control *list, char **newargv)
 {
     (void)newargv;
     ft_add_new_var(list, DEAL_EXPORT);
-
     ft_print_export(list->first_export, TRUE);
     free_all(list);
     return (1);
@@ -325,7 +324,6 @@ int ft_env(t_control *list)
 {
     ft_add_new_var(list, DEAL_ENV);
     ft_print_export(list->first_env, FALSE);
-
     free_all(list);
     return (1);
 }

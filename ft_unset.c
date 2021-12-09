@@ -15,13 +15,42 @@
 void    ft_delete_in_list(t_element *first, char *str)
 {
     t_element *tmp;
+    // t_element *tmp2;
 
     tmp = first;
+        printf("-------------------\n");
     while (tmp)
     {
-        if(ft_strncmp(tmp->str, str, ft_strlen(tmp->str)) == 0)
+        printf("we are comparing |%s| |%s|\n", tmp->var_name, str);
+        if (ft_strncmp(tmp->var_name, str, ft_strlen(tmp->var_name)) == 0)
            {
                printf("is in the fucking list\n");
+               if (tmp == first)
+               {
+                    printf("is first elem\n");
+                    if (tmp->next)
+                        first = tmp->next;
+                    else
+                    {
+                        printf("next is null so first should be null\n");
+                        // first->str = NULL;
+                        // first->var_name = NULL;
+                        first = NULL;
+                        return ;
+                    }
+                   free(tmp->str);
+                   free(tmp->var_name);
+                //    free(tmp);
+                   return ;
+               }
+               else if (tmp->next == NULL)
+               {
+                   printf(RED"is last elem of list\n"END);
+                   free(tmp->str);
+                   free(tmp->var_name);
+                   tmp = NULL;
+                   break ;
+               }
                //delete
            } 
         if (tmp->next == NULL)
@@ -33,11 +62,12 @@ void    ft_delete_in_list(t_element *first, char *str)
 
 void    ft_delete_from_lists(t_control *control, char *str)
 {
-    ft_delete_in_list(control->first_env, str);
+    // ft_delete_in_list(control->first_env, str);
     ft_delete_in_list(control->first_env_var, str);
     ft_delete_in_list(control->first_export, str);
 }
 
+//if = in uset word, print "not a valid identifier"
 int ft_unset(t_control *control, char *str)
 {
     char *neo_str;
@@ -48,8 +78,9 @@ int ft_unset(t_control *control, char *str)
     tmp = ft_is_in_list(control, neo_str);
     if (tmp)
     {
+        printf(RED "is in list!\n"END);
         ft_delete_from_lists(control, neo_str);
-        free(tmp);
+        // free(tmp);
         free(str);
     }
     return (1);
