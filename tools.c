@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 09:24:21 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/21 20:45:16 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/09 20:23:59 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *get_new_var_str(char *str)
+char	*get_new_var_str(char *str)
 {
 	char	*str2;
 	int		i;
@@ -30,7 +30,7 @@ char *get_new_var_str(char *str)
 
 t_element	*check_in_list(t_element *first, char *str)
 {
-	t_element *tmp;
+	t_element	*tmp;
 
 	tmp = first;
 	if (!tmp || !tmp->str || !tmp->var_name)
@@ -43,14 +43,14 @@ t_element	*check_in_list(t_element *first, char *str)
 			break ;
 		tmp = tmp->next;
 	}
-	return (NULL);	
+	return (NULL);
 }
 
 t_element	*ft_is_in_list(t_control *list, char *str)
 {
-	char *str2;
-	t_element *tmp1;
-	t_element *tmp2;
+	char		*str2;
+	t_element	*tmp1;
+	t_element	*tmp2;
 
 	str2 = NULL;
 	str2 = get_new_var_str(str);
@@ -117,6 +117,6 @@ void	ft_is_dollar(char **str, t_control *control)
 				str[i] = ft_strdup(str_good);
 			}
 		}
-	}	
+	}
 	return ;
 }
