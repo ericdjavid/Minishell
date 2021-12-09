@@ -37,7 +37,6 @@ t_element	*check_in_list(t_element *first, char *str)
 		return (FALSE);
 	while (tmp)
 	{
-		// printf(PINK"%s\n"END, tmp->var_name);
 		if (ft_strncmp(str, tmp->var_name, ft_strlen(str)) == 0)
 			return (tmp);
 		if (tmp->next == NULL)

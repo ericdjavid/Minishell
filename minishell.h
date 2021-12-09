@@ -177,7 +177,7 @@ int			order_ascii(t_control *list);
 
 int			ft_get_new_var(t_control *list, char **newargv);
 
-char    *ft_remove_quotes(char *str);
+char    	*ft_remove_quotes(char *str);
 
 		// FT_ENV.C
 
@@ -239,4 +239,7 @@ int		check_ret_stdout(int *ret);
 		//	FT_CHILD.C
 
 int		ft_child(char ***newargv, char **paths, t_control *list, int **fds);
+
+int		ft_unset(t_control *control, char *str);
+
 #endif

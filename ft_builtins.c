@@ -33,6 +33,8 @@ int	ft_builtins(char **newargv, t_control *list)
 	else if (ft_matlen(newargv) == 1
 			&& !ft_strncmp(newargv[0], "exit", len_0))
 		return (1);
+	else if (!ft_strncmp(newargv[0], "unset", len_0))
+		return (ft_unset(list, newargv[1]));
 	return (0);
 }
 
@@ -47,6 +49,8 @@ int	is_builtins(char *newargv)
 	else if (!ft_strncmp(newargv, "export", ft_strlen(newargv)))
 		return (1);
 	else if (!ft_strncmp(newargv, "env", ft_strlen(newargv)))
+		return (1);
+	else if (!ft_strncmp(newargv, "unset", ft_strlen(newargv)))
 		return (1);
 	return (0);
 }

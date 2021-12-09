@@ -243,7 +243,7 @@ int ft_get_new_var(t_control *list, char **newargv)
         {
             ft_printf_fd(1,"\"%s\" : not a valid identifier\n", retreat);
             free(retreat);
-            // free(tmp);
+            free(tmp);
             continue ;
         }
         if (tmp)
@@ -253,8 +253,6 @@ int ft_get_new_var(t_control *list, char **newargv)
             free(tmp->str);
             tmp->str = ft_strdup(retreat);
             free(retreat);
-
-            // printf(RED"New str is %s\n"END, tmp->str);
             continue ;
         }
         list->size_env++;
