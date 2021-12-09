@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cmd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/28 17:22:26 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/09 20:42:24 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 	{
 		if (pipe(fds[0]) == -1)
 			return (0);
-		if (!ft_strncmp(newargv[n_newargv][0], "export", ft_strlen(newargv[n_newargv][0]))
-			&& newargv[n_newargv][1])
-        		ft_get_new_var(list, newargv[n_newargv]);
-		if (!ft_strncmp(newargv[n_newargv][0], "unset", ft_strlen(newargv[n_newargv][0]))
-			&& newargv[n_newargv][1])
+		if (!ft_strncmp(newargv[n_newargv][0], "export",
+			ft_strlen(newargv[n_newargv][0])) && newargv[n_newargv][1])
+			ft_get_new_var(list, newargv[n_newargv]);
+		if (!ft_strncmp(newargv[n_newargv][0], "unset",
+			ft_strlen(newargv[n_newargv][0])) && newargv[n_newargv][1])
 			ft_unset(list, newargv[n_newargv]);
 		ft_is_dollar(newargv[n_newargv], list);
 		child_pid = fork();
@@ -40,7 +40,8 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 			if (!(ft_child(&newargv[n_newargv], paths, list, fds)))
 				return (status_free(fds));
 		ft_close_fd(fds[0][1]);
-		while (wait(&status) > 0);
+		while (wait(&status) > 0)
+			;
 		if (WIFEXITED(status))
 			status = WEXITSTATUS(status);
 		if (status == 131)

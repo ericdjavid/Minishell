@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:28:28 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/09 20:34:40 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/09 22:28:00 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,36 +172,6 @@ t_element	*ft_init(void)
 	return (first);
 }
 
-int	ft_init_list(t_control *list, char **envp)
-{
-	int			i;
-	t_element	*first_env;
-	t_element	*first_export;
-	t_element	*first_env_var;
-
-	first_env = ft_init();
-	first_export = ft_init();
-	first_env_var = ft_init();
-	if ((!first_export) || (!first_env) || (!first_env_var))
-		return (FAILURE);
-	list->first_env = first_env;
-	list->first_export = first_export;
-	list->first_env_var = first_env_var;
-	list->size = 0;
-	list->size_env = 0;
-	i = -1;
-	while (envp[++i])
-	{
-		list->size++;
-		add_end_list(envp[i], list->first_export, 0);
-		add_end_list(envp[i], list->first_env, 0);
-	}
-	add_index(list->first_export);
-	while (check_order(list) == FALSE)
-		order_ascii(list);
-	return (SUCCESS);
-}
-
 void    ft_print_export(t_element *first, t_bool bool)
 {
 	t_element *tmp;
@@ -281,8 +251,7 @@ int	ft_add_new_var(t_control *list, int type)
 	t_element	*tmp;
 
 	tmp = list->first_env_var;
-	printf("-------------------\n");
-	printf("first is %s", tmp->str);
+	// printf("first is %s", tmp->str);
 	if (!tmp)
 		return (FAILURE);
 	while (tmp && tmp->str)
@@ -314,6 +283,7 @@ sous la forme : declare -x nom=”valeur” ou declare -x nom */
 int	ft_export(t_control *list, char **newargv)
 {
 	(void)newargv;
+	// ft_print_stuff(list->first_export, "export list");
 	ft_add_new_var(list, DEAL_EXPORT);
 	ft_print_export(list->first_export, TRUE);
 	free_all(list);
@@ -323,6 +293,7 @@ int	ft_export(t_control *list, char **newargv)
 /* liste toutes les variables d’environnement dans un ordre random. sous la forme : nom=valeur */
 int	ft_env(t_control *list)
 {
+	// ft_print_stuff(list->first_env, "first env list");
 	ft_add_new_var(list, DEAL_ENV);
 	ft_print_export(list->first_env, FALSE);
 	free_all(list);

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/09 20:29:28 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/09 22:48:47 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ extern int	status;
 
 # define DEAL_EXPORT 1
 # define DEAL_ENV 0
+# define NEO_ENV 2
 
 		// STRUCTURES
 typedef enum s_bool
@@ -208,6 +209,11 @@ char		*is_in_list(t_element *first, char *str);
 
 void 		add_index(t_element *elem);
 
+char	*ft_get_parsed_env(char *str);
+
+
+int			ft_init_list(t_control *list, char **envp);
+
 		//	FREE GARBAGE COLLECTOR
 
 void		free_all(t_control *control);
@@ -229,5 +235,7 @@ int		ft_child(char ***newargv, char **paths, t_control *list, int **fds);
 		//	FT_UNSET.C
 
 int		ft_unset(t_control *control, char **newargv);
+
+int		ft_print_stuff(t_element *first, char *str);
 
 #endif
