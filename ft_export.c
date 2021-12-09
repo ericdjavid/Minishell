@@ -234,12 +234,18 @@ int ft_get_new_var(t_control *list, char **newargv)
     i = 0;
     while (newargv[++i])
     {
-        //TODO: CANNOT START WITH NUMBER
         //TODO: check with quotes, empty quotes, and only =
             //if only =, do not modify values
         retreat = ft_remove_quotes(newargv[i]);
         // printf(YELLOW"new str is %s\n"END, retreat);
         tmp = ft_is_in_list(list, retreat);
+        if (retreat[0] <= '9' && retreat[0] >= '0')
+        {
+            ft_printf_fd(1,"\"%s\" : not a valid identifier\n", retreat);
+            free(retreat);
+            // free(tmp);
+            continue ;
+        }
         if (tmp)
         {
             if(!ft_strchr(retreat, '='))
