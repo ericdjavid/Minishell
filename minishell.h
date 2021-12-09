@@ -179,6 +179,8 @@ int			ft_get_new_var(t_control *list, char **newargv);
 
 char    	*ft_remove_quotes(char *str);
 
+int			ft_add_new_var(t_control  *list, int type);
+
 		// FT_ENV.C
 
 int 		ft_env(t_control *list);
@@ -240,6 +242,8 @@ int		check_ret_stdout(int *ret);
 
 int		ft_child(char ***newargv, char **paths, t_control *list, int **fds);
 
-int		ft_unset(t_control *control, char *str);
+		//	FT_UNSET.C
+		
+int		ft_unset(t_control *control, char **newargv);
 
 #endif

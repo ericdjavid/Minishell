@@ -28,8 +28,10 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 			return (0);
 		if (!ft_strncmp(newargv[n_newargv][0], "export", ft_strlen(newargv[n_newargv][0]))
 			&& newargv[n_newargv][1])
-        	ft_get_new_var(list, newargv[n_newargv]);
-
+        		ft_get_new_var(list, newargv[n_newargv]);
+		if (!ft_strncmp(newargv[n_newargv][0], "unset", ft_strlen(newargv[n_newargv][0]))
+			&& newargv[n_newargv][1])
+			ft_unset(list, newargv[n_newargv]);
 		ft_is_dollar(newargv[n_newargv], list);
 		child_pid = fork();
 		if (child_pid == -1)

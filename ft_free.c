@@ -17,6 +17,8 @@ void free_elms(t_element *first)
     t_element *tmp;
 
     tmp = first;
+    if (tmp == NULL)
+        return ;
     while (tmp)
     {
         first = first->next;

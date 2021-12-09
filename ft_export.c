@@ -215,7 +215,7 @@ void    ft_print_export(t_element *first, t_bool bool)
         if (bool == TRUE)
             ft_printf_fd(1, "export ");
         ft_printf_fd(1,"%s\n", tmp->str);
-        // ft_printf_fd(1,"%s\n", tmp->var_name);
+        ft_printf_fd(1,"%s\n", tmp->var_name);
         if (tmp->next)
             tmp = tmp->next;
         else
@@ -282,6 +282,8 @@ int ft_add_new_var(t_control  *list, int type)
     t_element *tmp;
 
     tmp = list->first_env_var;
+    printf("-------------------\n");
+    printf("first is %s", tmp->str);
     if (!tmp)
         return(FAILURE);
     while (tmp && tmp->str)
