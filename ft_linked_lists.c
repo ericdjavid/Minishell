@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:18:13 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/10 14:56:42 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/10 18:52:25 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ char	*ft_get_good_str(char *str)
 	int	i;
 
 	i = 0;
-	while (*str != '=' && *str != '\0')
+	if (!str)
+		return (NULL);
+	while (*str != '\0' && *str != '=')
 	{
 		str++;
 		i++;
@@ -26,7 +28,6 @@ char	*ft_get_good_str(char *str)
 		str++;
 	if (*str == '\0')
 		return (NULL);
-	// printf("new str is |%s|", str);
 	return (str);
 }
 
@@ -36,6 +37,8 @@ char	*ft_get_parsed_env(char *str)
 	char	*tmp;
 
 	i = 0;
+	if (!str)
+		return (NULL);
 	while (str[i] && str[i] != '=')
 		i++;
 	if (str[i] == '\0')
@@ -57,25 +60,28 @@ char	*is_in_list(t_element *first, char *str)
 {
 	t_element	*tmp;
 	char		*new_str;
-	char		*wip_str;
+	// char		*wip_str;
 
 	new_str = ++str;
 	tmp = first;
 	while (tmp)
 	{
-		wip_str = ft_get_parsed_env(tmp->str);
-		if (ft_strncmp(wip_str, new_str, ft_strlen(wip_str)) == 0)
+		// wip_str = ft_get_parsed_env(tmp->str);
+		// printf("wip str is %s\n", wip_str);
+		// printf("think I got the var names.. : %s\n", tmp->var_name);
+		if (ft_strncmp(tmp->var_name, new_str, ft_strlen(new_str)) == 0)
 		{
-			free(wip_str);
+		// printf("we found the same\n");
+		// 	free(wip_str);
 			return (ft_get_good_str(tmp->str));
 		}
-		else
-			free(wip_str);
-		if (tmp == NULL)
+		// else
+		// 	free(wip_str);
+		if (tmp->next == NULL)
 			break ;
 		tmp = tmp->next;
 	}
-	return (FALSE);
+	return (NULL);
 }
 
 void	add_index(t_element *elem)
@@ -113,8 +119,8 @@ int	ft_init_list(t_control *list, char **envp)
 	while (envp[++i])
 	{
 		list->size++;
-		add_end_list(envp[i], list->first_export, 0);
-		add_end_list(envp[i], list->first_env, 0);
+		add_end_list(envp[i], list->first_export, 0, list);
+		add_end_list(envp[i], list->first_env, 0, list);
 	}
 	add_index(list->first_export);
 	while (check_order(list) == FALSE)

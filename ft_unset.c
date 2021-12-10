@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:17:25 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/10 14:59:52 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/10 22:00:30 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	ft_print_stuff(t_element *first, char *str)
 {
 	t_element	*tmp;
-	int			i;
 
 	if (!first)
 	{
@@ -23,13 +22,13 @@ int	ft_print_stuff(t_element *first, char *str)
 		return (FAILURE);
 	}
 	tmp = first;
-	i = 0;
 	printf(YELLOW"---LIST %s---\n", str);
 	while (tmp != NULL)
 	{
 		printf("[%s]\n", tmp->str);
+		if (tmp->next == NULL)
+			break ;
 		tmp = tmp->next;
-		i++;
 	}
 	printf("----------\n" END);
 	return (1);
@@ -82,9 +81,9 @@ void	ft_delete_in_list(t_element *first, char *str)
 				{
 					printf("next is true first to be free and 2 to be 1\n");
 					tmp2 = first->next;
-					free(first->str);
-					free(first->var_name);
-					free(first);
+					free(tmp->str);
+					free(tmp->var_name);
+					free(tmp);
 					first = tmp2;
 					return ;
 				}
@@ -128,6 +127,7 @@ void ft_delete(t_control *control, char *str, int type)
 	t_element *tmp;
 	t_element *tmp2;
 
+
 (void)str;
 	if (type == NEO_ENV)
 		tmp = control->first_env_var;
@@ -135,7 +135,7 @@ void ft_delete(t_control *control, char *str, int type)
 		tmp = control->first_env_var;
 	if (type == DEAL_EXPORT)
 		tmp = control->first_export;
-	tmp2 = tmp;
+	tmp2 = control->first_env_var;
 	while (tmp && tmp->var_name)
 	{
 		if (ft_strncmp(str, tmp->var_name,
@@ -145,10 +145,15 @@ void ft_delete(t_control *control, char *str, int type)
 			if (tmp2 == tmp)
 			{
 				printf("it is the first element of the list\n");
-				tmp = tmp->next;
+				tmp2 = control->first_env_var;
+				control->first_env_var = control->first_env_var->next;
 				free(tmp2->str);
 				free(tmp2->var_name);
 				free(tmp2);
+				// tmp = tmp->next;
+				// free(tmp2->str);
+				// free(tmp2->var_name);
+				// free(tmp2);
 				break ;
 			}
 		}
@@ -182,30 +187,30 @@ t_element *ft_good_find_in_list(t_element *first, char *noequal_str)
 //if = in uset word, print "not a valid identifier"
 int	ft_unset(t_control *control, char **newargv)
 {
-	char		*noquote_str;
-	char		*noequal_str;
-	t_element	*tmp;
-	int			i;
-
-	i = 0;
+	// char		*noquote_str;
+	// char		*noequal_str;
+	// t_element	*tmp;
+	// int			i;
+(void)newargv;
+	// i = 0;
 	ft_print_stuff(control->first_env_var, "env var");
-	while (newargv[++i])
-	{
-		noquote_str = ft_remove_quotes(newargv[i]);
-		noequal_str = ft_get_parsed_env(noquote_str);
+	ft_remove_env(control);
+	// while (newargv[++i])
+	// {
+	// 	noquote_str = ft_remove_quotes(newargv[i]);
+	// 	noequal_str = ft_get_parsed_env(noquote_str);
 
-		printf("new str is %s\n", noequal_str);
-		tmp = ft_good_find_in_list(control->first_env_var, noequal_str);
-		if (tmp)
-		{
-			printf(RED "is in list!\n"END);
-			ft_delete(control, noequal_str, NEO_ENV);
-			// free(tmp);
-			free(noequal_str);
-		}
-		//if found in export list...
+	// 	printf("new str is %s\n", noequal_str);
+	// 	tmp = ft_good_find_in_list(control->first_env_var, noequal_str);
+	// 	if (tmp)
+	// 	{
+	// 		printf(RED "is in list!\n"END);
+	// 		ft_delete(control, noequal_str, NEO_ENV);
+	// 		// free(tmp);
+	// 		free(noequal_str);
+	// 	}
 		ft_print_stuff(control->first_env_var, "env var");
-	}
+	// }
 	return (1);
 }
 /*

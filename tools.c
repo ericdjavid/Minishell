@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 09:24:21 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/10 15:11:53 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/10 18:08:37 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,13 @@ void	ft_is_dollar(char **str, t_control *control)
 			{
 				free(str[i]);
 				str[i] = ft_strdup(str_good);
+			}
+			else
+			{
+				// printf("modifiying value \n");
+				free(str[i]);
+				// str[i] = ft_strdup("");
+				str[i] = NULL;
 			}
 		}
 	}

@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   tools2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/18 12:17:09 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/10 15:55:09 by edjavid          ###   ########.fr       */
+/*   Created: 2021/12/10 17:40:53 by edjavid           #+#    #+#             */
+/*   Updated: 2021/12/10 17:58:28 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *s1)
+int	ft_is_space_before_qual(char *str)
 {
-	char	*dst;
-	int		c;
+	int	i;
 
-	if (!s1)
-		return (NULL);
-	dst = malloc(ft_strlen(s1) + 1);
-	if (!dst)
-		return (0);
-	c = 0;
-	while (s1[c])
+	i = 0;
+	while (str[i] && str[i] != '=')
 	{
-		dst[c] = s1[c];
-		c++;
+		if (str[i] == ' ')
+			return (1);
+		i++;
 	}
-	dst[c] = 0;
-	return (dst);
+	return (0);
 }
