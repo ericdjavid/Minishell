@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_newargv.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:56:08 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/10 20:12:24 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/10 22:35:14 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	is_syntax_er_spl(char **split)
 	while (split[c_1])
 	{
 		c_2 = 0;
-		while(split[c_1 + c_2] && split[c_1 + c_2][0] == '|')
+		while (split[c_1 + c_2] && split[c_1 + c_2][0] == '|')
 			c_2++;
 		if (c_2 > 1)
 		{
