@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:28:28 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/09 22:28:00 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/10 15:04:10 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ void    ft_print_export(t_element *first, t_bool bool)
 		if (bool == TRUE)
 			ft_printf_fd(1, "export ");
 		ft_printf_fd(1 ,"%s\n", tmp->str);
-		ft_printf_fd(1 ,"%s\n", tmp->var_name);
+		// ft_printf_fd(1 ,"%s\n", tmp->var_name);
 		if (tmp->next)
 			tmp = tmp->next;
 		else

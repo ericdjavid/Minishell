@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:18:13 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/09 20:49:18 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/10 14:56:42 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_get_parsed_env(char *str)
 	while (str[i] && str[i] != '=')
 		i++;
 	if (str[i] == '\0')
-		return (NULL);
+		return (str);
 	tmp = malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	while (str[i] && str[i] != '=')
@@ -48,6 +48,8 @@ char	*ft_get_parsed_env(char *str)
 		i++;
 	}
 	tmp[i] = '\0';
+	if (str)
+		free(str);
 	return (tmp);
 }
 

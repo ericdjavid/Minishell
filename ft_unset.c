@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:17:25 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/09 23:03:36 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/10 14:59:52 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,19 +126,31 @@ void	ft_delete_from_lists(t_control *control, char *str)
 void ft_delete(t_control *control, char *str, int type)
 {
 	t_element *tmp;
+	t_element *tmp2;
 
+(void)str;
 	if (type == NEO_ENV)
 		tmp = control->first_env_var;
 	if (type == DEAL_ENV)
 		tmp = control->first_env_var;
 	if (type == DEAL_EXPORT)
 		tmp = control->first_export;
-
-	while (tmp)
+	tmp2 = tmp;
+	while (tmp && tmp->var_name)
 	{
-		if (ft_strncmp(tmp->var_name, str, ft_strlen(tmp->var_name)) == 0)
+		if (ft_strncmp(str, tmp->var_name,
+			ft_strlen(tmp->var_name)) == 0)
 		{
 			printf("is in the fucking list\n");
+			if (tmp2 == tmp)
+			{
+				printf("it is the first element of the list\n");
+				tmp = tmp->next;
+				free(tmp2->str);
+				free(tmp2->var_name);
+				free(tmp2);
+				break ;
+			}
 		}
 		if (tmp->next == NULL)/* code */
 			break ;
@@ -157,7 +169,7 @@ t_element *ft_good_find_in_list(t_element *first, char *noequal_str)
 		if (ft_strncmp(tmp->var_name, noequal_str,
 			ft_strlen(noequal_str)) == 0)
 		{
-			printf(RED"fuck man it's in the fucking list, returning true\n"END);
+			printf(RED"it's in the fucking list\n"END);
 			return (tmp);
 		}
 		if (tmp->next == NULL)
@@ -182,6 +194,7 @@ int	ft_unset(t_control *control, char **newargv)
 		noquote_str = ft_remove_quotes(newargv[i]);
 		noequal_str = ft_get_parsed_env(noquote_str);
 
+		printf("new str is %s\n", noequal_str);
 		tmp = ft_good_find_in_list(control->first_env_var, noequal_str);
 		if (tmp)
 		{
