@@ -14,18 +14,16 @@
 
 int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 {
-	int		ret;
 	char	***newargv;
 
-	ret = 0;
-	if (!cmd_line[0])
+	if (!cmd_line || !ft_strncmp(cmd_line, "exit", ft_strlen(cmd_line)))
 		return (0);
 	newargv = init_newargv(cmd_line, paths);
 	if (!newargv)
 		return (-1);
-	ret = ft_cmd(newargv, paths, list);
+	ft_cmd(newargv, paths, list);
 	free_newargv(newargv);
-	return (ret);
+	return (1);
 }
 
 char	*init_cmd_path(char *cmd, char **paths)

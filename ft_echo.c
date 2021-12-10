@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-	// TODO: faire les echos avec '$var' et "$var"
-
 int	ft_echo(char **newargv)
 {
 	char	c;
