@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/09 22:48:47 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/10 18:56:28 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_element
 	char				*var_name;
 	int					index;
 	struct s_element	*next;
+	struct s_control			*control;
 }	t_element;
 
 typedef struct s_control
@@ -153,7 +154,7 @@ void    	ft_print_export(t_element *first, t_bool bool);
 
 t_element 	*ft_init();
 
-int			add_end_list(char *str, t_element *first, int type);
+int			add_end_list(char *str, t_element *first, int type, t_control *control);
 
 char 		*add_var_name(char *str);
 
@@ -238,4 +239,7 @@ int		ft_unset(t_control *control, char **newargv);
 
 int		ft_print_stuff(t_element *first, char *str);
 
+		//	TOOLS2.C
+
+int		ft_is_space_before_qual(char *str);
 #endif
