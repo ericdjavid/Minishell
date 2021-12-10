@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:28:28 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/10 19:17:04 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/10 21:46:04 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,27 +300,25 @@ int	ft_export(t_control *list, char **newargv)
 	return (1);
 }
 
-t_element	*ft_remove_first(t_element *first)
+void	ft_remove_env(t_control *control)
 {
-	t_element *ptr;
-	ptr = NULL;
-	printf(RED"ptr is of address [%p]\n"END, ptr);
-	printf(PINK"first is of address [%p]\n"END, first);
-	ptr = first;
-	printf(RED"now ptr is of address [%p]\n"END, ptr);
-	first = first->next;
-	printf(PINK"now first is of address [%p]\n"END, first);
-	return (first);
+	t_element *tmp;
 
+	if(control->first_env_var == NULL)
+		return ;
+	tmp = control->first_env_var;
+	control->first_env_var = control->first_env_var->next;
+	free(tmp->var_name);
+	free(tmp->str);
+	free(tmp);
 }
 /* liste toutes les variables d’environnement dans un ordre random. sous la forme : nom=valeur */
 int	ft_env(t_control *list)
 {
 	// ft_add_new_var(list, DEAL_ENV);
 	// ft_print_export(list->first_env, FALSE);
-	printf("list->first is of addrress [%p]\n", list->first_env_var);
-	list->first_env_var = ft_remove_first(list->first_env_var);
-	printf("list->first is of addrress [%p]\n", list->first_env_var);
+	printf("list->first is of address [%p]\n", list->first_env_var);
+	// printf("list->first is of addrress [%p]\n", list->first_env_var);
 	ft_print_stuff(list->first_env_var, "first env var list");
 	free_all(list);
 	return (1);

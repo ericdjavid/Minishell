@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 11:17:25 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/10 18:23:10 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/10 22:00:30 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,29 +187,30 @@ t_element *ft_good_find_in_list(t_element *first, char *noequal_str)
 //if = in uset word, print "not a valid identifier"
 int	ft_unset(t_control *control, char **newargv)
 {
-	char		*noquote_str;
-	char		*noequal_str;
-	t_element	*tmp;
-	int			i;
-
-	i = 0;
+	// char		*noquote_str;
+	// char		*noequal_str;
+	// t_element	*tmp;
+	// int			i;
+(void)newargv;
+	// i = 0;
 	ft_print_stuff(control->first_env_var, "env var");
-	while (newargv[++i])
-	{
-		noquote_str = ft_remove_quotes(newargv[i]);
-		noequal_str = ft_get_parsed_env(noquote_str);
+	ft_remove_env(control);
+	// while (newargv[++i])
+	// {
+	// 	noquote_str = ft_remove_quotes(newargv[i]);
+	// 	noequal_str = ft_get_parsed_env(noquote_str);
 
-		printf("new str is %s\n", noequal_str);
-		tmp = ft_good_find_in_list(control->first_env_var, noequal_str);
-		if (tmp)
-		{
-			printf(RED "is in list!\n"END);
-			ft_delete(control, noequal_str, NEO_ENV);
-			// free(tmp);
-			free(noequal_str);
-		}
+	// 	printf("new str is %s\n", noequal_str);
+	// 	tmp = ft_good_find_in_list(control->first_env_var, noequal_str);
+	// 	if (tmp)
+	// 	{
+	// 		printf(RED "is in list!\n"END);
+	// 		ft_delete(control, noequal_str, NEO_ENV);
+	// 		// free(tmp);
+	// 		free(noequal_str);
+	// 	}
 		ft_print_stuff(control->first_env_var, "env var");
-	}
+	// }
 	return (1);
 }
 /*

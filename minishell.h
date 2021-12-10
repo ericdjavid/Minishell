@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/10 18:56:28 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/10 21:55:57 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,4 +242,7 @@ int		ft_print_stuff(t_element *first, char *str);
 		//	TOOLS2.C
 
 int		ft_is_space_before_qual(char *str);
+
+void	ft_remove_env(t_control *list);
+
 #endif
