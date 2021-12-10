@@ -6,11 +6,36 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:07:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/17 13:49:57 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/10 20:12:10 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+#include <stdio.h>
+
+int	browse_str(char *str, char c)
+{
+	int	n;
+
+	n = 0;
+	while (str[n] && str[n] != c)
+	{
+		if (str[n] == '"')
+		{
+			n++;
+			while (str[n] && str[n] != '"')
+				n++;
+			n++;
+			if (!str[n])
+				return (n);
+			browse_str(str + n, c);
+		}
+		else
+			n++;
+	}
+	return (n);
+}
 
 int	get_n_cases(char *str, char c)
 {
@@ -22,22 +47,11 @@ int	get_n_cases(char *str, char c)
 	while (*str)
 	{
 		n++;
-		while (*str && *str != c)
-			str++;
+		str += browse_str(str, c);
 		while (*str && *str == c)
 			str++;
 	}
 	return (n);
-}
-
-int	get_len_str(char *str, char c)
-{
-	int	len;
-
-	len = 0;
-	while (str[len] && str[len] != c)
-		len++;
-	return (len);
 }
 
 char	*fill_split(char *str, char c)
@@ -46,12 +60,12 @@ char	*fill_split(char *str, char c)
 	char	*split;
 	int		count;
 
-	len_str = get_len_str(str, c);
+	len_str = browse_str(str, c);
 	split = malloc(len_str + 1);
 	if (!split)
 		return (0);
 	count = 0;
-	while (str[count] && str[count] != c)
+	while (count < len_str)
 	{
 		split[count] = str[count];
 		count++;
@@ -63,14 +77,11 @@ char	*fill_split(char *str, char c)
 char	*get_next_str(char *str, char c, int count)
 {
 	if (!count)
-	{
 		while (*str && *str == c)
 			str++;
-	}
 	else
 	{
-		while (*str && *str != c)
-			str++;
+		str += browse_str(str, c);
 		while (*str && *str == c)
 			str++;
 	}
