@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/10 21:55:57 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/10 22:07:38 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ int		ft_pwd(char **newargv);
 		//	FT_CD.C
 
 int		ft_cd(char **newargv);
+
+char	*get_absolutePath(void);
 
 		//	FT_CMD.C
 
