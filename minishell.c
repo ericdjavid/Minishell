@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:31:49 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/28 17:26:46 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/10 15:22:41 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	if (ft_init_list(&list, envp))
 		return (-1);
-	paths = init_paths(envp); 
+	paths = init_paths(envp);
 	ft_minishell(paths, &list);
 	free_matc(paths);
+	free_all(&list);
 	return (status);
 }
 
