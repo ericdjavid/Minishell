@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:18:13 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/10 18:52:25 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/12 17:05:08 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,26 @@ void	add_index(t_element *elem)
 	return ;
 }
 
+// TO DEAL WITH EXPORT QUOTES
+	// 1 REPLACE EXISTING SIMPLE QUOTES BY DOUBLE
+	// 2 ADD DOUBLE QUOTES TO ALL
+	//(if new env var with simple quotes, replace by double quotes)
+// char	*processing_exp(char *str)
+// {
+// 	char	*str;
+// 	int		i;
+
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		if (str[i] == '=' && str[i + 1] == "\'")
+// 		{
+
+// 		}
+// 		i++;
+// 	}
+// }
+
 int	ft_init_list(t_control *list, char **envp)
 {
 	int			i;
@@ -114,7 +134,6 @@ int	ft_init_list(t_control *list, char **envp)
 	list->first_export = first_export;
 	list->first_env_var = first_env_var;
 	list->size = 0;
-	list->size_env = 0;
 	i = -1;
 	while (envp[++i])
 	{
