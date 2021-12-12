@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:28:28 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/12 14:11:08 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/12 16:57:24 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,6 @@ void    ft_print_export(t_element *first, t_bool bool)
 		if (bool == TRUE)
 			ft_printf_fd(1, "export ");
 		ft_printf_fd(1 ,"%s\n", tmp->str);
-		// ft_printf_fd(1 ,"%s\n", tmp->var_name);
 		if (tmp->next)
 			tmp = tmp->next;
 		else
@@ -205,7 +204,6 @@ int ft_get_new_var(t_control *list, char **newargv)
 	i = 0;
 	while (newargv[++i])
 	{
-		//TODO: PBM WITH SPACES : AB is dealing
 		//TODO: check with quotes, empty quotes, and only =
 			//if only =, do not modify values
 		printf(PINK"newargv is %s\n"END, newargv[i]);
@@ -267,13 +265,9 @@ int	ft_add_new_var(t_control *list, int type)
 	{
 		//TODO: add " " if =
 		if (type == DEAL_EXPORT)
-		{
 			add_end_list(tmp->str, list->first_export, DEAL_EXPORT, list);
-		}
 		else
-		{
 			add_end_list(tmp->str, list->first_env, 0, list);
-		}
 		if (tmp->next)
 			tmp = tmp->next;
 		else
@@ -281,11 +275,6 @@ int	ft_add_new_var(t_control *list, int type)
 	}
 	return (SUCCESS);
 }
-
-// EXPORT BUGS
-
-//TODO: problem with spacing
-//TODO: IF NAME ALREADY EXIST, do nothing
 
 /* Liste toutes les variables d’environnement dans l’ordre ascii.
 sous la forme : declare -x nom=”valeur” ou declare -x nom */
@@ -307,7 +296,8 @@ void	ft_remove_first_env(t_control *control)
 	if(control->first_env_var == NULL)
 		return ;
 	tmp = control->first_env_var;
-	control->first_env_var = control->first_env_var->next;
+	if (control->first_env_var->next)
+		control->first_env_var = control->first_env_var->next;
 	free(tmp->var_name);
 	free(tmp->str);
 	free(tmp);
@@ -315,11 +305,8 @@ void	ft_remove_first_env(t_control *control)
 /* liste toutes les variables d’environnement dans un ordre random. sous la forme : nom=valeur */
 int	ft_env(t_control *list)
 {
-	// ft_add_new_var(list, DEAL_ENV);
-	// ft_print_export(list->first_env, FALSE);
-	printf("list->first is of address [%p]\n", list->first_env_var);
-	// printf("list->first is of addrress [%p]\n", list->first_env_var);
-	// ft_print_stuff(list->first_env_var, "first env var list");
+	ft_add_new_var(list, DEAL_ENV);
+	ft_print_export(list->first_env, FALSE);
 	free_all(list);
 	return (1);
 }
