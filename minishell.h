@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/10 22:07:38 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/12 14:11:38 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ typedef struct s_control
 	t_element	*first_export;
 	t_element	*first_env_var;
 	int			size;
-	int			size_env;
 }	t_control;
 
 		//	MINISHELL.C
@@ -173,6 +172,8 @@ int			ft_get_new_var(t_control *list, char **newargv);
 char    	*ft_remove_quotes(char *str);
 
 int			ft_add_new_var(t_control  *list, int type);
+
+void	ft_remove_first_env(t_control *control);
 
 		// FT_ENV.C
 

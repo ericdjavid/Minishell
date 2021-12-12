@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:28:28 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/10 21:46:04 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/12 14:11:08 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,8 @@ int ft_get_new_var(t_control *list, char **newargv)
 		//TODO: PBM WITH SPACES : AB is dealing
 		//TODO: check with quotes, empty quotes, and only =
 			//if only =, do not modify values
-		printf(PINK"newargv is %s"END, newargv[i]);
+		printf(PINK"newargv is %s\n"END, newargv[i]);
+		//think about removing it
 		retreat = ft_remove_quotes(newargv[i]);
 		printf(YELLOW"new str is %s\n"END, retreat);
 		tmp = ft_is_in_list(list, retreat);
@@ -231,7 +232,6 @@ int ft_get_new_var(t_control *list, char **newargv)
 			free(retreat);
 			continue ;
 		}
-		list->size_env++;
 		if (list->first_env_var->str == NULL)
 		{
 			list->first_env_var->str = ft_strdup(retreat);
@@ -295,12 +295,12 @@ int	ft_export(t_control *list, char **newargv)
 	// ft_print_stuff(list->first_export, "export list");
 	ft_add_new_var(list, DEAL_EXPORT);
 	ft_print_export(list->first_export, TRUE);
-	ft_print_stuff(list->first_env_var, "first env var list");
+	// ft_print_stuff(list->first_env_var, "first env var list");
 	free_all(list);
 	return (1);
 }
 
-void	ft_remove_env(t_control *control)
+void	ft_remove_first_env(t_control *control)
 {
 	t_element *tmp;
 
@@ -319,7 +319,7 @@ int	ft_env(t_control *list)
 	// ft_print_export(list->first_env, FALSE);
 	printf("list->first is of address [%p]\n", list->first_env_var);
 	// printf("list->first is of addrress [%p]\n", list->first_env_var);
-	ft_print_stuff(list->first_env_var, "first env var list");
+	// ft_print_stuff(list->first_env_var, "first env var list");
 	free_all(list);
 	return (1);
 }

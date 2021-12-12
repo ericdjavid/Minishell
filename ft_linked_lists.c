@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:18:13 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/10 18:52:25 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/12 13:41:36 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ int	ft_init_list(t_control *list, char **envp)
 	list->first_export = first_export;
 	list->first_env_var = first_env_var;
 	list->size = 0;
-	list->size_env = 0;
 	i = -1;
 	while (envp[++i])
 	{
