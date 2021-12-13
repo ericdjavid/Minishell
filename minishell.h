@@ -248,4 +248,11 @@ int		ft_is_space_before_qual(char *str);
 
 void	ft_remove_env(t_control *list);
 
+
+		//	FT_CLEAR.C
+
+int		ft_clear(char **newargv);
+
+int		is_OptionOfClear(char **newargv);
+
 #endif

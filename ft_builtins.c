@@ -37,6 +37,8 @@ int	ft_builtins(char **newargv, t_control *list)
 		return (1);
 	else if (!ft_strncmp(newargv[0], "unset", len_0))
 		return (1);
+	if (!ft_strncmp(newargv[0], "/usr/bin/clear", len_0))
+		return (ft_clear(newargv));
 	return (0);
 }
 
