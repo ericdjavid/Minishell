@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:28:28 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/12 16:57:24 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/13 21:31:51y edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*ft_remove_quotes(char *str)
 	return (str2);
 }
 
-//Suppress the double quotes before =
+//add the simple quotes before =
 //TODO: when creating a new env with " ", bad behavior (double quotes)
 char *add_str2(char *str, int type)
 {
@@ -81,7 +81,6 @@ char *add_str2(char *str, int type)
 	t_bool	is_equal;
 
 	i = 0;
-	j = 0;
 	is_equal = FALSE;
 	tmp = NULL;
 	while (str[i])
@@ -93,7 +92,7 @@ char *add_str2(char *str, int type)
 	if (type == DEAL_ENV && is_equal == FALSE)
 		return (NULL);
 	if (is_equal == TRUE && type == DEAL_EXPORT)
-		tmp = malloc(sizeof(char) * ft_strlen(str) + 1 + 2);
+		tmp = malloc(sizeof(char) * (ft_strlen(str) + 1 + 500));
 	// if (ft_get_quotes(str) > 0)
 	// {
 	//     str = move_quotes(str);
@@ -106,6 +105,7 @@ char *add_str2(char *str, int type)
 	if (!tmp)
 		return (NULL);
 	i = 0;
+	j = 0;
 	while (str[i] != '\0')
 	{
 		if (is_equal == TRUE && type == DEAL_EXPORT && str[i] == '=')

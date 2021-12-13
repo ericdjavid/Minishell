@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 09:24:21 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/10 18:08:37 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/13 17:56:16 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	ft_close_fd(int fd)
 	}
 }
 
+// TODO:segault if $var is not found
+// TODO: display the var if "", but don't if ''
 void	ft_is_dollar(char **str, t_control *control)
 {
 	int		i;
