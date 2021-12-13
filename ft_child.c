@@ -22,11 +22,17 @@ int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 		exit(status);
 	else if (ft_builtins(*newargv, list))
 		;
-	else if (access((*newargv)[0], X_OK))
+	else if (access((*newargv)[0], F_OK))
 	{
 		ft_printf_fd(2, "minishell: %s: command not found\n",
 			(*newargv)[0]);
 		status = 127;
+	}
+	else if (access((*newargv)[0], X_OK))
+	{
+		ft_printf_fd(2, "minishell: permission non accordée: %s\n",
+			(*newargv)[0]);
+		status = 126;
 	}
 	else if (execve((*newargv)[0],
 		(*newargv), NULL) < 0)

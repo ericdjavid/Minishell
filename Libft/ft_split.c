@@ -13,14 +13,12 @@
 #include "libft.h"
 #include "../minishell.h"
 
-#include <stdio.h>
-
-int	browse_str(char *str, char c)
+int	browse_str(char *str, char *charset)
 {
 	int	n;
 
 	n = 0;
-	while (str[n] && str[n] != c)
+	while (str[n] && !ft_strchr(charset, str[n]))
 	{
 		if (str[n] == '"')
 		{
@@ -30,7 +28,7 @@ int	browse_str(char *str, char c)
 			n++;
 			if (!str[n])
 				return (n);
-			browse_str(str + n, c);
+			browse_str(str + n, charset);
 		}
 		else
 			n++;
@@ -38,31 +36,31 @@ int	browse_str(char *str, char c)
 	return (n);
 }
 
-int	get_n_cases(char *str, char c)
+int	get_n_cases(char *str, char *charset)
 {
 	int	n;
 
 	n = 0;
-	while (*str && *str == c)
+	while (*str && ft_strchr(charset, str[n]))
 		str++;
 	while (*str)
 	{
 		n++;
-		str += browse_str(str, c);
-		while (*str && *str == c)
+		str += browse_str(str, charset);
+		while (*str && ft_strchr(charset, str[n]))
 			str++;
 	}
 	return (n);
 }
 
-char	*fill_split(char *str, char c)
+char	*fill_split(char *str, char *charset)
 {
 	int		len_str;
 	char	*split;
 	int		count;
 	char	*splitted2;
 
-	len_str = browse_str(str, c);
+	len_str = browse_str(str, charset);
 	split = malloc(len_str + 1);
 	if (!split)
 		return (0);
@@ -78,35 +76,35 @@ char	*fill_split(char *str, char c)
 	return (splitted2);
 }
 
-char	*get_next_str(char *str, char c, int count)
+char	*get_next_str(char *str, char *charset, int count)
 {
 	if (!count)
-		while (*str && *str == c)
+		while (*str && ft_strchr(charset, *str))
 			str++;
 	else
 	{
-		str += browse_str(str, c);
-		while (*str && *str == c)
+		str += browse_str(str, charset);
+		while (*str && ft_strchr(charset, *str))
 			str++;
 	}
 	return (str);
 }
 
-char	**ft_split(char *str, char c)
+char	**ft_split(char *str, char *charset)
 {
 	int		n_cases;
 	char	**split;
 	int		count;
 
-	n_cases = get_n_cases(str, c);
+	n_cases = get_n_cases(str, charset);
 	split = malloc(sizeof(char *) * (n_cases + 1));
 	if (!split)
 		return (0);
 	count = 0;
 	while (*str && count < n_cases)
 	{
-		str = get_next_str(str, c, count);
-		split[count] = fill_split(str, c);
+		str = get_next_str(str, charset, count);
+		split[count] = fill_split(str, charset);
 		if (!*split)
 		{
 			free_matc(split);

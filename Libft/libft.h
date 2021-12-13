@@ -32,7 +32,7 @@ void	ft_strcpy(char *dst, const char *str);
 
 void	ft_strcat(char *dst, const char *str);
 
-char	**ft_split(char *s, char c);
+char	**ft_split(char *s, char *charset);
 
 int		ft_matlen(char **mat);
 
@@ -49,4 +49,6 @@ int		ft_matstr(char **mat, const char *str);
 void	free_mati(int **mati, int m_len);
 
 void	ft_putnbr_fd(long long int nb, int fd);
+
+size_t	ft_3dimlen(char ***mat);
 #endif

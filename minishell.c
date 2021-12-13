@@ -39,12 +39,16 @@ void	ft_minishell(char **paths, t_control *list)
 	signal(SIGINT, &sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 	cmd_line = prompt_msg();
-	ret = exec_cmd(cmd_line, paths, list);
+	if (cmd_line)
+		ret = exec_cmd(cmd_line, paths, list);
+	else
+		ret = 0;
 	while (ret > 0 && cmd_line)
 	{
 		free(cmd_line);
 		cmd_line = prompt_msg();
-		ret = exec_cmd(cmd_line, paths, list);
+		if (cmd_line)
+			ret = exec_cmd(cmd_line, paths, list);
 	}
 	if (cmd_line)
 		free(cmd_line);
