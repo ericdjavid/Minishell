@@ -16,12 +16,14 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 {
 	char	***newargv;
 
-	if (!cmd_line || !ft_strncmp(cmd_line, "exit", ft_strlen(cmd_line)))
+	if (!*cmd_line)
+		return (1);
+	else if (!ft_strncmp(cmd_line, "exit", ft_strlen(cmd_line)))
 		return (0);
 	newargv = init_newargv(cmd_line, paths);
 	if (!newargv)
 		return (-1);
-	if (!newargv[2] && !ft_strncmp(newargv[1][0], "cd", 3))
+	if (ft_3dimlen(newargv) == 2 && !ft_strncmp(newargv[1][0], "cd", 3))
 		ft_cd(newargv[1]);
 	else
 		ft_cmd(newargv, paths, list);
@@ -44,7 +46,7 @@ char	*init_cmd_path(char *cmd, char **paths)
 		cmd_path = malloc(ft_strlen(paths[n_path]) + cmd_len + 1);
 		ft_strcpy(cmd_path, paths[n_path]);
 		ft_strcat(cmd_path, cmd);
-		if (!access(cmd_path, X_OK))
+		if (!access(cmd_path, F_OK))
 		{
 			free(cmd);
 			return (cmd_path);

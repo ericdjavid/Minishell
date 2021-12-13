@@ -44,11 +44,22 @@ char	***init_newargv(char *cmd_line, char **paths)
 char	***init_param_in(char ***split, char *cmd_line, int *c_1, int *c)
 {
 	char	***newargv;
+	char	*charset;
 
 	newargv = malloc(sizeof(char **) * (get_n_cmd(cmd_line) + 2));
 	if (!newargv)
 		return (0);
-	*split = ft_split(cmd_line, 32);
+	charset = malloc(3);
+	if (!charset)
+	{
+		free(newargv);
+		return (0);
+	}
+	charset[0] = 32;
+	charset[1] = 9;
+	charset[2] = 0;
+	*split = ft_split(cmd_line, charset);
+	free(charset);
 	if (!*split || is_syntax_er_spl(*split))
 	{
 		free(newargv);
