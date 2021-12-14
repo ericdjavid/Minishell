@@ -239,15 +239,14 @@ int ft_get_new_var(t_control *list, char **newargv)
 	i = 0;
 	while (newargv[++i])
 	{
-		//TODO: check with quotes, empty quotes, and only =
-			//if only =, do not modify values
+		//TODO: export = '' -> replace by " "
+		//TODO: export var= '$var' -> replace by "$var" (litteral)
 
-		printf(PINK"newargv is %s\n"END, newargv[i]);
-		//think about removing it
+		// printf(PINK"newargv is %s\n"END, newargv[i]);
 		retreat = ft_deal_dollar(newargv[i], list);
 		if (retreat == NULL)
 			retreat = ft_strdup(newargv[i]);
-		printf(YELLOW"new str is |%s|\n"END, retreat);
+		// printf(YELLOW"new str is |%s|\n"END, retreat);
 		tmp = ft_is_in_list(list, retreat);
 		if ((retreat[0] <= '9' && retreat[0] >= '0') || (ft_is_space_before_qual(retreat)))
 		{
