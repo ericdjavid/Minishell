@@ -6,13 +6,14 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 09:02:55 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/14 15:47:58 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/14 16:38:55 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "../minishell.h"
 
 static int	ft_count(char *s, int cnts)
 {
@@ -34,7 +35,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s2)
 		return (s1);
 	if (!s1)
-		return (s2);
+		return (ft_strdup(s2));
 	if (!s1 && !s2)
 		return (NULL);
 	cnts1 = ft_count(s1, cnts1);
@@ -53,8 +54,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	if (s1)
 		free(s1);
-	if (s2)
-		free(s2);
 	str[i] = '\0';
 	return (str);
 }

@@ -199,13 +199,14 @@ char	*ft_deal_dollar(char *str, t_control *list)
 	char	*new_str;
 	char	**arr_str;
 	char	*ret;
-	(void)list;
+	char	*ret2;
+	int		i;
 
+	i = 0;
 	arr_str = ft_split(str, "$");
 	if (!arr_str)
 		return (str);
 
-	int i = 0;
 	while (arr_str[++i])
 	{
 		printf("arr i is |%s|\n", arr_str[i]);
@@ -218,31 +219,15 @@ char	*ft_deal_dollar(char *str, t_control *list)
 
 	i = -1;
 	ret = NULL;
-	// while (arr_str[++i])
-	// 	ret = ft_strjoin(ret, arr_str[i]);
+	while (arr_str[++i])
+		ret = ft_strjoin(ret, arr_str[i]);
+	// if (i != 0)
 	free_matc(arr_str);
-
-	// while(*str2)
-	// {
-	// 	if (*str2 == '$')
-	// 	{
-
-	// 		printf("there is a dollar $\n");
-	// 		new_str = ft_get_dollar_var(str2, list);
-	// 		// ft_rebase(str2, new_str);
-	// 		printf("new str is %s", new_str);
-	// 	}
-	// 	str2++;
-	// }
-	// if (new_str == NULL)
-	// {
-	// 	printf("new str is NULL\n");
-	// 	return (str);
-	// }
-	// return new_str;
-	return (ret);
+	ret2 = ft_remove_quotes(ret);
+	free(ret);
+	return (ret2);
 }
-// TODO: add the $ modifier
+// TODO: deal with spaces
 // TODO: add the simple quote modifier
 int ft_get_new_var(t_control *list, char **newargv)
 {

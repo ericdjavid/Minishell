@@ -7,7 +7,7 @@ ft_3dimlen.c ft_strjoin.c
 
 OBJS	= $(SRCS:.c=.o)
 
-CC		= cc
+CC		= gcc -g
 
 AR		= ar rc
 
@@ -15,7 +15,7 @@ RM		= rm -rf
 
 INC		= -I includes/
 
-CFLAGS	= -Wall -Werror -Wextra 
+CFLAGS	= -Wall -Werror -Wextra
 
 %.o: %.c
 		$(CC) $(CFLAGS) $(INC) -o $@ -c $?

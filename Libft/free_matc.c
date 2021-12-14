@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_matc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 15:43:44 by abrun             #+#    #+#             */
-/*   Updated: 2021/10/13 12:53:23 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/14 16:23:36 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	free_matc(char **matc)
 	n = 0;
 	while (matc[n])
 	{
-		free(matc[n]);
+		if (matc[n])
+			free(matc[n]);
 		n++;
 	}
 	free(matc);
