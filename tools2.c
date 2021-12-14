@@ -6,23 +6,23 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:40:53 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/14 13:11:25 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/14 15:20:22 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_rebase(char *str, char *replace)
-{
-	char **split;
+// char	*ft_rebase(char *str, char *replace)
+// {
+// 	char **split;
 
-	split = ft_split(str, "$");
-	while (*split)
-	{
-		printf(split)
-	}
+// 	split = ft_split(str, "$");
+// 	while (*split)
+// 	{
+// 		printf(split)
+// 	}
 
-}
+// }
 
 char	*add_value_name(char *str)
 {
@@ -93,28 +93,28 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 
 char	*ft_get_dollar_var(char *str, t_control *list)
 {
-	int			i;
+	// int			i;
 	t_element	*tmp;
 	char		*tmp_char;
 
-	i = 0;
+	// i = 0;
 	tmp_char = NULL;
-	(void) list;
-	while (str[++i] && str[i] != '$')
-		;
-	tmp_char = malloc(sizeof(char) * (i + 1));
-	if (!tmp_char)
-		return (NULL);
-	ft_strlcpy(tmp_char, ++str, i);
-	printf("tmp char is %s\n", tmp_char);
-	tmp = ft_is_in_list(list, tmp_char);
+	// while (str[++i] && str[i] != '$')
+	// 	;
+	// tmp_char = malloc(sizeof(char) * (i + 1));
+	// if (!tmp_char)
+	// 	return (NULL);
+	// ft_strlcpy(tmp_char, ++str, i);
+	// printf("tmp char is %s\n", tmp_char);
+	// tmp = ft_is_in_list(list, tmp_char);
+	tmp = ft_is_in_list(list, str);
 	if (!tmp)
 		return (NULL);
-	printf("tmp->str is |%s|\n", tmp->str);
+	printf("(ft_get_doll)tmp->str is |%s|\n", tmp->str);
 	free(tmp_char);
 	tmp_char = NULL;
 	tmp_char = add_value_name(tmp->str);
-	printf("new value name is |%s|\n", tmp_char);
+	printf("(ft_get_doll)new value name is |%s|\n", tmp_char);
 	return (tmp_char);
 }
 

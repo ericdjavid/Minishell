@@ -3,7 +3,7 @@ NAME	= libft.a
 SRCS	= ft_strdup.c free_matc.c ft_strlen.c print_matc.c ft_strncmp.c\
 ft_strcat.c ft_strcpy.c ft_split.c ft_matlen.c free_3dim_matc.c ft_strchr.c \
 ft_strjoin_free_n.c ft_strnstr.c ft_matstr.c free_mati.c ft_putnbr_fd.c\
-ft_3dimlen.c
+ft_3dimlen.c ft_strjoin.c
 
 OBJS	= $(SRCS:.c=.o)
 
