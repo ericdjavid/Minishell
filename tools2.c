@@ -6,11 +6,117 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:40:53 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/10 17:58:28 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/14 15:20:22 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// char	*ft_rebase(char *str, char *replace)
+// {
+// 	char **split;
+
+// 	split = ft_split(str, "$");
+// 	while (*split)
+// 	{
+// 		printf(split)
+// 	}
+
+// }
+
+char	*add_value_name(char *str)
+{
+	char	*tmp;
+	int		i;
+	int		j;
+	int		k;
+
+	i = 0;
+	if (str == NULL)
+		return (NULL);
+	while (str[i] != '\0')
+	{
+		if (str[i] == '=')
+		{
+			i++;
+			break ;
+		}
+		i++;
+	}
+	k = i;
+	j = 0;
+	while (str[i])
+	{
+		j++;
+		i++;
+	}
+	tmp = malloc(sizeof(char) * (j + 1));
+	if (!tmp)
+		return (NULL);
+	i = 0;
+	while (str[k] != '\0')
+	{
+		tmp[i] = str[k];
+		k++;
+		i++;
+	}
+	tmp[i] = '\0';
+	return (tmp);
+}
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	char		*d;
+	const char	*s;
+	size_t		n;
+
+	d = dst;
+	n = size;
+	s = src;
+	if (n != 0)
+	{
+		while (--n != 0)
+		{
+			if ((*d++ = *s++) == '\0')
+				break ;
+		}
+	}
+	if (n == 0)
+	{
+		if (size != 0)
+			*d = '\0';
+		while (*s++)
+			;
+	}
+	return (s - src - 1);
+}
+
+char	*ft_get_dollar_var(char *str, t_control *list)
+{
+	// int			i;
+	t_element	*tmp;
+	char		*tmp_char;
+
+	// i = 0;
+	tmp_char = NULL;
+	// while (str[++i] && str[i] != '$')
+	// 	;
+	// tmp_char = malloc(sizeof(char) * (i + 1));
+	// if (!tmp_char)
+	// 	return (NULL);
+	// ft_strlcpy(tmp_char, ++str, i);
+	// printf("tmp char is %s\n", tmp_char);
+	// tmp = ft_is_in_list(list, tmp_char);
+	tmp = ft_is_in_list(list, str);
+	if (!tmp)
+		return (NULL);
+	printf("(ft_get_doll)tmp->str is |%s|\n", tmp->str);
+	free(tmp_char);
+	tmp_char = NULL;
+	tmp_char = add_value_name(tmp->str);
+	printf("(ft_get_doll)new value name is |%s|\n", tmp_char);
+	return (tmp_char);
+}
 
 int	ft_is_space_before_qual(char *str)
 {

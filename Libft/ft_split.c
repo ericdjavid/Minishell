@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:07:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/10 22:38:37 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/14 15:01:54 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ char	**ft_split(char *str, char *charset)
 	char	**split;
 	int		count;
 
+	if (!str)
+		return (NULL);
 	n_cases = get_n_cases(str, charset);
 	split = malloc(sizeof(char *) * (n_cases + 1));
 	if (!split)

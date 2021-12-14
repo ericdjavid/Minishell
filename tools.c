@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 09:24:21 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/10 18:08:37 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/14 17:00:10 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	ft_close_fd(int fd)
 	}
 }
 
+// TODO:segault if $var is not found
+// TODO: display the var if "", but don't if ''
 void	ft_is_dollar(char **str, t_control *control)
 {
 	int		i;
@@ -106,13 +108,14 @@ void	ft_is_dollar(char **str, t_control *control)
 	while (str[++i])
 	{
 		if (str[i][0] == '$' && str[i][1] != ' '
-			&& str[i][0] == '$' && str[i][1] != '?')
+			&& str[i][1] && str[i][1] != '?')
 		{
 			str_good = is_in_list(control->first_env, str[i]);
 			if (str_good == NULL)
 				str_good = is_in_list(control->first_env_var, str[i]);
 			if (str_good != NULL)
 			{
+				printf("found\n");
 				free(str[i]);
 				str[i] = ft_strdup(str_good);
 			}

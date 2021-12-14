@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:28:28 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/12 16:57:24 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/13 21:31:51y edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*ft_remove_quotes(char *str)
 	return (str2);
 }
 
-//Suppress the double quotes before =
+//add the simple quotes before =
 //TODO: when creating a new env with " ", bad behavior (double quotes)
 char *add_str2(char *str, int type)
 {
@@ -81,7 +81,6 @@ char *add_str2(char *str, int type)
 	t_bool	is_equal;
 
 	i = 0;
-	j = 0;
 	is_equal = FALSE;
 	tmp = NULL;
 	while (str[i])
@@ -93,7 +92,7 @@ char *add_str2(char *str, int type)
 	if (type == DEAL_ENV && is_equal == FALSE)
 		return (NULL);
 	if (is_equal == TRUE && type == DEAL_EXPORT)
-		tmp = malloc(sizeof(char) * ft_strlen(str) + 1 + 2);
+		tmp = malloc(sizeof(char) * (ft_strlen(str) + 1 + 500));
 	// if (ft_get_quotes(str) > 0)
 	// {
 	//     str = move_quotes(str);
@@ -106,6 +105,7 @@ char *add_str2(char *str, int type)
 	if (!tmp)
 		return (NULL);
 	i = 0;
+	j = 0;
 	while (str[i] != '\0')
 	{
 		if (is_equal == TRUE && type == DEAL_EXPORT && str[i] == '=')
@@ -194,6 +194,41 @@ void    ft_print_export(t_element *first, t_bool bool)
 	return ;
 }
 
+char	*ft_deal_dollar(char *str, t_control *list)
+{
+	char	*new_str;
+	char	**arr_str;
+	char	*ret;
+	char	*ret2;
+	int		i;
+
+	i = 0;
+	arr_str = ft_split(str, "$");
+	if (!arr_str)
+		return (str);
+
+	while (arr_str[++i])
+	{
+		printf("arr i is |%s|\n", arr_str[i]);
+		new_str = ft_get_dollar_var(arr_str[i], list);
+		free(arr_str[i]);
+		arr_str[i] = ft_strdup(new_str);
+		free(new_str);
+		printf("new arr i is |%s|\n", arr_str[i]);
+	}
+
+	i = -1;
+	ret = NULL;
+	while (arr_str[++i])
+		ret = ft_strjoin(ret, arr_str[i]);
+	// if (i != 0)
+	free_matc(arr_str);
+	ret2 = ft_remove_quotes(ret);
+	free(ret);
+	return (ret2);
+}
+// TODO: deal with spaces
+// TODO: add the simple quote modifier
 int ft_get_new_var(t_control *list, char **newargv)
 {
 	int			i;
@@ -204,12 +239,14 @@ int ft_get_new_var(t_control *list, char **newargv)
 	i = 0;
 	while (newargv[++i])
 	{
-		//TODO: check with quotes, empty quotes, and only =
-			//if only =, do not modify values
-		printf(PINK"newargv is %s\n"END, newargv[i]);
-		//think about removing it
-		retreat = ft_remove_quotes(newargv[i]);
-		printf(YELLOW"new str is %s\n"END, retreat);
+		//TODO: export = '' -> replace by " "
+		//TODO: export var= '$var' -> replace by "$var" (litteral)
+
+		// printf(PINK"newargv is %s\n"END, newargv[i]);
+		retreat = ft_deal_dollar(newargv[i], list);
+		if (retreat == NULL)
+			retreat = ft_strdup(newargv[i]);
+		// printf(YELLOW"new str is |%s|\n"END, retreat);
 		tmp = ft_is_in_list(list, retreat);
 		if ((retreat[0] <= '9' && retreat[0] >= '0') || (ft_is_space_before_qual(retreat)))
 		{
@@ -221,10 +258,7 @@ int ft_get_new_var(t_control *list, char **newargv)
 		if (tmp)
 		{
 			if (!ft_strchr(retreat, '='))
-			{
-				free(retreat);
 				continue ;
-			}
 			free(tmp->str);
 			tmp->str = ft_strdup(retreat);
 			free(retreat);

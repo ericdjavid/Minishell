@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 14:03:18 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/12 16:13:15 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/14 10:13:16 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,46 +117,51 @@ void	ft_remove_from_env(t_element *to_supp, t_control *control)
 int	ft_unset(t_control *control, char **newargv)
 {
 	t_element	*tmp;
-	// int			i;
-	ft_print_stuff(control->first_env_var, "env var");
-	tmp = ft_good_find_in_list(control->first_env_var, newargv[1]);
-	if (tmp)
+	int			i;
+
+	i = 0;
+	while (newargv[++i])
 	{
-		ft_remove_from_env(tmp, control);
 		ft_print_stuff(control->first_env_var, "env var");
-		return (1);
-	}
-	tmp = ft_good_find_in_list(control->first_env, newargv[1]);
-	if (tmp == control->first_env)
-	{
-		if (control->first_env->next)
-			control->first_env = control->first_env->next;
-		free(tmp->str);
-		free(tmp->var_name);
-		free(tmp);
-	}
-	else
-	{
-		if (tmp && tmp->next == NULL)
-			ft_delete_last(control->first_env);
-		else if (tmp)
-			ft_replace_str(tmp);
-	}
-	tmp = ft_good_find_in_list(control->first_export, newargv[1]);
-	if (tmp == control->first_export)
-	{
-		if (control->first_export->next)
-			control->first_export = control->first_export->next;
-		free(tmp->str);
-		free(tmp->var_name);
-		free(tmp);
-	}
-	else
-	{
-		if (tmp && tmp->next == NULL)
-			ft_delete_last(control->first_export);
-		else if (tmp)
-			ft_replace_str(tmp);
+		tmp = ft_good_find_in_list(control->first_env_var, newargv[i]);
+		if (tmp)
+		{
+			ft_remove_from_env(tmp, control);
+			ft_print_stuff(control->first_env_var, "env var");
+			continue ;
+		}
+		tmp = ft_good_find_in_list(control->first_env, newargv[i]);
+		if (tmp == control->first_env)
+		{
+			if (control->first_env->next)
+				control->first_env = control->first_env->next;
+			free(tmp->str);
+			free(tmp->var_name);
+			free(tmp);
+		}
+		else
+		{
+			if (tmp && tmp->next == NULL)
+				ft_delete_last(control->first_env);
+			else if (tmp)
+				ft_replace_str(tmp);
+		}
+		tmp = ft_good_find_in_list(control->first_export, newargv[i]);
+		if (tmp == control->first_export)
+		{
+			if (control->first_export->next)
+				control->first_export = control->first_export->next;
+			free(tmp->str);
+			free(tmp->var_name);
+			free(tmp);
+		}
+		else
+		{
+			if (tmp && tmp->next == NULL)
+				ft_delete_last(control->first_export);
+			else if (tmp)
+				ft_replace_str(tmp);
+		}
 	}
 	return (1);
 }

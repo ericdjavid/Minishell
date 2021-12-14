@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/12 14:11:38 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/14 11:25:44 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,7 @@ int		ft_is_space_before_qual(char *str);
 
 void	ft_remove_env(t_control *list);
 
+char	*ft_get_dollar_var(char *str, t_control *list);
 
 		//	FT_CLEAR.C
 
