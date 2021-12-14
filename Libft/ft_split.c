@@ -41,13 +41,13 @@ int	get_n_cases(char *str, char *charset)
 	int	n;
 
 	n = 0;
-	while (*str && ft_strchr(charset, str[n]))
+	while (*str && ft_strchr(charset, *str))
 		str++;
 	while (*str)
 	{
 		n++;
 		str += browse_str(str, charset);
-		while (*str && ft_strchr(charset, str[n]))
+		while (*str && ft_strchr(charset, *str))
 			str++;
 	}
 	return (n);
