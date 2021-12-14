@@ -198,15 +198,26 @@ char	*ft_deal_dollar(char *str, t_control *list)
 {
 	char	*new_str;
 	char	*str2;
+	// char	**arr_str;
 	(void)list;
 	str2 = str;
 	new_str = NULL;
+
+	// arr_str = malloc(sizeof(**arr_str));
+	// arr_str = ft_split(str, "$");
+	// if (!arr_str)
+	// {
+	// 	free(arr_str);
+	// 	return (str);
+	// }
 	while(*str2)
 	{
 		if (*str2 == '$')
 		{
+
 			printf("there is a dollar $\n");
 			new_str = ft_get_dollar_var(str2, list);
+			ft_rebase(str2, new_str)
 			printf("new str is %s", new_str);
 		}
 		str2++;
@@ -250,20 +261,16 @@ int ft_get_new_var(t_control *list, char **newargv)
 		if (tmp)
 		{
 			if (!ft_strchr(retreat, '='))
-			{
-				free(retreat);
 				continue ;
-			}
 			free(tmp->str);
 			tmp->str = ft_strdup(retreat);
-			free(retreat);
 			continue ;
 		}
 		if (list->first_env_var->str == NULL)
 		{
 			list->first_env_var->str = ft_strdup(retreat);
 			list->first_env_var->var_name = add_var_name(list->first_env_var->str);
-			free(retreat);
+			// free(retreat);
 			continue ;
 		}
 		tmp = list->first_env_var;

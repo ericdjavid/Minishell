@@ -6,11 +6,63 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:40:53 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/14 12:02:26 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/14 13:11:25 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*ft_rebase(char *str, char *replace)
+{
+	char **split;
+
+	split = ft_split(str, "$");
+	while (*split)
+	{
+		printf(split)
+	}
+
+}
+
+char	*add_value_name(char *str)
+{
+	char	*tmp;
+	int		i;
+	int		j;
+	int		k;
+
+	i = 0;
+	if (str == NULL)
+		return (NULL);
+	while (str[i] != '\0')
+	{
+		if (str[i] == '=')
+		{
+			i++;
+			break ;
+		}
+		i++;
+	}
+	k = i;
+	j = 0;
+	while (str[i])
+	{
+		j++;
+		i++;
+	}
+	tmp = malloc(sizeof(char) * (j + 1));
+	if (!tmp)
+		return (NULL);
+	i = 0;
+	while (str[k] != '\0')
+	{
+		tmp[i] = str[k];
+		k++;
+		i++;
+	}
+	tmp[i] = '\0';
+	return (tmp);
+}
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
@@ -39,8 +91,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (s - src - 1);
 }
 
-
-
 char	*ft_get_dollar_var(char *str, t_control *list)
 {
 	int			i;
@@ -60,8 +110,12 @@ char	*ft_get_dollar_var(char *str, t_control *list)
 	tmp = ft_is_in_list(list, tmp_char);
 	if (!tmp)
 		return (NULL);
-	//should return tmp->var value
-	return (tmp->str);
+	printf("tmp->str is |%s|\n", tmp->str);
+	free(tmp_char);
+	tmp_char = NULL;
+	tmp_char = add_value_name(tmp->str);
+	printf("new value name is |%s|\n", tmp_char);
+	return (tmp_char);
 }
 
 int	ft_is_space_before_qual(char *str)
