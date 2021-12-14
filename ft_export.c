@@ -194,6 +194,32 @@ void    ft_print_export(t_element *first, t_bool bool)
 	return ;
 }
 
+char	*ft_deal_dollar(char *str, t_control *list)
+{
+	char	*new_str;
+	char	*str2;
+	(void)list;
+	str2 = str;
+	new_str = NULL;
+	while(*str2)
+	{
+		if (*str2 == '$')
+		{
+			printf("there is a dollar $\n");
+			new_str = ft_get_dollar_var(str2, list);
+			printf("new str is %s", new_str);
+		}
+		str2++;
+	}
+	if (new_str == NULL)
+	{
+		printf("new str is NULL\n");
+		return (str);
+	}
+	return new_str;
+}
+// TODO: add the $ modifier
+// TODO: add the simple quote modifier
 int ft_get_new_var(t_control *list, char **newargv)
 {
 	int			i;
@@ -206,10 +232,13 @@ int ft_get_new_var(t_control *list, char **newargv)
 	{
 		//TODO: check with quotes, empty quotes, and only =
 			//if only =, do not modify values
+
 		printf(PINK"newargv is %s\n"END, newargv[i]);
 		//think about removing it
-		retreat = ft_remove_quotes(newargv[i]);
-		printf(YELLOW"new str is %s\n"END, retreat);
+		retreat = ft_deal_dollar(newargv[i], list);
+		if (retreat == NULL)
+			retreat = ft_strdup(newargv[i]);
+		printf(YELLOW"new str is |%s|\n"END, retreat);
 		tmp = ft_is_in_list(list, retreat);
 		if ((retreat[0] <= '9' && retreat[0] >= '0') || (ft_is_space_before_qual(retreat)))
 		{
