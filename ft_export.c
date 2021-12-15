@@ -209,12 +209,12 @@ char	*ft_deal_dollar(char *str, t_control *list)
 
 	while (arr_str[++i])
 	{
-		printf("arr i is |%s|\n", arr_str[i]);
+		// printf("arr i is |%s|\n", arr_str[i]);
 		new_str = ft_get_dollar_var(arr_str[i], list);
 		free(arr_str[i]);
 		arr_str[i] = ft_strdup(new_str);
 		free(new_str);
-		printf("new arr i is |%s|\n", arr_str[i]);
+		// printf("new arr i is |%s|\n", arr_str[i]);
 	}
 
 	i = -1;
@@ -248,7 +248,8 @@ int ft_get_new_var(t_control *list, char **newargv)
 			retreat = ft_strdup(newargv[i]);
 		// printf(YELLOW"new str is |%s|\n"END, retreat);
 		tmp = ft_is_in_list(list, retreat);
-		if ((retreat[0] <= '9' && retreat[0] >= '0') || (ft_is_space_before_qual(retreat)))
+		if ((retreat[0] <= '9' && retreat[0] >= '0') || (ft_is_space_before_qual(retreat)
+			|| is_quest(retreat) == TRUE || retreat[0] == '='))
 		{
 			ft_printf_fd(1, "\"%s\" : not a valid identifier\n", retreat);
 			free(retreat);

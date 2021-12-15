@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/15 18:28:44 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/15 19:49:05 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,8 @@ int		ft_unset(t_control *control, char **newargv);
 int		ft_print_stuff(t_element *first, char *str);
 
 		//	TOOLS2.C
+
+t_bool	is_quest(char *str);
 
 int		ft_is_space_before_qual(char *str);
 

@@ -6,11 +6,28 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:40:53 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/15 15:12:08 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/15 20:07:18 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
+
+t_bool	is_quest(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if ((!(str[i] >= 'a' && str[i] <= 'z'))
+		|| (!(str[i] >= 'A' && str[i] <= 'Z'))
+		|| (!(str[i] >= '0' && str[i] <= '9')))
+			return (TRUE);
+	}
+	return (FALSE);
+}
 
 char	*add_value_name(char *str)
 {
