@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 16:14:10 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/15 16:46:28 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/15 17:51:31 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@ int	ft_exit(char **arg)
 {
 	int	arglen;
 
-	ft_printf_fd(1, "exit\n"); 
 	arglen = ft_matlen(arg);
 	if (arglen == 1)
-		return (0);
+		return (1);
 	else if (arglen == 2)
 	{
 		if (ft_strIsNum(arg[1]))
@@ -36,5 +35,5 @@ int	ft_exit(char **arg)
 			ft_printf_fd(2, "minishell: exit: %s: numeric argument required\n",
 				arg[1]);
 	}
-	return (0);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 09:24:21 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/15 17:35:21 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/15 17:47:32 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,6 @@ char *ft_is_dollar2(char *str, t_control *control)
 	size = 0;
 	while (str[i])
 	{
-		printf(YELLOW"line cmd is |%s| \n"END, str);
 		if (str[i] == '$' && str[i + 1] != ' '
 			&& str[i + 1] && str[i + 1] != '?')
 		{
