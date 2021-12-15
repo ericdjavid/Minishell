@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 09:24:21 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/15 16:49:37 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/15 17:35:21 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ char	*get_new_line_cmd(char *str,int i, int size, char *str_good)
 		k++;
 	}
 	k = (i + size - 1);
-	while (str[k] && neo_line_cmd[j])
+	while (str[k])
 	{
 		neo_line_cmd[j] = str_good[k];
 		j++;

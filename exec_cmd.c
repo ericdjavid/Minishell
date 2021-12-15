@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/15 16:48:28 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/15 17:25:12 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,18 @@
 int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 {
 	char	***newargv;
+	int	newargv_len;
 
 	if (!*cmd_line)
 		return (1);
-	else if (!ft_strncmp(cmd_line, "exit", ft_strlen(cmd_line)))
-		return (0);
-	//add new cmd here
 	cmd_line = ft_is_dollar2(cmd_line, list);
 	newargv = init_newargv(cmd_line, paths);
 	if (!newargv)
 		return (-1);
-	if (ft_3dimlen(newargv) == 2 && !ft_strncmp(newargv[1][0], "cd", 3))
+	newargv_len = ft_3dimlen(newargv + 1);
+	if (newargv_len == 1 && !ft_strncmp(newargv[1][0], "exit", 4))
+		return (ft_exit(newargv[1]));
+	if (newargv_len == 1 && !ft_strncmp(newargv[1][0], "cd", 3))
 		ft_cd(newargv[1]);
 	else
 		ft_cmd(newargv, paths, list);
