@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/15 17:24:14 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/15 18:28:44 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int		exec_cmd(char *cmd_line, char **paths, t_control *list);
 char	*init_cmd_path(char *cmd, char **paths);
 
 void	free_newargv(char ***matc);
+
+char	*put_spAroundPipes(char *str);
 
 		//	PROMPT_MSG.C
 

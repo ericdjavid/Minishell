@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/15 17:25:12 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/15 18:44:50 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,35 @@
 int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 {
 	char	***newargv;
-	int	newargv_len;
+	int		newargv_len;
+	char	*new_line;
 
 	if (!*cmd_line)
 		return (1);
-	cmd_line = ft_is_dollar2(cmd_line, list);
-	newargv = init_newargv(cmd_line, paths);
+	new_line = ft_strdup(cmd_line);
+	if (!new_line)
+		return (-1);
+	new_line = ft_is_dollar2(new_line, list);
+	if (!new_line)
+		return (-1);
+	new_line = put_spAroundPipes(new_line);
+	if (!new_line)
+		return (-1);
+	newargv = init_newargv(new_line, paths);
 	if (!newargv)
 		return (-1);
 	newargv_len = ft_3dimlen(newargv + 1);
 	if (newargv_len == 1 && !ft_strncmp(newargv[1][0], "exit", 4))
-		return (ft_exit(newargv[1]));
+	{
+		write(1, "exit\n", 5);
+		return (ft_exit(newargv[1]) - 1);
+	}
 	if (newargv_len == 1 && !ft_strncmp(newargv[1][0], "cd", 3))
 		ft_cd(newargv[1]);
 	else
 		ft_cmd(newargv, paths, list);
 	free_newargv(newargv);
+	free(new_line);
 	return (1);
 }
 
@@ -71,4 +84,42 @@ void	free_newargv(char ***matc)
 		n++;
 	}
 	free(matc);
+}
+
+char	*put_spAroundPipes(char *str)
+{
+	char	*new;
+	int	c_1;
+	int	c_2;
+
+	c_2 = 0;
+	c_1 = 0;
+	while (str[c_1])
+	{
+		if (str[c_1] == '|')
+			c_2 += 2;
+		c_1++;
+	}
+	if (!c_2)
+		return (str);
+	new = malloc(c_1 + c_2 + 1);
+	if (!new)
+		return (0);
+	c_1 = 0;
+	c_2 = 0;
+	while (str[c_1])
+	{
+		if (str[c_1] == '|')
+		{
+			new[c_1 + c_2++] = 32;
+			new[c_1 + c_2++] = '|';
+			new[c_1 + c_2] = 32;
+		}
+		else
+			new[c_1 + c_2] = str[c_1];
+		c_1++;
+	}
+	new[c_1 + c_2] = 0;
+	free(str);
+	return (new);
 }
