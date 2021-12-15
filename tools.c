@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 09:24:21 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/14 17:00:10 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/15 17:35:21 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	ft_close_fd(int fd)
 	}
 }
 
+//to delete
 // TODO:segault if $var is not found
 // TODO: display the var if "", but don't if ''
 void	ft_is_dollar(char **str, t_control *control)
@@ -130,3 +131,102 @@ void	ft_is_dollar(char **str, t_control *control)
 	}
 	return ;
 }
+
+char	*get_new_str(char *str, int i, int *size)
+{
+	int j;
+	int k;
+	char *new_str;
+
+	j = i + 1;
+	while (str[j] && str[j]  != '\0' && str[j] != '$' && str[j] != ' ')
+		j++;
+	*size = j;
+	new_str = malloc(sizeof(char) * j + 1);
+	k = 0;
+	new_str[k] = '$';
+	i++;
+	k++;
+	while (str[i] && str[i]  != '\0' && str[i] != '$' && str[i] != ' ')
+	{
+		new_str[k] = str[i];
+		k++;
+		i++;
+	}
+	new_str[k] = '\0';
+	return (new_str);
+}
+
+char	*get_new_line_cmd(char *str,int i, int size, char *str_good)
+{
+	char	*neo_line_cmd;
+	int		j;
+	int		k;
+
+
+	printf("size is %d\n" , (int)ft_strlen(str_good) + (int)ft_strlen(str) - size);
+	printf("i is %d and size is %d\n", i, size);
+	neo_line_cmd = malloc(sizeof(char) * ((int)ft_strlen(str_good) + (int)ft_strlen(str) - size));
+	j = 0;;
+	while (str[j] && j < i )
+	{
+		neo_line_cmd[j] = str[j];
+		j++;
+	}
+	k = 0;
+	while (str_good[k])
+	{
+		neo_line_cmd[j] = str_good[k];
+		j++;
+		k++;
+	}
+	k = (i + size - 1);
+	while (str[k])
+	{
+		neo_line_cmd[j] = str_good[k];
+		j++;
+		k++;
+	}
+	neo_line_cmd[j] = '\0';
+	free(str);
+	return (neo_line_cmd);
+}
+
+char *ft_is_dollar2(char *str, t_control *control)
+{
+	int		i;
+	char	*str_good;
+	char	*new_str;
+	int		size;
+
+	i = 0;
+	size = 0;
+	while (str[i])
+	{
+		printf(YELLOW"line cmd is |%s| \n"END, str);
+		if (str[i] == '$' && str[i + 1] != ' '
+			&& str[i + 1] && str[i + 1] != '?')
+		{
+			new_str = get_new_str(str, i, &size);
+			printf("new str is %s and size is %d\n", new_str, size);
+			str_good = is_in_list(control->first_env, new_str);
+			if (str_good == NULL)
+				str_good = is_in_list(control->first_env_var, new_str);
+			printf(RED"new str good is %s \n"END, str_good);
+			if (str_good != NULL)
+			{
+				printf("found !\n");
+				printf(RED"old line cmd is |%s| \n"END, str);
+				str = get_new_line_cmd(str, i, size, str_good);
+				printf(RED"new line cmd is |%s| \n"END, str);
+				i = 0;
+				continue ;
+			}
+			if (new_str)
+				free(new_str);
+		}
+		i++;
+	}
+	return str;
+}
+

@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 12:32:07 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/17 12:52:57 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/15 16:02:49 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*ft_add_one_path(char *envp, int *count)
 	if (!path)
 		return (0);
 	n = 0;
-	while (path_len-- && envp[*count + 1])
+	while (path_len-- && envp[*count])
 	{
 		if (envp[*count] != 32)
 		{
@@ -91,8 +91,10 @@ char	*ft_add_one_path(char *envp, int *count)
 		}
 		*count += 1;
 	}
-	path[n++] = '/';
+	if (path[n - 1] != '/')
+		path[n++] = '/';
 	path[n] = 0;
-	*count += 1;
+	if (envp[*count])
+		*count += 1;
 	return (path);
 }
