@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/10 16:10:56 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/15 16:48:28 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 		return (1);
 	else if (!ft_strncmp(cmd_line, "exit", ft_strlen(cmd_line)))
 		return (0);
+	//add new cmd here
+	cmd_line = ft_is_dollar2(cmd_line, list);
 	newargv = init_newargv(cmd_line, paths);
 	if (!newargv)
 		return (-1);

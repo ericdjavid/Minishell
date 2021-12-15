@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/14 11:25:44 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/15 16:49:03 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,9 @@ void	ft_dup2(int newfd, int oldfd);
 
 void	ft_close_fd(int fd);
 
-void	ft_is_dollar(char **str, t_control *control);
+// void	ft_is_dollar(char **str, t_control *control);
+
+char *ft_is_dollar2(char *str, t_control *control);
 
 t_element	*ft_is_in_list(t_control *list, char *str);
 

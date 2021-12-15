@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/10 22:07:50 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/15 15:51:34 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 		if (!ft_strncmp(newargv[n_newargv][0], "unset",
 			ft_strlen(newargv[n_newargv][0])) && newargv[n_newargv][1])
 			ft_unset(list, newargv[n_newargv]);
-		ft_is_dollar(newargv[n_newargv], list);
+		// ft_is_dollar(newargv[n_newargv], list);
 		child_pid = fork();
 		if (child_pid == -1)
 			return (0);

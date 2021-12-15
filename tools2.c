@@ -6,23 +6,11 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:40:53 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/14 15:20:22 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/15 15:12:08 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// char	*ft_rebase(char *str, char *replace)
-// {
-// 	char **split;
-
-// 	split = ft_split(str, "$");
-// 	while (*split)
-// 	{
-// 		printf(split)
-// 	}
-
-// }
 
 char	*add_value_name(char *str)
 {
