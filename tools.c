@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 09:24:21 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/15 18:23:17 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/15 18:35:37 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,6 @@ char *ft_is_dollar2(char *str, t_control *control)
 		}
 		i++;
 	}
-	return str;
+	return (str);
 }
 
