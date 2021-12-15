@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/15 18:36:32 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/15 18:44:50 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 {
 	char	***newargv;
-	int	newargv_len;
+	int		newargv_len;
 	char	*new_line;
 
 	if (!*cmd_line)
