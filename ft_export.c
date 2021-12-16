@@ -203,16 +203,19 @@ char	*ft_deal_dollar(char *str, t_control *list)
 	int		i;
 
 	i = 0;
+	while (*str != '=')
+		str++;
 	if(!(ft_strchr(str, '$')))
 		return (str);
-	arr_str = ft_split(str, "$ ");
+	arr_str = ft_split(str, " $");
 	if (!arr_str)
 		return (str);
-
 	while (arr_str[++i])
 	{
+		//TODO: PBM WITH export lol="     $USER      "
 		printf("arr i is |%s|\n", arr_str[i]);
 		new_str = ft_get_dollar_var(arr_str[i], list);
+		printf("new str is |%s|\n", new_str);
 		free(arr_str[i]);
 		arr_str[i] = ft_strdup(new_str);
 		free(new_str);
@@ -256,7 +259,6 @@ int ft_get_new_var(t_control *list, char **newargv)
 			|| (is_quest(retreat) == TRUE) || (retreat[0] == '=')))
 		{
 			ft_printf_fd(1, "\"%s\" : not a valid identifier\n", retreat);
-			free(retreat);
 			free(tmp);
 			continue ;
 		}
@@ -266,7 +268,6 @@ int ft_get_new_var(t_control *list, char **newargv)
 				continue ;
 			free(tmp->str);
 			tmp->str = ft_strdup(retreat);
-			free(retreat);
 			continue ;
 		}
 		if (list->first_env_var->str == NULL)
@@ -282,7 +283,6 @@ int ft_get_new_var(t_control *list, char **newargv)
 		if (!new)
 			return (FAILURE);
 		new->str = ft_strdup(retreat);
-		free(retreat);
 		new->var_name = add_var_name(new->str);
 		new->next = NULL;
 		new->index = i;
