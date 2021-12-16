@@ -6,13 +6,21 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:40:53 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/15 20:07:18 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/16 14:53:06 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
+int	ft_isalnum(int c)
+{
+	if ((c >= 'a' && c <= 'z')
+		|| (c >= 'A' && c <= 'Z')
+		|| (c >= '0' && c <= '9'))
+		return (1);
+	else
+		return (0);
+}
 
 t_bool	is_quest(char *str)
 {
@@ -21,9 +29,10 @@ t_bool	is_quest(char *str)
 	i = -1;
 	while (str[++i])
 	{
-		if ((!(str[i] >= 'a' && str[i] <= 'z'))
-		|| (!(str[i] >= 'A' && str[i] <= 'Z'))
-		|| (!(str[i] >= '0' && str[i] <= '9')))
+		printf("checking %c\n", str[i]);
+		if (str[i] == '=')
+			return (FALSE);
+		if (!ft_isalnum(str[i]))
 			return (TRUE);
 	}
 	return (FALSE);
