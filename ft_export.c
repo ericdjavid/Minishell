@@ -203,18 +203,18 @@ char	*ft_deal_dollar(char *str, t_control *list)
 	int		i;
 
 	i = 0;
-	arr_str = ft_split(str, "$");
+	arr_str = ft_split(str, "$ ");
 	if (!arr_str)
 		return (str);
 
 	while (arr_str[++i])
 	{
-		// printf("arr i is |%s|\n", arr_str[i]);
+		printf("arr i is |%s|\n", arr_str[i]);
 		new_str = ft_get_dollar_var(arr_str[i], list);
 		free(arr_str[i]);
 		arr_str[i] = ft_strdup(new_str);
 		free(new_str);
-		// printf("new arr i is |%s|\n", arr_str[i]);
+		printf("new arr i is |%s|\n", arr_str[i]);
 	}
 
 	i = -1;
@@ -242,14 +242,17 @@ int ft_get_new_var(t_control *list, char **newargv)
 		//TODO: export = '' -> replace by " "
 		//TODO: export var= '$var' -> replace by "$var" (litteral)
 
-		// printf(PINK"newargv is %s\n"END, newargv[i]);
+		printf(PINK"newargv is %s\n"END, newargv[i]);
+		if (!(ft_check_position('$', '=', newargv[i])) || (newargv[i][0] <= 'Z'
+			&& newargv[i][0] >= 'A'))
+			continue ;
 		retreat = ft_deal_dollar(newargv[i], list);
 		if (retreat == NULL)
 			retreat = ft_strdup(newargv[i]);
-		// printf(YELLOW"new str is |%s|\n"END, retreat);
+		printf(YELLOW"new str is |%s|\n"END, retreat);
 		tmp = ft_is_in_list(list, retreat);
-		if ((retreat[0] <= '9' && retreat[0] >= '0') || (ft_is_space_before_qual(retreat)
-			|| is_quest(retreat) == TRUE || retreat[0] == '='))
+		if (((retreat[0] <= '9') && (retreat[0] >= '0')) || ((ft_is_space_before_qual(retreat))
+			|| (is_quest(retreat) == TRUE) || (retreat[0] == '=')))
 		{
 			ft_printf_fd(1, "\"%s\" : not a valid identifier\n", retreat);
 			free(retreat);

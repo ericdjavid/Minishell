@@ -6,11 +6,24 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:40:53 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/16 14:53:06 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/16 16:24:20 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_check_position(char c, char c2, char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i] && str[i] != c2)
+	{
+		if (str[i] == c)
+			return (SUCCESS);
+	}
+	return (FAILURE);
+}
 
 int	ft_isalnum(int c)
 {
@@ -29,7 +42,6 @@ t_bool	is_quest(char *str)
 	i = -1;
 	while (str[++i])
 	{
-		printf("checking %c\n", str[i]);
 		if (str[i] == '=')
 			return (FALSE);
 		if (!ft_isalnum(str[i]))

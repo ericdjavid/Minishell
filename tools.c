@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 09:24:21 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/15 18:48:13 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/16 15:05:25 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,11 @@ char *ft_is_dollar2(char *str, t_control *control)
 
 	i = 0;
 	size = 0;
+	if (ft_strncmp(str, "export", 6) == 0)
+	{
+		printf("is export \n");
+		return (str);
+	}
 	while (str[i])
 	{
 		if (str[i] == '$' && str[i + 1] != ' '
