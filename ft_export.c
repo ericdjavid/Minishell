@@ -203,6 +203,8 @@ char	*ft_deal_dollar(char *str, t_control *list)
 	int		i;
 
 	i = 0;
+	if(!(ft_strchr(str, '$')))
+		return (str);
 	arr_str = ft_split(str, "$ ");
 	if (!arr_str)
 		return (str);
@@ -216,7 +218,6 @@ char	*ft_deal_dollar(char *str, t_control *list)
 		free(new_str);
 		printf("new arr i is |%s|\n", arr_str[i]);
 	}
-
 	i = -1;
 	ret = NULL;
 	while (arr_str[++i])
@@ -272,7 +273,6 @@ int ft_get_new_var(t_control *list, char **newargv)
 		{
 			list->first_env_var->str = ft_strdup(retreat);
 			list->first_env_var->var_name = add_var_name(list->first_env_var->str);
-			free(retreat);
 			continue ;
 		}
 		tmp = list->first_env_var;
