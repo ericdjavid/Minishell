@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/18 12:28:28 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/13 21:31:51y edjavid          ###   ########.fr       */
+/*   Created: 2021/12/17 20:43:22 by edjavid           #+#    #+#             */
+/*   Updated: 2021/12/17 20:59:43 edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,25 +248,26 @@ int ft_get_new_var(t_control *list, char **newargv)
 		if (retreat)
 			free (retreat);
 		retreat = NULL;
-		//TODO: export = '' -> replace by " "
-		//TODO: export var= '$var' -> replace by "$var" (litteral)
-
 		// printf(PINK"newargv is %s\n"END, newargv[i]);
-		if (!(ft_check_position('$', '=', newargv[i])) || (newargv[i][0] <= 'Z'
-			&& newargv[i][0] >= 'A'))
-			continue ;
 		retreat = ft_deal_dollar(newargv[i], list);
 		// printf(PINK" retreat is %s\n"END, retreat);
 		if (retreat == NULL)
 			retreat = ft_remove_simple_quotes(newargv[i]);
-		// printf(YELLOW"new str is |%s|\n"END, retreat);
-		tmp = ft_is_in_list(list, retreat);
-		if (((retreat[0] <= '9') && (retreat[0] >= '0')) || ((ft_is_space_before_qual(retreat))
-			|| (is_quest(retreat) == TRUE) || (retreat[0] == '=')))
+		if (!(ft_check_position('$', '=', newargv[i])) || (newargv[i][0] <= 'Z'
+			&& newargv[i][0] >= 'A') || (newargv[i][0] == '=' ||  ((retreat[0] <= '9') && (retreat[0] >= '0')) ))
 		{
 			ft_printf_fd(1, "\"%s\" : not a valid identifier\n", retreat);
-			free(tmp);
 			continue ;
+		}
+		// printf(YELLOW"new str is |%s|\n"END, retreat);
+		tmp = ft_is_in_list(list, retreat);
+		if ((ft_is_space_before_qual(retreat))
+			|| (is_quest(retreat) == TRUE))
+		{
+			ft_printf_fd(1, "\"%s\" : not a valid identifier\n", retreat);
+			// free(retreat);
+			free(tmp);
+			continue;
 		}
 		if (tmp)
 		{
