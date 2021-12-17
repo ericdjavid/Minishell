@@ -203,13 +203,14 @@ char	*ft_deal_dollar(char *str, t_control *list)
 	int		i;
 
 	i = 0;
-	while (*str != '=')
-		str++;
 	if(!(ft_strchr(str, '$')))
-		return (str);
+		return (NULL);
+
+	// while (*str != '=')
+	// 	str++;
 	arr_str = ft_split(str, " $");
 	if (!arr_str)
-		return (str);
+		return (NULL);
 	while (arr_str[++i])
 	{
 		//TODO: PBM WITH export lol="     $USER      "
@@ -239,10 +240,16 @@ int ft_get_new_var(t_control *list, char **newargv)
 	t_element	*new;
 	t_element	*tmp;
 	char		*retreat;
+	// t_bool		to_free;
 
 	i = 0;
+	retreat = NULL;
+	// to_free = FALSE;
 	while (newargv[++i])
 	{
+		if (retreat)
+			free (retreat);
+		retreat = NULL;
 		//TODO: export = '' -> replace by " "
 		//TODO: export var= '$var' -> replace by "$var" (litteral)
 
@@ -250,9 +257,12 @@ int ft_get_new_var(t_control *list, char **newargv)
 		if (!(ft_check_position('$', '=', newargv[i])) || (newargv[i][0] <= 'Z'
 			&& newargv[i][0] >= 'A'))
 			continue ;
-		retreat = ft_deal_dollar(newargv[i], list);
+		// retreat = ft_deal_dollar(newargv[i], list);
 		if (retreat == NULL)
+		{
 			retreat = ft_strdup(newargv[i]);
+			// to_free = TRUE;
+		}
 		printf(YELLOW"new str is |%s|\n"END, retreat);
 		tmp = ft_is_in_list(list, retreat);
 		if (((retreat[0] <= '9') && (retreat[0] >= '0')) || ((ft_is_space_before_qual(retreat))
@@ -274,6 +284,7 @@ int ft_get_new_var(t_control *list, char **newargv)
 		{
 			list->first_env_var->str = ft_strdup(retreat);
 			list->first_env_var->var_name = add_var_name(list->first_env_var->str);
+			// free(retreat);
 			continue ;
 		}
 		tmp = list->first_env_var;
@@ -288,6 +299,10 @@ int ft_get_new_var(t_control *list, char **newargv)
 		new->index = i;
 		tmp->next = new;
 	}
+	if (retreat)
+		free (retreat);
+	// if (to_free)
+	// 	free (retreat);
 	return (1);
 }
 
