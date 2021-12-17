@@ -208,7 +208,7 @@ char	*ft_deal_dollar(char *str, t_control *list)
 
 	// while (*str != '=')
 	// 	str++;
-	arr_str = ft_split(str, " $");
+	arr_str = ft_split(str, "$");
 	if (!arr_str)
 		return (NULL);
 	while (arr_str[++i])
@@ -219,10 +219,11 @@ char	*ft_deal_dollar(char *str, t_control *list)
 		printf("new str is |%s|\n", new_str);
 		free(arr_str[i]);
 		arr_str[i] = ft_strdup(new_str);
-		free(new_str);
+		if (new_str)
+			free(new_str);
 		printf("new arr i is |%s|\n", arr_str[i]);
 	}
-	i = -1;
+	i = 0;
 	ret = NULL;
 	while (arr_str[++i])
 		ret = ft_strjoin(ret, arr_str[i]);
@@ -257,7 +258,8 @@ int ft_get_new_var(t_control *list, char **newargv)
 		if (!(ft_check_position('$', '=', newargv[i])) || (newargv[i][0] <= 'Z'
 			&& newargv[i][0] >= 'A'))
 			continue ;
-		// retreat = ft_deal_dollar(newargv[i], list);
+		retreat = ft_deal_dollar(newargv[i], list);
+		printf(PINK" retreat is %s\n"END, retreat);
 		if (retreat == NULL)
 		{
 			retreat = ft_strdup(newargv[i]);
