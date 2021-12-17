@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/16 16:22:41 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/17 19:58:34 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,8 @@ int		ft_unset(t_control *control, char **newargv);
 int		ft_print_stuff(t_element *first, char *str);
 
 		//	TOOLS2.C
+
+char	*ft_remove_simple_quotes(char *str);
 
 t_bool	is_quest(char *str);
 

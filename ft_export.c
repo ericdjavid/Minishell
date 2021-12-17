@@ -233,7 +233,6 @@ char	*ft_deal_dollar(char *str, t_control *list)
 	free(ret);
 	return (ret2);
 }
-// TODO: deal with spaces
 // TODO: add the simple quote modifier
 int ft_get_new_var(t_control *list, char **newargv)
 {
@@ -241,11 +240,9 @@ int ft_get_new_var(t_control *list, char **newargv)
 	t_element	*new;
 	t_element	*tmp;
 	char		*retreat;
-	// t_bool		to_free;
 
 	i = 0;
 	retreat = NULL;
-	// to_free = FALSE;
 	while (newargv[++i])
 	{
 		if (retreat)
@@ -254,18 +251,15 @@ int ft_get_new_var(t_control *list, char **newargv)
 		//TODO: export = '' -> replace by " "
 		//TODO: export var= '$var' -> replace by "$var" (litteral)
 
-		printf(PINK"newargv is %s\n"END, newargv[i]);
+		// printf(PINK"newargv is %s\n"END, newargv[i]);
 		if (!(ft_check_position('$', '=', newargv[i])) || (newargv[i][0] <= 'Z'
 			&& newargv[i][0] >= 'A'))
 			continue ;
 		retreat = ft_deal_dollar(newargv[i], list);
-		printf(PINK" retreat is %s\n"END, retreat);
+		// printf(PINK" retreat is %s\n"END, retreat);
 		if (retreat == NULL)
-		{
-			retreat = ft_strdup(newargv[i]);
-			// to_free = TRUE;
-		}
-		printf(YELLOW"new str is |%s|\n"END, retreat);
+			retreat = ft_remove_simple_quotes(newargv[i]);
+		// printf(YELLOW"new str is |%s|\n"END, retreat);
 		tmp = ft_is_in_list(list, retreat);
 		if (((retreat[0] <= '9') && (retreat[0] >= '0')) || ((ft_is_space_before_qual(retreat))
 			|| (is_quest(retreat) == TRUE) || (retreat[0] == '=')))
@@ -286,7 +280,6 @@ int ft_get_new_var(t_control *list, char **newargv)
 		{
 			list->first_env_var->str = ft_strdup(retreat);
 			list->first_env_var->var_name = add_var_name(list->first_env_var->str);
-			// free(retreat);
 			continue ;
 		}
 		tmp = list->first_env_var;
@@ -303,8 +296,6 @@ int ft_get_new_var(t_control *list, char **newargv)
 	}
 	if (retreat)
 		free (retreat);
-	// if (to_free)
-	// 	free (retreat);
 	return (1);
 }
 

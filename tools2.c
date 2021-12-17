@@ -6,11 +6,41 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:40:53 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/17 18:43:02 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/17 19:56:43 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*ft_remove_simple_quotes(char *str)
+{
+	int		i;
+	int		j;
+	char	*str2;
+	int		nb;
+
+	i = -1;
+	nb = 0;
+	if (!str)
+		return (NULL);
+	while (str[++i])
+	{
+		if (str[i] == '\'')
+			nb++;
+	}
+	str2 = malloc(sizeof(char) * (ft_strlen(str) - nb + 1));
+	i = -1;
+	j = 0;
+	while (str[++i])
+	{
+		if (str[i] == '\'')
+			continue ;
+		str2[j] = str[i];
+		j++;
+	}
+	str2[j] = '\0';
+	return (str2);
+}
 
 int	ft_check_position(char c, char c2, char *str)
 {
