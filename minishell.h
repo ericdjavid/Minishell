@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/17 19:58:34 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/17 20:12:54 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,6 +259,11 @@ void	ft_remove_env(t_control *list);
 char	*ft_get_dollar_var(char *str, t_control *list);
 
 int		ft_check_position(char c, char c2, char *str);
+
+		//	TOOLS3.C
+
+t_bool	ft_bad_entries(char *str);
+
 		//	FT_CLEAR.C
 
 int		ft_clear(char **newargv);

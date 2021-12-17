@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:31:49 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/15 18:41:36 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/17 20:18:47 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,10 @@ void	ft_minishell(char **paths, t_control *list)
 	}
 	if (cmd_line)
 		free(cmd_line);
-	if (ret < 0)
-		ft_printf_fd(2, "Un malloc a echoue !\n");
+	if (ret == -1)
+		ft_printf_fd(2, "Erreur : Un malloc a echoue !\n");
+	if (ret == -2)
+		ft_printf_fd(2, "Erreur : Simple quote ou double quote orphelin !\n");
 }
 
 void	sigint_handler(int sig)
