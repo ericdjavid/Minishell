@@ -6,11 +6,54 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:40:53 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/16 14:53:06 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/17 19:56:43 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*ft_remove_simple_quotes(char *str)
+{
+	int		i;
+	int		j;
+	char	*str2;
+	int		nb;
+
+	i = -1;
+	nb = 0;
+	if (!str)
+		return (NULL);
+	while (str[++i])
+	{
+		if (str[i] == '\'')
+			nb++;
+	}
+	str2 = malloc(sizeof(char) * (ft_strlen(str) - nb + 1));
+	i = -1;
+	j = 0;
+	while (str[++i])
+	{
+		if (str[i] == '\'')
+			continue ;
+		str2[j] = str[i];
+		j++;
+	}
+	str2[j] = '\0';
+	return (str2);
+}
+
+int	ft_check_position(char c, char c2, char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i] && str[i] != c2)
+	{
+		if (str[i] == c)
+			return (SUCCESS);
+	}
+	return (FAILURE);
+}
 
 int	ft_isalnum(int c)
 {
@@ -29,7 +72,6 @@ t_bool	is_quest(char *str)
 	i = -1;
 	while (str[++i])
 	{
-		printf("checking %c\n", str[i]);
 		if (str[i] == '=')
 			return (FALSE);
 		if (!ft_isalnum(str[i]))
@@ -105,30 +147,47 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (s - src - 1);
 }
 
+char *ft_deal_space(char *str)
+{
+	char	**split;
+	int		i;
+
+	i = 0;
+	split = NULL;
+	split = ft_split(str, " ");
+	while (split[i])
+	{
+		// printf("splitted val %d is |%s|\n", i, split[i]);
+		i++;
+	}
+	free_matc(split);
+	return (str);
+}
+
 char	*ft_get_dollar_var(char *str, t_control *list)
 {
-	// int			i;
 	t_element	*tmp;
 	char		*tmp_char;
+	char		*deal_space;
+	// int			after;
 
-	// i = 0;
 	tmp_char = NULL;
-	// while (str[++i] && str[i] != '$')
-	// 	;
-	// tmp_char = malloc(sizeof(char) * (i + 1));
-	// if (!tmp_char)
-	// 	return (NULL);
-	// ft_strlcpy(tmp_char, ++str, i);
-	// printf("tmp char is %s\n", tmp_char);
-	// tmp = ft_is_in_list(list, tmp_char);
+	deal_space = NULL;
+
+	if (ft_strchr(str, ' ') )
+	{
+		deal_space = ft_deal_space(str);
+	}
+	(void)deal_space;
+
 	tmp = ft_is_in_list(list, str);
 	if (!tmp)
 		return (NULL);
-	printf("(ft_get_doll)tmp->str is |%s|\n", tmp->str);
+	// printf("(ft_get_doll)tmp->str is |%s|\n", tmp->str);
 	free(tmp_char);
 	tmp_char = NULL;
 	tmp_char = add_value_name(tmp->str);
-	printf("(ft_get_doll)new value name is |%s|\n", tmp_char);
+	// printf("(ft_get_doll)new value name is |%s|\n", tmp_char);
 	return (tmp_char);
 }
 

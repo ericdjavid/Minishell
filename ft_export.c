@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/18 12:28:28 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/13 21:31:51y edjavid          ###   ########.fr       */
+/*   Created: 2021/12/17 20:43:22 by edjavid           #+#    #+#             */
+/*   Updated: 2021/12/17 20:59:43 edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,21 +203,27 @@ char	*ft_deal_dollar(char *str, t_control *list)
 	int		i;
 
 	i = 0;
+	if(!(ft_strchr(str, '$')))
+		return (NULL);
+
+	// while (*str != '=')
+	// 	str++;
 	arr_str = ft_split(str, "$");
 	if (!arr_str)
-		return (str);
-
+		return (NULL);
 	while (arr_str[++i])
 	{
-		// printf("arr i is |%s|\n", arr_str[i]);
+		//TODO: PBM WITH export lol="     $USER      "
+		printf("arr i is |%s|\n", arr_str[i]);
 		new_str = ft_get_dollar_var(arr_str[i], list);
+		printf("new str is |%s|\n", new_str);
 		free(arr_str[i]);
 		arr_str[i] = ft_strdup(new_str);
-		free(new_str);
-		// printf("new arr i is |%s|\n", arr_str[i]);
+		if (new_str)
+			free(new_str);
+		printf("new arr i is |%s|\n", arr_str[i]);
 	}
-
-	i = -1;
+	i = 0;
 	ret = NULL;
 	while (arr_str[++i])
 		ret = ft_strjoin(ret, arr_str[i]);
@@ -227,7 +233,6 @@ char	*ft_deal_dollar(char *str, t_control *list)
 	free(ret);
 	return (ret2);
 }
-// TODO: deal with spaces
 // TODO: add the simple quote modifier
 int ft_get_new_var(t_control *list, char **newargv)
 {
@@ -237,24 +242,32 @@ int ft_get_new_var(t_control *list, char **newargv)
 	char		*retreat;
 
 	i = 0;
+	retreat = NULL;
 	while (newargv[++i])
 	{
-		//TODO: export = '' -> replace by " "
-		//TODO: export var= '$var' -> replace by "$var" (litteral)
-
+		if (retreat)
+			free (retreat);
+		retreat = NULL;
 		// printf(PINK"newargv is %s\n"END, newargv[i]);
 		retreat = ft_deal_dollar(newargv[i], list);
+		// printf(PINK" retreat is %s\n"END, retreat);
 		if (retreat == NULL)
-			retreat = ft_strdup(newargv[i]);
-		// printf(YELLOW"new str is |%s|\n"END, retreat);
-		tmp = ft_is_in_list(list, retreat);
-		if ((retreat[0] <= '9' && retreat[0] >= '0') || (ft_is_space_before_qual(retreat)
-			|| is_quest(retreat) == TRUE || retreat[0] == '='))
+			retreat = ft_remove_simple_quotes(newargv[i]);
+		if (!(ft_check_position('$', '=', newargv[i])) || (newargv[i][0] <= 'Z'
+			&& newargv[i][0] >= 'A') || (newargv[i][0] == '=' ||  ((retreat[0] <= '9') && (retreat[0] >= '0')) ))
 		{
 			ft_printf_fd(1, "\"%s\" : not a valid identifier\n", retreat);
-			free(retreat);
-			free(tmp);
 			continue ;
+		}
+		// printf(YELLOW"new str is |%s|\n"END, retreat);
+		tmp = ft_is_in_list(list, retreat);
+		if ((ft_is_space_before_qual(retreat))
+			|| (is_quest(retreat) == TRUE))
+		{
+			ft_printf_fd(1, "\"%s\" : not a valid identifier\n", retreat);
+			// free(retreat);
+			free(tmp);
+			continue;
 		}
 		if (tmp)
 		{
@@ -262,14 +275,12 @@ int ft_get_new_var(t_control *list, char **newargv)
 				continue ;
 			free(tmp->str);
 			tmp->str = ft_strdup(retreat);
-			free(retreat);
 			continue ;
 		}
 		if (list->first_env_var->str == NULL)
 		{
 			list->first_env_var->str = ft_strdup(retreat);
 			list->first_env_var->var_name = add_var_name(list->first_env_var->str);
-			free(retreat);
 			continue ;
 		}
 		tmp = list->first_env_var;
@@ -279,12 +290,13 @@ int ft_get_new_var(t_control *list, char **newargv)
 		if (!new)
 			return (FAILURE);
 		new->str = ft_strdup(retreat);
-		free(retreat);
 		new->var_name = add_var_name(new->str);
 		new->next = NULL;
 		new->index = i;
 		tmp->next = new;
 	}
+	if (retreat)
+		free (retreat);
 	return (1);
 }
 

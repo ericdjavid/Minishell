@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:18:13 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/15 20:08:43 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/17 20:44:59 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,24 +60,13 @@ char	*is_in_list(t_element *first, char *str)
 {
 	t_element	*tmp;
 	char		*new_str;
-	// char		*wip_str;
 
 	new_str = ++str;
 	tmp = first;
 	while (tmp)
 	{
-		// printf("comparing |%s| and |%s| \n", str, tmp->var_name);
-		// wip_str = ft_get_parsed_env(tmp->str);
-		// printf("wip str is %s\n", wip_str);
-		// printf("think I got the var names.. : %s\n", tmp->var_name);
 		if (ft_strncmp(tmp->var_name, new_str, ft_strlen(new_str)) == 0)
-		{
-		// printf("we found the same\n");
-		// 	free(wip_str);
 			return (ft_get_good_str(tmp->str));
-		}
-		// else
-		// 	free(wip_str);
 		if (tmp->next == NULL)
 			break ;
 		tmp = tmp->next;
@@ -98,26 +87,6 @@ void	add_index(t_element *elem)
 	elem->index = ++i;
 	return ;
 }
-
-// TO DEAL WITH EXPORT QUOTES
-	// 1 REPLACE EXISTING SIMPLE QUOTES BY DOUBLE
-	// 2 ADD DOUBLE QUOTES TO ALL
-	//(if new env var with simple quotes, replace by double quotes)
-// char	*processing_exp(char *str)
-// {
-// 	char	*str;
-// 	int		i;
-
-// 	i = 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] == '=' && str[i + 1] == "\'")
-// 		{
-
-// 		}
-// 		i++;
-// 	}
-// }
 
 int	ft_init_list(t_control *list, char **envp)
 {

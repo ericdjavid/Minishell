@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/15 19:49:05 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/17 20:12:54 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,8 @@ int		ft_print_stuff(t_element *first, char *str);
 
 		//	TOOLS2.C
 
+char	*ft_remove_simple_quotes(char *str);
+
 t_bool	is_quest(char *str);
 
 int		ft_is_space_before_qual(char *str);
@@ -255,6 +257,12 @@ int		ft_is_space_before_qual(char *str);
 void	ft_remove_env(t_control *list);
 
 char	*ft_get_dollar_var(char *str, t_control *list);
+
+int		ft_check_position(char c, char c2, char *str);
+
+		//	TOOLS3.C
+
+t_bool	ft_bad_entries(char *str);
 
 		//	FT_CLEAR.C
 

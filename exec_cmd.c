@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/15 18:44:50 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/17 20:18:24 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 	int		newargv_len;
 	char	*new_line;
 
+	if (ft_bad_entries(cmd_line) == TRUE)
+		return (-2);
 	if (!*cmd_line)
 		return (1);
 	new_line = ft_strdup(cmd_line);

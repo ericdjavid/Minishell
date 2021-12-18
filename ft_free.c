@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 16:51:08 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/09 20:23:07 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/17 20:32:21 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	free_elms(t_element *first)
 
 void	free_all(t_control *control)
 {
+	printf("is freeing\n");
 	if (control->first_env)
 		free_elms(control->first_env);
 	if (control->first_export)
