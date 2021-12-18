@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/17 20:18:24 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/18 19:22:27 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ void	free_newargv(char ***matc)
 char	*put_spAroundPipes(char *str)
 {
 	char	*new;
-	int	c_1;
-	int	c_2;
+	int		c_1;
+	int		c_2;
 
 	c_2 = 0;
 	c_1 = 0;
