@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/17 20:12:54 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/18 19:30:42 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_element
 	char				*var_name;
 	int					index;
 	struct s_element	*next;
-	struct s_control			*control;
+	struct s_control	*control;
 }	t_element;
 
 typedef struct s_control
@@ -138,6 +138,7 @@ char	***free_init_new(char ***newargv, char **split);
 int		is_syntax_er_spl(char **split);
 
 		//	TOOLS.C
+char	*get_new_str(char *str, int i, int *size);
 
 void	ft_dup2(int newfd, int oldfd);
 
@@ -145,7 +146,7 @@ void	ft_close_fd(int fd);
 
 // void	ft_is_dollar(char **str, t_control *control);
 
-char *ft_is_dollar2(char *str, t_control *control);
+char	*ft_is_dollar2(char *str, t_control *control);
 
 t_element	*ft_is_in_list(t_control *list, char *str);
 
@@ -155,9 +156,9 @@ t_element	*check_in_list(t_element *first, char *str);
 
 int			ft_export(t_control *list, char **newargv);
 
-void    	ft_print_export(t_element *first, t_bool bool);
+void	ft_print_export(t_element *first, t_bool bool);
 
-t_element 	*ft_init();
+t_element	*ft_init();
 
 int			add_end_list(char *str, t_element *first, int type, t_control *control);
 
@@ -173,7 +174,7 @@ int			order_ascii(t_control *list);
 
 int			ft_get_new_var(t_control *list, char **newargv);
 
-char    	*ft_remove_quotes(char *str);
+char	*ft_remove_quotes(char *str);
 
 int			ft_add_new_var(t_control  *list, int type);
 
@@ -215,10 +216,9 @@ int			exit_redirection(int *ret);
 
 char		*is_in_list(t_element *first, char *str);
 
-void 		add_index(t_element *elem);
+void		add_index(t_element *elem);
 
 char	*ft_get_parsed_env(char *str);
-
 
 int			ft_init_list(t_control *list, char **envp);
 
@@ -261,6 +261,8 @@ char	*ft_get_dollar_var(char *str, t_control *list);
 int		ft_check_position(char c, char c2, char *str);
 
 		//	TOOLS3.C
+
+char	*get_new_line_cmd(char *str, int i, int size, char *str_good);
 
 t_bool	ft_bad_entries(char *str);
 

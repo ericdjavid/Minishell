@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:31:49 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/17 20:31:48 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/18 19:22:50 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	status = 0;
 int	main(int ac, char **av, char **envp)
 {
 	char		**paths;
-    t_control   list;
+	t_control	list;
 
 	(void)av;
 	if (ac != 1)

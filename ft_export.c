@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/17 20:43:22 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/17 20:59:43 edjavid          ###   ########.fr       */
+/*   Created: 2021/12/18 19:18:36 by edjavid           #+#    #+#             */
+/*   Updated: 2021/12/18 19:21:57 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,16 @@ char	*ft_remove_quotes(char *str)
 
 //add the simple quotes before =
 //TODO: when creating a new env with " ", bad behavior (double quotes)
-char *add_str2(char *str, int type)
+char	*add_str2(char *str, int type)
 {
 	char	*tmp;
 	int		i;
 	int		j;
 	t_bool	is_equal;
+	int		k;
 
 	i = 0;
+	k = 0;
 	is_equal = FALSE;
 	tmp = NULL;
 	while (str[i])
@@ -93,27 +95,21 @@ char *add_str2(char *str, int type)
 		return (NULL);
 	if (is_equal == TRUE && type == DEAL_EXPORT)
 		tmp = malloc(sizeof(char) * (ft_strlen(str) + 1 + 500));
-	// if (ft_get_quotes(str) > 0)
-	// {
-	//     str = move_quotes(str);
-	//     tmp = malloc(sizeof(char) * ft_strlen(str) + 1);
-	// }
 	if (!tmp)
 		tmp = malloc(sizeof(char) * ft_strlen(str) + 1);
-	// else
-		// tmp = malloc(sizeof(char) * ft_strlen(str) + 1);
 	if (!tmp)
 		return (NULL);
 	i = 0;
 	j = 0;
 	while (str[i] != '\0')
 	{
-		if (is_equal == TRUE && type == DEAL_EXPORT && str[i] == '=')
+		if (is_equal == TRUE && type == DEAL_EXPORT && str[i] == '=' && k == 0)
 		{
 			tmp[j] = str[i];
 			tmp[++j] = '\"';
 			i++;
 			j++;
+			k = 1;
 			continue ;
 		}
 		tmp[j] = str[i];
@@ -203,37 +199,29 @@ char	*ft_deal_dollar(char *str, t_control *list)
 	int		i;
 
 	i = 0;
-	if(!(ft_strchr(str, '$')))
+	if (!(ft_strchr(str, '$')))
 		return (NULL);
-
-	// while (*str != '=')
-	// 	str++;
 	arr_str = ft_split(str, "$");
 	if (!arr_str)
 		return (NULL);
 	while (arr_str[++i])
 	{
-		//TODO: PBM WITH export lol="     $USER      "
-		printf("arr i is |%s|\n", arr_str[i]);
 		new_str = ft_get_dollar_var(arr_str[i], list);
-		printf("new str is |%s|\n", new_str);
 		free(arr_str[i]);
 		arr_str[i] = ft_strdup(new_str);
 		if (new_str)
 			free(new_str);
-		printf("new arr i is |%s|\n", arr_str[i]);
 	}
 	i = 0;
 	ret = NULL;
 	while (arr_str[++i])
 		ret = ft_strjoin(ret, arr_str[i]);
-	// if (i != 0)
 	free_matc(arr_str);
 	ret2 = ft_remove_quotes(ret);
 	free(ret);
 	return (ret2);
 }
-// TODO: add the simple quote modifier
+
 int ft_get_new_var(t_control *list, char **newargv)
 {
 	int			i;
@@ -248,26 +236,22 @@ int ft_get_new_var(t_control *list, char **newargv)
 		if (retreat)
 			free (retreat);
 		retreat = NULL;
-		// printf(PINK"newargv is %s\n"END, newargv[i]);
 		retreat = ft_deal_dollar(newargv[i], list);
-		// printf(PINK" retreat is %s\n"END, retreat);
 		if (retreat == NULL)
 			retreat = ft_remove_simple_quotes(newargv[i]);
 		if (!(ft_check_position('$', '=', newargv[i])) || (newargv[i][0] <= 'Z'
-			&& newargv[i][0] >= 'A') || (newargv[i][0] == '=' ||  ((retreat[0] <= '9') && (retreat[0] >= '0')) ))
+			&& newargv[i][0] >= 'A') || (newargv[i][0] == '=' || ((retreat[0] <= '9') && (retreat[0] >= '0'))))
 		{
 			ft_printf_fd(1, "\"%s\" : not a valid identifier\n", retreat);
 			continue ;
 		}
-		// printf(YELLOW"new str is |%s|\n"END, retreat);
 		tmp = ft_is_in_list(list, retreat);
 		if ((ft_is_space_before_qual(retreat))
 			|| (is_quest(retreat) == TRUE))
 		{
 			ft_printf_fd(1, "\"%s\" : not a valid identifier\n", retreat);
-			// free(retreat);
 			free(tmp);
-			continue;
+			continue ;
 		}
 		if (tmp)
 		{
@@ -305,12 +289,10 @@ int	ft_add_new_var(t_control *list, int type)
 	t_element	*tmp;
 
 	tmp = list->first_env_var;
-	// printf("first is %s", tmp->str);
 	if (!tmp)
 		return (FAILURE);
 	while (tmp && tmp->str)
 	{
-		//TODO: add " " if =
 		if (type == DEAL_EXPORT)
 			add_end_list(tmp->str, list->first_export, DEAL_EXPORT, list);
 		else
@@ -328,10 +310,8 @@ sous la forme : declare -x nom=”valeur” ou declare -x nom */
 int	ft_export(t_control *list, char **newargv)
 {
 	(void)newargv;
-	// ft_print_stuff(list->first_export, "export list");
 	ft_add_new_var(list, DEAL_EXPORT);
 	ft_print_export(list->first_export, TRUE);
-	// ft_print_stuff(list->first_env_var, "first env var list");
 	free_all(list);
 	return (1);
 }
@@ -340,7 +320,7 @@ void	ft_remove_first_env(t_control *control)
 {
 	t_element *tmp;
 
-	if(control->first_env_var == NULL)
+	if (control->first_env_var == NULL)
 		return ;
 	tmp = control->first_env_var;
 	if (control->first_env_var->next)
@@ -349,6 +329,7 @@ void	ft_remove_first_env(t_control *control)
 	free(tmp->str);
 	free(tmp);
 }
+
 /* liste toutes les variables d’environnement dans un ordre random. sous la forme : nom=valeur */
 int	ft_env(t_control *list)
 {
