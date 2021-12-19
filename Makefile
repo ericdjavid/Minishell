@@ -27,7 +27,7 @@ OBJS_P	= $(_SRCS_P:.c=.o)
 
 CFLAGS	= -Wall -Wextra -Werror
 
-FLAGS	= -lreadline -L/Users/$(UNAME)/.brew/Cellar/readline/8.1/lib/ -I/Users/$(UNAME)/.brew/Cellar/readline/8.1/include
+READLINE	= -lreadline
 
 %.o: %.c
 			gcc -g $(CFLAGS) $(INC) -o $@ -c $?
@@ -38,22 +38,22 @@ RM		= rm -rf
 
 INC		= -I includes/
 
-lib:
+$(NAME):
+	@echo "$<[$(C_PURPLE)COMPILING$(C_END)]"
 	@make -C Libft
-
-$(NAME):	lib $(OBJS) $(OBJS_P)
-		gcc -g $(CFLAGS) $(OBJS) $(OBJS_P) $(FLAGS) -o $(NAME) Libft/libft.a
+	@gcc -g $(CFLAGS) -o $(NAME) $(SRCS) $(_SRCS_P) Libft/libft.a $(READLINE)
+	@echo "$<[$(C_GREEN)OK$(C_END)]"
 
 clean:
-		$(RM) $(OBJS) $(OBJS_P)
-		make fclean -C Libft
+	@echo "$<[$(C_YELLOW)Cleaning .o files$(C_END)]"
+	@$(RM) $(OBJS) $(OBJS_P)
+	@make fclean -C Libft
+	@echo "$<[$(C_GREEN)OK$(C_END)]"
 
 fclean:		clean
-			$(RM) $(NAME)
-			make fclean -C Libft
+	@$(RM) $(NAME)
+	@make fclean -C Libft
 
 re:		fclean all
-
-reskiperror: fclean skiperror
 
 .PHONY:		all clean fclean re
