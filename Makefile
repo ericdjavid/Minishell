@@ -43,6 +43,22 @@ $(NAME):
 	@make -C Libft
 	@gcc -g $(CFLAGS) -o $(NAME) $(SRCS) $(_SRCS_P) Libft/libft.a $(READLINE)
 	@echo "$<[$(C_GREEN)OK$(C_END)]"
+	@echo "        _       _     _          _ _"
+	@echo "  /\/\ (_)_ __ (_)___| |__   ___| | |"
+	@echo " /    \| | '_ \| / __| '_ \ / _ \ | |"
+	@echo "/ /\/\ \ | | | | \__ \ | | |  __/ | |"
+	@echo "\/    \/_|_| |_|_|___/_| |_|\___|_|_|"
+	@echo "       _"
+	@echo "  __ _| |__  _ __ _   _ _ __"
+	@echo " / _  |  _ \|  __| | | |  _ \ "
+	@echo "| (_| | |_) | |  | |_| | | | |"
+	@echo " \__,_|_.__/|_|   \__,_|_| |_|"
+	@echo "          _  _             _     _"
+	@echo "  ___  __| |(_) __ ___   _(_) __| |"
+	@echo " / _ \/ _  || |/ _  \ \ / / |/ _  |"
+	@echo "|  __/ (_| || | (_| |\ V /| | (_| |"
+	@echo " \___|\__,_|/ |\__,_| \_/ |_|\__,_|"
+	@echo "          |__/"
 
 clean:
 	@echo "$<[$(C_YELLOW)Cleaning .o files$(C_END)]"
@@ -57,3 +73,5 @@ fclean:		clean
 re:		fclean all
 
 .PHONY:		all clean fclean re
+
+
