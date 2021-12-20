@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 15:10:49 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/20 15:11:27 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/20 18:48:43 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	ft_add_new_var(t_control *list, int type)
 		return (FAILURE);
 	while (tmp && tmp->str)
 	{
+		list->size++;
 		if (type == DEAL_EXPORT)
 			add_end_list(tmp->str, list->first_export, DEAL_EXPORT, list);
 		else

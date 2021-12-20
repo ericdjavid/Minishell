@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/20 15:07:45 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/20 18:41:59 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,6 +239,8 @@ int		check_ret_stdout(int *ret);
 		//	FT_CHILD.C
 
 int		ft_child(char ***newargv, char **paths, t_control *list, int **fds);
+
+char	**ft_get_envs_var(t_control *list);
 
 		//	FT_UNSET.C
 void	ft_replace_str(t_element *tmp);
