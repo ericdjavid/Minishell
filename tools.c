@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 09:24:21 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/18 19:26:45 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/20 15:00:25 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,62 +94,4 @@ void	ft_close_fd(int fd)
 		perror("La fonction close a echoue");
 		exit(EXIT_FAILURE);
 	}
-}
-
-//to delete
-// TODO:segault if $var is not found
-// TODO: display the var if "", but don't if ''
-void	ft_is_dollar(char **str, t_control *control)
-{
-	int		i;
-	char	*str_good;
-
-	(void) control;
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i][0] == '$' && str[i][1] != ' '
-			&& str[i][1] && str[i][1] != '?')
-		{
-			str_good = is_in_list(control->first_env, str[i]);
-			if (str_good == NULL)
-				str_good = is_in_list(control->first_env_var, str[i]);
-			if (str_good != NULL)
-			{
-				free(str[i]);
-				str[i] = ft_strdup(str_good);
-			}
-			else
-			{
-				free(str[i]);
-				str[i] = NULL;
-			}
-		}
-	}
-	return ;
-}
-
-char	*get_new_str(char *str, int i, int *size)
-{
-	int		j;
-	int		k;
-	char	*new_str;
-
-	j = i + 1;
-	while (str[j] && str[j] != '\0' && str[j] != '$' && str[j] != ' ' && str[j] != '\"')
-		j++;
-	*size = j - i;
-	new_str = malloc(sizeof(char) * (j - i + 1));
-	k = 0;
-	new_str[k] = '$';
-	i++;
-	k++;
-	while (str[i] && str[i] != '\0' && str[i] != '$' && str[i] != ' ' && str[i] != '\"')
-	{
-		new_str[k] = str[i];
-		k++;
-		i++;
-	}
-	new_str[k] = '\0';
-	return (new_str);
 }

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 14:03:18 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/14 10:13:16 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/20 15:04:38 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,10 @@ t_element	*ft_good_find_in_list(t_element *first, char *noequal_str)
 	t_element	*tmp;
 
 	tmp = first;
-
 	while (tmp && tmp->var_name)
 	{
 		if (ft_strncmp(tmp->var_name, noequal_str,
-			ft_strlen(noequal_str)) == 0)
+				ft_strlen(noequal_str)) == 0)
 		{
 			printf(RED"it's in the fucking list\n"END);
 			return (tmp);
@@ -86,31 +85,6 @@ t_element	*ft_good_find_in_list(t_element *first, char *noequal_str)
 		tmp = tmp->next;
 	}
 	return (NULL);
-}
-
-void	ft_delete_last(t_element *first)
-{
-	t_element *tmp;
-
-	tmp = first;
-	while (tmp->next->next != NULL)
-		tmp = tmp->next;
-	free(tmp->next->str);
-	free(tmp->next->var_name);
-	free(tmp->next);
-	tmp->next = NULL;
-	return ;
-}
-
-void	ft_remove_from_env(t_element *to_supp, t_control *control)
-{
-	if (to_supp == control->first_env_var)
-		ft_remove_first_env(control);
-	else if (to_supp->next == NULL)
-		ft_delete_last(control->first_env_var);
-	else
-		ft_replace_str(to_supp);
-	return ;
 }
 
 //if = in uset word, print "not a valid identifier"

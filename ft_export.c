@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 19:18:36 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/18 19:21:57 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/20 15:11:18 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,9 +170,9 @@ t_element	*ft_init(void)
 	return (first);
 }
 
-void    ft_print_export(t_element *first, t_bool bool)
+void	ft_print_export(t_element *first, t_bool bool)
 {
-	t_element *tmp;
+	t_element	*tmp;
 
 	tmp = first;
 	if (!first)
@@ -181,7 +181,7 @@ void    ft_print_export(t_element *first, t_bool bool)
 	{
 		if (bool == TRUE)
 			ft_printf_fd(1, "export ");
-		ft_printf_fd(1 ,"%s\n", tmp->str);
+		ft_printf_fd(1, "%s\n", tmp->str);
 		if (tmp->next)
 			tmp = tmp->next;
 		else
@@ -240,7 +240,8 @@ int ft_get_new_var(t_control *list, char **newargv)
 		if (retreat == NULL)
 			retreat = ft_remove_simple_quotes(newargv[i]);
 		if (!(ft_check_position('$', '=', newargv[i])) || (newargv[i][0] <= 'Z'
-			&& newargv[i][0] >= 'A') || (newargv[i][0] == '=' || ((retreat[0] <= '9') && (retreat[0] >= '0'))))
+			&& newargv[i][0] >= 'A') || (newargv[i][0] == '='
+			|| ((retreat[0] <= '9') && (retreat[0] >= '0'))))
 		{
 			ft_printf_fd(1, "\"%s\" : not a valid identifier\n", retreat);
 			continue ;
@@ -264,7 +265,8 @@ int ft_get_new_var(t_control *list, char **newargv)
 		if (list->first_env_var->str == NULL)
 		{
 			list->first_env_var->str = ft_strdup(retreat);
-			list->first_env_var->var_name = add_var_name(list->first_env_var->str);
+			list->first_env_var->var_name
+				= add_var_name(list->first_env_var->str);
 			continue ;
 		}
 		tmp = list->first_env_var;
@@ -281,60 +283,5 @@ int ft_get_new_var(t_control *list, char **newargv)
 	}
 	if (retreat)
 		free (retreat);
-	return (1);
-}
-
-int	ft_add_new_var(t_control *list, int type)
-{
-	t_element	*tmp;
-
-	tmp = list->first_env_var;
-	if (!tmp)
-		return (FAILURE);
-	while (tmp && tmp->str)
-	{
-		if (type == DEAL_EXPORT)
-			add_end_list(tmp->str, list->first_export, DEAL_EXPORT, list);
-		else
-			add_end_list(tmp->str, list->first_env, 0, list);
-		if (tmp->next)
-			tmp = tmp->next;
-		else
-			break ;
-	}
-	return (SUCCESS);
-}
-
-/* Liste toutes les variables d’environnement dans l’ordre ascii.
-sous la forme : declare -x nom=”valeur” ou declare -x nom */
-int	ft_export(t_control *list, char **newargv)
-{
-	(void)newargv;
-	ft_add_new_var(list, DEAL_EXPORT);
-	ft_print_export(list->first_export, TRUE);
-	free_all(list);
-	return (1);
-}
-
-void	ft_remove_first_env(t_control *control)
-{
-	t_element *tmp;
-
-	if (control->first_env_var == NULL)
-		return ;
-	tmp = control->first_env_var;
-	if (control->first_env_var->next)
-		control->first_env_var = control->first_env_var->next;
-	free(tmp->var_name);
-	free(tmp->str);
-	free(tmp);
-}
-
-/* liste toutes les variables d’environnement dans un ordre random. sous la forme : nom=valeur */
-int	ft_env(t_control *list)
-{
-	ft_add_new_var(list, DEAL_ENV);
-	ft_print_export(list->first_env, FALSE);
-	free_all(list);
 	return (1);
 }
