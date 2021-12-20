@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_child.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:44:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/15 17:48:14 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/20 16:24:00 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//  when deleting the folder where we are and pwd
+// pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
 int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 {
 	int		*ret;
@@ -35,8 +37,11 @@ int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 		status = 126;
 	}
 	else if (execve((*newargv)[0],
+	// rmplcacer NULL par les vars d env avec une valeur
+	//  incrementer SHLVL au debut de minishell (si aucun set 1)
 		(*newargv), NULL) < 0)
 		status = 1;
 	free(ret);
 	exit(status);
 }
+
