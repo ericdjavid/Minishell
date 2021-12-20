@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/18 19:30:42 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/20 15:07:45 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,7 @@ int		check_ret_stdout(int *ret);
 int		ft_child(char ***newargv, char **paths, t_control *list, int **fds);
 
 		//	FT_UNSET.C
+void	ft_replace_str(t_element *tmp);
 
 int		ft_unset(t_control *control, char **newargv);
 
@@ -266,12 +267,21 @@ char	*get_new_line_cmd(char *str, int i, int size, char *str_good);
 
 t_bool	ft_bad_entries(char *str);
 
-		//	FT_CLEAR.C
+		//	ft_clear.c
 
 int		ft_clear(char **newargv);
 
 int		is_OptionOfClear(char **newargv);
 
+		//	TOOLS4.C
+
+void	ft_delete_last(t_element *first);
+
+void	ft_remove_from_env(t_element *to_supp, t_control *control);
+
+char	*get_new_str(char *str, int i, int *size);
+
+void	ft_is_dollar(char **str, t_control *control);
 
 		//	FT_EXIT.C
 
