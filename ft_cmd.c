@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/16 14:44:28 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/21 18:00:49 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 	fds = init_fds();
 	if (!fds)
 		return (0);
+		// TODO: deal with it
+	ft_add_new_var(list, DEAL_ENV);
+	ft_add_new_var(list, DEAL_EXPORT);
 	while (newargv[n_newargv])
 	{
 		if (pipe(fds[0]) == -1)

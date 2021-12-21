@@ -30,27 +30,52 @@ char	*ft_fill_env(t_element *tmp)
 	return (str);
 }
 
+int	ft_add_from_list(char **neo_env, t_element *first, int i)
+{
+	t_element *tmp;
+
+	tmp = first;
+	if (!tmp)
+	{
+		printf("list is empty\n");
+		return (FAILURE);
+	}
+	while (tmp)
+	{
+		if (tmp->next == NULL)
+			break ;
+		neo_env[i] = ft_fill_env(tmp);
+			// printf("Sending |%s|\n", neo_env[i]);
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
+
 char	**ft_get_envs_var(t_control *list)
 {
 	char		**neo_env;
-	t_element	*tmp;
+	// t_element	*tmp;
 	int			i;
 
 	i = 0;
 	neo_env = malloc(sizeof(char *) * (list->size + 1));
 	if (!neo_env)
 		return (0);
-	tmp = list->first_env;
-	if (!tmp)
-		return 0;
-	while (tmp)
-	{
-		if (tmp->next == NULL)
-			break ;
-		neo_env[i] = ft_fill_env(tmp);
-		i++;
-		tmp = tmp->next;
-	}
+	i = ft_add_from_list(neo_env, list->first_env, i);
+	// ft_print_stuff(list->first_env_var, "new envs");
+	// i = ft_add_from_list(neo_env, list->first_env_var, i);
+	// tmp = list->first_env;
+	// if (!tmp)
+	// 	return 0;
+	// while (tmp)
+	// {
+	// 	if (tmp->next == NULL)
+	// 		break ;
+	// 	neo_env[i] = ft_fill_env(tmp);
+	// 	i++;
+	// 	tmp = tmp->next;
+	// }
 	//TODO: think I have to add also new envs
 	neo_env[i] = 0;
 	return (neo_env);
@@ -65,7 +90,6 @@ int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 	char	**new_env;
 
 	new_env = NULL;
-	// ft_deal_SHLVL(list);
 	new_env = ft_get_envs_var(list);
 	// i = 0;
 	// while (new_env[i])
