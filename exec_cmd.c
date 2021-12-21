@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/18 19:22:27 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/21 16:55:30 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 	if (!newargv)
 		return (-1);
 	newargv_len = ft_3dimlen(newargv + 1);
+	//TODO : Fix free pbm with exit
 	if (newargv_len == 1 && !ft_strncmp(newargv[1][0], "exit", 4))
 	{
+		free(new_line);
 		write(1, "exit\n", 5);
 		return (ft_exit(newargv[1]) - 1);
 	}

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:18:13 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/17 20:44:59 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/21 17:03:33 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,10 @@ int	ft_init_list(t_control *list, char **envp)
 	while (envp[++i])
 	{
 		list->size++;
-		add_end_list(envp[i], list->first_export, DEAL_EXPORT, list);
-		add_end_list(envp[i], list->first_env, 0, list);
+		add_end_list(envp[i], list->first_export, DEAL_EXPORT);
+		add_end_list(envp[i], list->first_env, 0);
 	}
+	ft_deal_SHLVL(list);
 	add_index(list->first_export);
 	while (check_order(list) == FALSE)
 		order_ascii(list);

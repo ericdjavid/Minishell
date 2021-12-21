@@ -63,9 +63,9 @@ int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 {
 	int		*ret;
 	char	**new_env;
-	int		i;
 
 	new_env = NULL;
+	// ft_deal_SHLVL(list);
 	new_env = ft_get_envs_var(list);
 	// i = 0;
 	// while (new_env[i])
