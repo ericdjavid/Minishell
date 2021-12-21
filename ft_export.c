@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 19:18:36 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/20 15:11:18 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/21 15:15:18 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ char	*add_str2(char *str, int type)
 	return (tmp);
 }
 
-int	add_end_list(char *str, t_element *first, int type, t_control *control)
+int	add_end_list(char *str, t_element *first, int type)
 {
 	t_element	*tmp;
 	t_element	*tmp2;
@@ -139,7 +139,7 @@ int	add_end_list(char *str, t_element *first, int type, t_control *control)
 		first->str = str_new;
 		first->var_name = add_var_name(str_new);
 		first->next = NULL;
-		first->control = control;
+		// first->control = control;
 		return (SUCCESS);
 	}
 	tmp = first;
@@ -150,24 +150,9 @@ int	add_end_list(char *str, t_element *first, int type, t_control *control)
 	tmp2->var_name = add_var_name(str_new);
 	tmp2->next = NULL;
 	tmp2->index = 0;
-	first->control = control;
+	// first->control = control;
 	tmp->next = tmp2;
 	return (SUCCESS);
-}
-
-t_element	*ft_init(void)
-{
-	t_element	*first;
-
-	first = malloc(sizeof(*first));
-	if (!first)
-		return (NULL);
-	first->str = NULL;
-	first->var_name = NULL;
-	first->next = NULL;
-	first->index = 0;
-	first->control = NULL;
-	return (first);
 }
 
 void	ft_print_export(t_element *first, t_bool bool)
