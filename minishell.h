@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/15 19:49:05 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/21 17:59:50 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +119,13 @@ int		ft_cmd(char ***newargv, char **paths, t_control *list);
 
 int		*init_ret(void);
 
-int		**init_fds(void);
+int		**init_fds(char ***newargv);
 
 int		status_free(int **fds);
 
 int		get_n_cmd(char *cmd_line);
+
+int		n_pid(char ***newargv);
 
 		//	INIT_NEWARGV.C
 
@@ -266,5 +268,12 @@ int		is_OptionOfClear(char **newargv);
 		//	FT_EXIT.C
 
 int		ft_exit(char **arg);
+
+
+		//	FT_CLOSE_FDS.C
+
+void	ft_close_fds(int **fds, int n);
+
+void	ft_close_fds_around(int **fds, int n);
 
 #endif
