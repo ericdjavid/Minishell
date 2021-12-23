@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 19:18:36 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/21 15:15:18 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/23 16:43:22 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,5 +268,8 @@ int ft_get_new_var(t_control *list, char **newargv)
 	}
 	if (retreat)
 		free (retreat);
+	ft_print_stuff(list->first_env_var, "new env arr");
+	ft_add_new_var(list, DEAL_EXPORT);
+	ft_print_stuff(list->first_export, "Export list");
 	return (1);
 }

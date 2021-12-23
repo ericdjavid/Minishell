@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 12:10:45 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/23 17:26:36 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,6 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 	while (newargv[n_newargv])
 	{
 		fds[0][0] += 1;
-		if (!ft_strncmp(newargv[n_newargv][0], "export",
-					ft_strlen(newargv[n_newargv][0]))
-				&& newargv[n_newargv][1])
-			ft_get_new_var(list, newargv[n_newargv]);
 		if (!ft_strncmp(newargv[n_newargv][0], "unset",
 					ft_strlen(newargv[n_newargv][0]))
 				&& newargv[n_newargv][1])
