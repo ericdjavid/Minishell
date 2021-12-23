@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/21 20:01:25 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/23 14:43:51 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,8 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 	if (!newargv)
 		return (-1);
 	newargv_len = ft_3dimlen(newargv + 1);
-	if (newargv_len == 1 && !ft_strncmp(newargv[1][0], "exit", 4))
-	{
-		write(1, "exit\n", 5);
-		ret = ft_exit(newargv[1]) - 1;
-	}
-	else if (newargv_len == 1 && !ft_strncmp(newargv[1][0], "cd", 3))
-		ft_cd(newargv[1]);
+	if (newargv_len == 1 && is_builtins(newargv[1][0]))
+		ret = ft_builtins(newargv[1], list);
 	else
 		ft_cmd(newargv, paths, list);
 	free_newargv(newargv);
@@ -55,7 +50,7 @@ char	*init_cmd_path(char *cmd, char **paths)
 	size_t	cmd_len;
 	char	*cmd_path;
 
-	if (is_builtins(cmd))
+	if (is_builtins(cmd) || *cmd == '/')
 		return (cmd);
 	n_path = 0;
 	cmd_len = ft_strlen(cmd);

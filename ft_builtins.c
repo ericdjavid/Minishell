@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:42:20 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/15 18:05:53 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/23 13:30:03 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,22 @@ int	ft_builtins(char **newargv, t_control *list)
 
 int	is_builtins(char *newargv)
 {
-	if (!ft_strncmp(newargv, "echo", ft_strlen(newargv)))
+	size_t	len;
+
+	len = ft_strlen(newargv);
+	if (!ft_strncmp(newargv, "echo", len))
 		return (1);
-	else if (!ft_strncmp(newargv, "pwd", ft_strlen(newargv)))
+	else if (!ft_strncmp(newargv, "pwd", len))
 		return (1);
-	else if (!ft_strncmp(newargv, "cd", ft_strlen(newargv)))
+	else if (!ft_strncmp(newargv, "cd", len))
 		return (1);
-	else if (!ft_strncmp(newargv, "export", ft_strlen(newargv)))
+	else if (!ft_strncmp(newargv, "export", len))
 		return (1);
-	else if (!ft_strncmp(newargv, "env", ft_strlen(newargv)))
+	else if (!ft_strncmp(newargv, "env", len))
 		return (1);
-	else if (!ft_strncmp(newargv, "unset", ft_strlen(newargv)))
+	else if (!ft_strncmp(newargv, "unset", len))
+		return (1);
+	else if (!ft_strncmp(newargv, "exit", len))
 		return (1);
 	return (0);
 }
