@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:14 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 17:31:28 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/23 17:52:37 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int	ft_echo(char **newargv)
 	}
 	else if (!ft_strncmp(newargv[1], "-n", 2))
 	{
-		while (check_echoArg(newargv[1 + c])
+		while (check_echoArg(newargv[1 + c]))
 			c++;
-		write_newargv(newargv, 2 + c);
+		write_newargv(newargv, 1 + c);
 	}
 	else
 	{

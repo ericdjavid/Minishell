@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 20:59:11 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 11:22:08 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/23 19:05:37 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ int	*ft_manage_fds(char ***newargv, char **paths, int **fds)
 	ret = init_ret();
 	if (!ret)
 		return (0);
-//	ft_printf_fd(2, "hey close_fds %d\n", fds[0][0]);
 	ft_close_fds(fds, fds[0][0]);
-//	ft_printf_fd(2, "hey close_fds %d\n", fds[0][0]);
 	ret[0] = ft_read_input(newargv, paths);
 	ret[1] = ft_redirection(newargv);
 	(*newargv)[0] = init_cmd_path((*newargv)[0], paths);
@@ -31,14 +29,11 @@ int	*ft_manage_fds(char ***newargv, char **paths, int **fds)
 			&& ((ft_matlen((*newargv)) > 1) || *(newargv - 1))
 			&& fds[0][0] > 1)
 	{
-//		ft_printf_fd(2, "hey STDIN %d\n", fds[0][0]);
 		ft_dup2(fds[fds[0][0] - 1][0], STDIN_FILENO);
 		ft_close_fd(fds[fds[0][0] - 1][0]);
-//		ft_printf_fd(2, "hey STDIN %d\n", fds[0][0]);
 	}
 	if (check_ret_stdout(ret) && *(newargv + 1))
 		ft_dup2(fds[fds[0][0]][1], STDOUT_FILENO);
-//	ft_printf_fd(2, "hey STDOUT %d\n", fds[0][0]);
 	return (ret);
 }
 
