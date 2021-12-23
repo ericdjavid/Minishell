@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:42:20 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 13:30:03 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/23 15:19:11 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ int	is_builtins(char *newargv)
 		return (1);
 	else if (!ft_strncmp(newargv, "cd", len))
 		return (1);
-	else if (!ft_strncmp(newargv, "export", len))
-		return (1);
-	else if (!ft_strncmp(newargv, "env", len))
-		return (1);
+	// else if (!ft_strncmp(newargv, "export", len))
+	// 	return (1);
+	// else if (!ft_strncmp(newargv, "env", len))
+	// 	return (1);
 	else if (!ft_strncmp(newargv, "unset", len))
 		return (1);
 	else if (!ft_strncmp(newargv, "exit", len))

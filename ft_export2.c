@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 15:10:49 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/21 15:10:02 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/23 15:22:05 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	ft_remove_first_env(t_control *control)
 /* liste toutes les variables d’environnement dans un ordre random. sous la forme : nom=valeur */
 int	ft_env(t_control *list)
 {
+	ft_print_stuff(list->first_env_var, "str" );
 	ft_add_new_var(list, DEAL_ENV);
 	ft_print_export(list->first_env, FALSE);
 	free_all(list);
