@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 14:50:59 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/23 17:31:35 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ int		is_builtins(char *newargv);
 int		ft_echo(char **newargv);
 
 void	write_newargv(char **newargv, int c);
+
+int		check_echoArg(char *newargv);
 
 		//	FT_PWD.C
 
