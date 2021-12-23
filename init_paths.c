@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_paths.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 12:32:07 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 14:47:01 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/23 14:51:31 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**init_paths(char **envp)
 	while (ft_strncmp(envp[c], "PATH", 4))
 		c++;
 	c_2 = 0;
-	while (envp[c][c_2] && envp[c][c_2] != '/')
+	while (envp[c][c_2] && envp[c][c_2] != '/') //pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory)
 		c_2++;
 	paths = fill_paths(envp[c], c_2);
 	return (paths);

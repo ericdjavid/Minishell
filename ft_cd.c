@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 17:39:49 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 13:50:21 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/23 14:55:03 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_cd(char **newargv)
 		old_path = get_absolutePath();
 		if (ft_matlen(newargv) == 1)
 			ret = chdir(getenv("HOME"));
-		else if (newargv[1][0] != '~') 
+		else if (newargv[1][0] != '~')
 			ret = chdir(newargv[1]);
 		else
 		{
@@ -49,7 +49,7 @@ int	ft_cd(char **newargv)
 		if (ret)
 		{
 			ft_printf_fd(2,
-				"minishell: cd: %s: No sush file or directory\n",
+				"minishell: cd: %s: No such file or directory\n",
 				newargv[1]);
 			status = 1;
 		}

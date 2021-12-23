@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 14:09:41 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/23 14:50:59 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ typedef struct s_element
 	char				*var_name;
 	int					index;
 	struct s_element	*next;
-	struct s_control			*control;
 }	t_element;
 
 typedef struct s_control
@@ -142,13 +141,19 @@ int		is_syntax_er_spl(char **split);
 
 		//	TOOLS.C
 
+t_element	*check_in_list(t_element *first, char *str);
+
+char	*get_new_str(char *str, int i, int *size);
+
 void	ft_dup2(int newfd, int oldfd);
 
 void	ft_close_fd(int fd);
 
+char	*ft_get_good_str(char *str);
+
 // void	ft_is_dollar(char **str, t_control *control);
 
-char *ft_is_dollar2(char *str, t_control *control);
+char	*ft_is_dollar2(char *str, t_control *control);
 
 t_element	*ft_is_in_list(t_control *list, char *str);
 
@@ -158,17 +163,13 @@ t_element	*check_in_list(t_element *first, char *str);
 
 int			ft_export(t_control *list, char **newargv);
 
-void    	ft_print_export(t_element *first, t_bool bool);
+void		ft_print_export(t_element *first, t_bool bool);
 
-t_element 	*ft_init();
-
-int			add_end_list(char *str, t_element *first, int type, t_control *control);
+int			add_end_list(char *str, t_element *first, int type);
 
 char 		*add_var_name(char *str);
 
 char 		*add_str2(char *str, int type);
-
-int			ft_init_list(t_control *list, char **envp);
 
 t_bool		check_order(t_control *list);
 
@@ -176,11 +177,11 @@ int			order_ascii(t_control *list);
 
 int			ft_get_new_var(t_control *list, char **newargv);
 
-char    	*ft_remove_quotes(char *str);
+char		*ft_remove_quotes(char *str);
 
 int			ft_add_new_var(t_control  *list, int type);
 
-void	ft_remove_first_env(t_control *control);
+void		ft_remove_first_env(t_control *control);
 
 		// FT_ENV.C
 
@@ -218,12 +219,17 @@ int			exit_redirection(int *ret);
 
 char		*is_in_list(t_element *first, char *str);
 
-void 		add_index(t_element *elem);
+void		add_index(t_element *elem);
 
 char	*ft_get_parsed_env(char *str);
 
-
 int			ft_init_list(t_control *list, char **envp);
+
+		// FT_LINKED_LISTS 2
+
+t_element	*ft_init(void);
+
+void	ft_deal_SHLVL(t_control *control);
 
 		//	FREE GARBAGE COLLECTOR
 
@@ -243,13 +249,20 @@ int		check_ret_stdout(int *ret);
 
 int		ft_child(char ***newargv, char **paths, t_control *list, int **fds);
 
+char	**ft_get_envs_var(t_control *list);
+
 		//	FT_UNSET.C
+void	ft_replace_str(t_element *tmp);
 
 int		ft_unset(t_control *control, char **newargv);
 
 int		ft_print_stuff(t_element *first, char *str);
 
+t_element	*ft_good_find_in_list(t_element *first, char *noequal_str);
+
 		//	TOOLS2.C
+
+char	*ft_remove_simple_quotes(char *str);
 
 t_bool	is_quest(char *str);
 
@@ -259,12 +272,29 @@ void	ft_remove_env(t_control *list);
 
 char	*ft_get_dollar_var(char *str, t_control *list);
 
-		//	FT_CLEAR.C
+int		ft_check_position(char c, char c2, char *str);
+
+		//	TOOLS3.C
+
+char	*get_new_line_cmd(char *str, int i, int size, char *str_good);
+
+t_bool	ft_bad_entries(char *str);
+
+		//	ft_clear.c
 
 int		ft_clear(char **newargv);
 
 int		is_OptionOfClear(char **newargv);
 
+		//	TOOLS4.C
+
+void	ft_delete_last(t_element *first);
+
+void	ft_remove_from_env(t_element *to_supp, t_control *control);
+
+char	*get_new_str(char *str, int i, int *size);
+
+void	ft_is_dollar(char **str, t_control *control);
 
 		//	FT_EXIT.C
 
