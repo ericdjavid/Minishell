@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/21 16:55:30 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/23 14:56:13 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 	char	***newargv;
 	int		newargv_len;
 	char	*new_line;
+	int		ret;
 
+	ret = 1;
 	if (ft_bad_entries(cmd_line) == TRUE)
 		return (-2);
 	if (!*cmd_line)
@@ -35,20 +37,13 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 	if (!newargv)
 		return (-1);
 	newargv_len = ft_3dimlen(newargv + 1);
-	//TODO : Fix free pbm with exit
-	if (newargv_len == 1 && !ft_strncmp(newargv[1][0], "exit", 4))
-	{
-		free(new_line);
-		write(1, "exit\n", 5);
-		return (ft_exit(newargv[1]) - 1);
-	}
-	if (newargv_len == 1 && !ft_strncmp(newargv[1][0], "cd", 3))
-		ft_cd(newargv[1]);
+	if (newargv_len == 1 && is_builtins(newargv[1][0]))
+		ret = ft_builtins(newargv[1], list);
 	else
 		ft_cmd(newargv, paths, list);
 	free_newargv(newargv);
 	free(new_line);
-	return (1);
+	return (ret);
 }
 
 char	*init_cmd_path(char *cmd, char **paths)
@@ -57,7 +52,7 @@ char	*init_cmd_path(char *cmd, char **paths)
 	size_t	cmd_len;
 	char	*cmd_path;
 
-	if (is_builtins(cmd))
+	if (is_builtins(cmd) || *cmd == '/')
 		return (cmd);
 	n_path = 0;
 	cmd_len = ft_strlen(cmd);

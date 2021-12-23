@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:44:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/20 18:23:41y edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/23 14:54:51 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char	**ft_get_envs_var(t_control *list)
 int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 {
 	int		*ret;
+	DIR	*fDir;
 	char	**new_env;
 
 	new_env = NULL;
@@ -96,16 +97,35 @@ int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 		exit(status);
 	else if (ft_builtins(*newargv, list))
 		;
-	else if (access((*newargv)[0], F_OK))
+	else if (!ft_strchr((*newargv)[0], '/') || access((*newargv)[0], F_OK))
 	{
-		ft_printf_fd(2, "minishell: %s: command not found\n",
-			(*newargv)[0]);
+			ft_printf_fd(2, "cmd : %s\n", (*newargv)[0]);
+		if (ft_strchr((*newargv)[0], '/'))
+		{
+			fDir = opendir((*newargv)[0]);
+			if (!fDir)
+			{
+				ft_printf_fd(2, "minishell: %s: No such file or directory\n",
+						(*newargv)[0]);
+			}
+			else
+			{
+				ft_printf_fd(2, "minishell: %s: Is a directory\n",
+						(*newargv)[0]);
+				closedir(fDir);
+			}
+		}
+		else
+		{
+			ft_printf_fd(2, "minishell: %s: command not found\n",
+					(*newargv)[0]);
+		}
 		status = 127;
 	}
 	else if (access((*newargv)[0], X_OK))
 	{
 		ft_printf_fd(2, "minishell: permission non accordée: %s\n",
-			(*newargv)[0]);
+				(*newargv)[0]);
 		status = 126;
 	}
 	else if (execve((*newargv)[0],

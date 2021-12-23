@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 17:39:49 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/20 15:18:46 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/23 14:55:03 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@ int	ft_cd(char **newargv)
 
 	if (!old_path)
 		old_path = get_absolutePath();
-	if (newargv[1][0] == '-' && !newargv[1][1])
+	if (ft_matlen(newargv) > 2)
+	{
+		ft_printf_fd(2, "minishell: cd: too many arguments\n");
+		return (1);
+	}
+	else if (ft_matlen(newargv) > 1 && newargv[1][0] == '-' && !newargv[1][1])
 	{
 		ret = chdir(old_path);
 		write(1, old_path, ft_strlen(old_path));

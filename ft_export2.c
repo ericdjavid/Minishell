@@ -6,7 +6,11 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 15:10:49 by edjavid           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/12/23 14:51:30 by edjavid          ###   ########.fr       */
+=======
+/*   Updated: 2021/12/23 17:05:35 by edjavid          ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +42,24 @@ int	ft_add_new_var(t_control *list, int type)
 sous la forme : declare -x nom=”valeur” ou declare -x nom */
 int	ft_export(t_control *list, char **newargv)
 {
+	// int i = -1;
+	// while(newargv[++i])
+	// 	printf("new arg is %s", newargv[i]);
 	(void)newargv;
-	// ft_add_new_var(list, DEAL_EXPORT);
-	ft_print_export(list->first_export, TRUE);
-	free_all(list);
+	// printf("lolcat");
+
+	if (!ft_strncmp(newargv[0], "export",
+				ft_strlen(newargv[0]))
+			&& newargv[1])
+		ft_get_new_var(list, newargv);
+	else
+	{
+		printf("print_export\n");
+		ft_print_stuff(list->first_env_var, "new env arr");
+		// ft_add_new_var(list, DEAL_EXPORT);
+		ft_print_export(list->first_export, TRUE);
+		// free_all(list);
+	}
 	return (1);
 }
 
@@ -62,8 +80,15 @@ void	ft_remove_first_env(t_control *control)
 /* liste toutes les variables d’environnement dans un ordre random. sous la forme : nom=valeur */
 int	ft_env(t_control *list)
 {
+<<<<<<< HEAD
 	// ft_add_new_var(list, DEAL_ENV);
+=======
+	(void)list;
+	printf("lolcat");
+	ft_print_stuff(list->first_env_var, "str" );
+	ft_add_new_var(list, DEAL_ENV);
+>>>>>>> master
 	ft_print_export(list->first_env, FALSE);
-	free_all(list);
+	// free_all(list);
 	return (1);
 }

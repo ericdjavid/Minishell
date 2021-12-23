@@ -6,11 +6,12 @@
 /*   By: abrun <abrun@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 11:33:27 by abrun             #+#    #+#             */
-/*   Updated: 2021/10/27 18:58:46 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/21 16:57:12 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 int	ft_atoi(const char *str)
 {

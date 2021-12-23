@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 14:53:58 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/23 17:32:40 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 {
 	int		n_newargv;
 	int		**fds;
-	pid_t	child_pid;
+	pid_t	child_pid[n_pid(newargv)];
+	int		c;
 
 	n_newargv = 1;
-	fds = init_fds();
+	fds = init_fds(newargv);
 	if (!fds)
 		return (0);
 		// TODO: deal with it
@@ -27,31 +28,39 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 	// ft_add_new_var(list, DEAL_EXPORT);
 	while (newargv[n_newargv])
 	{
-		if (pipe(fds[0]) == -1)
-			return (0);
-		if (!ft_strncmp(newargv[n_newargv][0], "export",
-			ft_strlen(newargv[n_newargv][0])) && newargv[n_newargv][1])
-			ft_get_new_var(list, newargv[n_newargv]);
+		fds[0][0] += 1;
 		if (!ft_strncmp(newargv[n_newargv][0], "unset",
-			ft_strlen(newargv[n_newargv][0])) && newargv[n_newargv][1])
+					ft_strlen(newargv[n_newargv][0]))
+				&& newargv[n_newargv][1])
 			ft_unset(list, newargv[n_newargv]);
-		child_pid = fork();
-		if (child_pid == -1)
+		child_pid[n_newargv - 1] = fork();
+		if (child_pid[n_newargv - 1] == -1)
 			return (0);
-		if (child_pid == 0)
+		else if (child_pid[n_newargv - 1] == 0)
+		{
 			if (!(ft_child(&newargv[n_newargv], paths, list, fds)))
 				return (status_free(fds));
-		ft_close_fd(fds[0][1]);
-		while (wait(&status) > 0)
-			;
+		}
+		else
+		{
+			if (fds[0][0] > 2)
+				ft_close_fd(fds[fds[0][0] - 2][0]);
+			ft_close_fd(fds[fds[0][0]][1]);
+		}
+		n_newargv++;
+	}
+	c = 0;
+	while (c < n_newargv - 1)
+	{
+		waitpid(0, &status, 0);
 		if (WIFEXITED(status))
 			status = WEXITSTATUS(status);
 		if (status == 131)
 			write(1, "\n", 1);
-		fds[1][0] = fds[0][0];
-		n_newargv++;
+		c++;
 	}
-	return (status_free(fds));
+	free_mati(fds, n_newargv);
+	return (status);
 }
 
 int	*init_ret(void)
@@ -66,27 +75,35 @@ int	*init_ret(void)
 	return (ret);
 }
 
-int	**init_fds(void)
+int	**init_fds(char ***newargv)
 {
 	int	**fds;
+	int	n_cmd;
+	int	c;
 
-	fds = malloc(sizeof(int *) * 2);
+	n_cmd = 1;
+	while (newargv[n_cmd + 1])
+		n_cmd++;
+	fds = malloc(sizeof(int *) * (n_cmd + 2));
 	if (!fds)
 		return (0);
-	fds[0] = malloc(sizeof(int) * 2);
-	if (!fds[0])
-	{
-		free(fds);
+	c = 0;
+	fds[c] = malloc(sizeof(int));
+	if (!fds[c])
 		return (0);
-	}
-	fds[1] = malloc(sizeof(int));
-	if (!fds[1])
+	fds[c][0] = 0;
+	c++;
+	while (c < n_cmd + 1)
 	{
-		free(fds[0]);
-		free(fds);
-		return (0);
+		fds[c] = malloc(sizeof(int) * 2);
+		if (!fds[c] || pipe(fds[c]) == -1)
+		{
+			free_mati(fds, c);
+			return (0);
+		}
+		c++;
 	}
-	fds[1][0] = 0;
+	fds[c] = 0;
 	return (fds);
 }
 
@@ -110,4 +127,14 @@ int	get_n_cmd(char *cmd_line)
 		c++;
 	}
 	return (n_cmd);
+}
+
+int	n_pid(char ***newargv)
+{
+	int	c;
+
+	c = 1;
+	while (newargv[c])
+		c++;
+	return (c);
 }

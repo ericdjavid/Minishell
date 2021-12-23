@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/21 16:59:02 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/23 14:50:59 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <dirent.h>
 
 		//	MACROS
 # define FAILURE 1
@@ -118,11 +119,13 @@ int		ft_cmd(char ***newargv, char **paths, t_control *list);
 
 int		*init_ret(void);
 
-int		**init_fds(void);
+int		**init_fds(char ***newargv);
 
 int		status_free(int **fds);
 
 int		get_n_cmd(char *cmd_line);
+
+int		n_pid(char ***newargv);
 
 		//	INIT_NEWARGV.C
 
@@ -296,5 +299,12 @@ void	ft_is_dollar(char **str, t_control *control);
 		//	FT_EXIT.C
 
 int		ft_exit(char **arg);
+
+
+		//	FT_CLOSE_FDS.C
+
+void	ft_close_fds(int **fds, int n);
+
+void	ft_close_fds_around(int **fds, int n);
 
 #endif
