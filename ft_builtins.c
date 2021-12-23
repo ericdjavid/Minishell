@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:42:20 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 15:19:11 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/23 17:01:51 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,7 @@ int	ft_builtins(char **newargv, t_control *list)
 	else if (!ft_strncmp(newargv[0], "cd", len_0))
 		return (ft_cd(newargv));
 	else if (!ft_strncmp(newargv[0], "export", len_0))
-	{
-		if (!newargv[1])
 			return (ft_export(list, newargv));
-		else
-			return (1);
-	}
 	else if (!ft_strncmp(newargv[0], "env", len_0))
 		return (ft_env(list));
 	else if (!ft_strncmp(newargv[0], "exit", len_0))
@@ -52,10 +47,10 @@ int	is_builtins(char *newargv)
 		return (1);
 	else if (!ft_strncmp(newargv, "cd", len))
 		return (1);
-	// else if (!ft_strncmp(newargv, "export", len))
-	// 	return (1);
-	// else if (!ft_strncmp(newargv, "env", len))
-	// 	return (1);
+	else if (!ft_strncmp(newargv, "export", len))
+		return (1);
+	else if (!ft_strncmp(newargv, "env", len))
+		return (1);
 	else if (!ft_strncmp(newargv, "unset", len))
 		return (1);
 	else if (!ft_strncmp(newargv, "exit", len))
