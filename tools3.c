@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 20:08:32 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/18 19:28:39 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/23 19:03:09 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,30 @@ char	*ft_is_dollar2(char *str, t_control *control)
 
 	i = 0;
 	size = 0;
+	// TODO: Finish to test $?
 	while (str[i])
 	{
 		if (str[i] == '$' && str[i + 1] != ' '
-			&& str[i + 1] && str[i + 1] != '?')
+			&& str[i + 1])
 		{
 			new_str = get_new_str(str, i, &size);
 			str_good = is_in_list(control->first_env, new_str);
 			if (str_good == NULL)
 				str_good = is_in_list(control->first_env_var, new_str);
+			if (str_good == NULL && new_str[1] == '?')
+				str_good = ft_itoa(status);
 			if (str_good != NULL)
 			{
 				str = get_new_line_cmd(str, i, size, str_good);
 				i = 0;
 				free(new_str);
+				free(str_good);
 				continue ;
 			}
 			if (new_str)
 				free(new_str);
+			if (str_good)
+				free(str_good);
 		}
 		i++;
 	}
@@ -97,6 +103,8 @@ char	*get_new_line_cmd(char *str, int i, int size, char *str_good)
 	}
 	if (str)
 		free(str);
+	// if (str_good)
+	// 	free(str_good);
 	neo_line_cmd[j] = '\0';
 	return (neo_line_cmd);
 }

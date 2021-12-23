@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:44:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 14:54:51 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/23 17:43:08 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_add_from_list(char **neo_env, t_element *first, int i)
 		if (tmp->next == NULL)
 			break ;
 		neo_env[i] = ft_fill_env(tmp);
-		printf("Sending |%s|\n", neo_env[i]);
+		// printf("Sending |%s|\n", neo_env[i]);
 		i++;
 		tmp = tmp->next;
 	}

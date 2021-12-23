@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 17:32:40 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/23 17:42:23 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 	while (newargv[n_newargv])
 	{
 		fds[0][0] += 1;
-		if (!ft_strncmp(newargv[n_newargv][0], "unset",
-					ft_strlen(newargv[n_newargv][0]))
-				&& newargv[n_newargv][1])
-			ft_unset(list, newargv[n_newargv]);
+		// if (!ft_strncmp(newargv[n_newargv][0], "unset",
+		// 			ft_strlen(newargv[n_newargv][0]))
+		// 		&& newargv[n_newargv][1])
+		// 	ft_unset(list, newargv[n_newargv]);
 		child_pid[n_newargv - 1] = fork();
 		if (child_pid[n_newargv - 1] == -1)
 			return (0);
