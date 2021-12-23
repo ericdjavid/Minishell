@@ -35,6 +35,7 @@ int	ft_add_from_list(char **neo_env, t_element *first, int i)
 	t_element *tmp;
 
 	tmp = first;
+	printf(RED "lolcat\n"END);
 	if (!tmp)
 	{
 		printf("list is empty\n");
@@ -45,7 +46,7 @@ int	ft_add_from_list(char **neo_env, t_element *first, int i)
 		if (tmp->next == NULL)
 			break ;
 		neo_env[i] = ft_fill_env(tmp);
-			// printf("Sending |%s|\n", neo_env[i]);
+		printf("Sending |%s|\n", neo_env[i]);
 		i++;
 		tmp = tmp->next;
 	}
@@ -62,21 +63,13 @@ char	**ft_get_envs_var(t_control *list)
 	neo_env = malloc(sizeof(char *) * (list->size + 1));
 	if (!neo_env)
 		return (0);
+	ft_print_stuff(list->first_env_var, "new envs");
+	// ft_add_new_var(list, DEAL_ENV);
 	i = ft_add_from_list(neo_env, list->first_env, i);
-	// ft_print_stuff(list->first_env_var, "new envs");
-	// i = ft_add_from_list(neo_env, list->first_env_var, i);
-	// tmp = list->first_env;
-	// if (!tmp)
-	// 	return 0;
-	// while (tmp)
-	// {
-	// 	if (tmp->next == NULL)
-	// 		break ;
-	// 	neo_env[i] = ft_fill_env(tmp);
-	// 	i++;
-	// 	tmp = tmp->next;
-	// }
+
 	//TODO: think I have to add also new envs
+	// i = ft_add_from_list(neo_env, list->first_env_var, i);
+
 	neo_env[i] = 0;
 	return (neo_env);
 }
@@ -115,8 +108,6 @@ int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 			(*newargv)[0]);
 		status = 126;
 	}
-	// rmplcacer NULL par les vars d env avec une valeur
-	//  incrementer SHLVL au debut de minishell (si aucun set 1)
 	else if (execve((*newargv)[0],
 		(*newargv), new_env) < 0)
 		status = 1;
