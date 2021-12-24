@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 19:05:47 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/24 17:56:45 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define YELLOW "\033[93m"
 # define RED "\033[91m"
 
-extern int	status;
+extern int	g_status;
 
 # define DEAL_EXPORT 1
 # define DEAL_ENV 0
@@ -77,15 +77,21 @@ int		get_path_len(char *line, int count);
 
 char	*ft_add_one_path(char *line, int *count);
 
+char	*init_param_path(char *envp, int count, int *path_len, int *n);
+
 		//	EXEC_CMD.C
 
 int		exec_cmd(char *cmd_line, char **paths, t_control *list);
+
+char	*get_new_line(char *cmd_line, t_control *list);
 
 char	*init_cmd_path(char *cmd, char **paths);
 
 void	free_newargv(char ***matc);
 
-char	*put_spAroundPipes(char *str);
+char	*put_sp_around_pipes(char *str);
+
+char	*init_param_put_sp(char *str);
 
 		//	PROMPT_MSG.C
 
@@ -103,7 +109,7 @@ int		ft_echo(char **newargv);
 
 void	write_newargv(char **newargv, int c);
 
-int		check_echoArg(char *newargv);
+int		check_echo_arg(char *newargv);
 
 		//	FT_PWD.C
 
@@ -113,7 +119,9 @@ int		ft_pwd(char **newargv);
 
 int		ft_cd(char **newargv);
 
-char	*get_absolutePath(void);
+char	*ft_cd_2(char **newargv, int ret, char *old_path);
+
+char	*get_absolute_path(void);
 
 		//	FT_CMD.C
 
@@ -205,9 +213,15 @@ char		*ft_strdup_rdin(char *s, char **mat1, char **mat2);
 
 int			ft_redirection(char ***newargv);
 
+char		***loop_redirection(char ***newargv, int config, int *ret, int c);
+
 int			which_redirection(char *s);
 
 int			get_outfd(char *file, int config);
+
+int			get_outfd_2(char *file, int config);
+
+		//	FT_REDIRECTION_UTILS.C
 
 char		**get_new_redir(char **newargv, int redir);
 
@@ -286,7 +300,7 @@ t_bool	ft_bad_entries(char *str);
 
 int		ft_clear(char **newargv);
 
-int		is_OptionOfClear(char **newargv);
+int		is_option_of_clear(char **newargv);
 
 		//	TOOLS4.C
 
@@ -301,6 +315,8 @@ void	ft_is_dollar(char **str, t_control *control);
 		//	FT_EXIT.C
 
 int		ft_exit(char **arg);
+
+int		ft_exit_2(char **arg);
 
 
 		//	FT_CLOSE_FDS.C

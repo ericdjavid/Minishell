@@ -6,13 +6,13 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:31:49 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/24 14:43:39 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/24 15:05:01 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	status = 0;
+int	g_status = 0;
 
 int	main(int ac, char **av, char **envp)
 {
@@ -28,7 +28,7 @@ int	main(int ac, char **av, char **envp)
 	ft_minishell(paths, &list);
 	free_matc(paths);
 	free_all(&list);
-	return (status);
+	return (g_status);
 }
 
 void	ft_minishell(char **paths, t_control *list)
@@ -66,7 +66,7 @@ void	sigint_handler(int sig)
 	{
 		stat = 0;
 		waitpid(-1, &stat, 0);
-		if (!stat && status != 9)
+		if (!stat && g_status != 9)
 		{
 			rl_clear_history();
 			ft_printf_fd(1, "\n");
@@ -74,12 +74,12 @@ void	sigint_handler(int sig)
 			rl_replace_line("", 0);
 			rl_redisplay();
 		}
-		else if (!stat && status == 9)
+		else if (!stat && g_status == 9)
 		{
 			exit(130);
 		}
 		else
 			ft_printf_fd(1, "\n");
-		status = 130;
+		g_status = 130;
 	}
 }

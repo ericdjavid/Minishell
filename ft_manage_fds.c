@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 20:59:11 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 19:05:37 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/24 18:16:22 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ int	*ft_manage_fds(char ***newargv, char **paths, int **fds)
 	ret[1] = ft_redirection(newargv);
 	(*newargv)[0] = init_cmd_path((*newargv)[0], paths);
 	if (!ret[0] || !ret[1])
+	{
+		free(ret);
 		return (0);
+	}
 	else if (check_ret_stdin(ret)
 			&& ((ft_matlen((*newargv)) > 1) || *(newargv - 1))
 			&& fds[0][0] > 1)

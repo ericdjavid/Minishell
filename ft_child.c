@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:44:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/24 14:55:00 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/24 15:46:51 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 	signal(SIGQUIT, SIG_DFL);
 	ret = ft_manage_fds(newargv, paths, fds);
 	if (!ret)
-		exit(status);
+		exit(g_status);
 	else if (ft_builtins(*newargv, list) > -1)
 		;
 	else if (!ft_strchr((*newargv)[0], '/') || access((*newargv)[0], F_OK))
@@ -103,21 +103,21 @@ int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 			ft_printf_fd(2, "minishell: %s: command not found\n",
 					(*newargv)[0]);
 		}
-		status = 127;
+		g_status = 127;
 	}
 	else if (access((*newargv)[0], X_OK))
 	{
 		ft_printf_fd(2, "minishell: permission non accordée: %s\n",
 				(*newargv)[0]);
-		status = 126;
+		g_status = 126;
 	}
 	// rmplcacer NULL par les vars d env avec une valeur
 	//  incrementer SHLVL au debut de minishell (si aucun set 1)
 	else if (execve((*newargv)[0],
 				(*newargv), new_env) < 0)
-		status = 1;
+		g_status = 1;
 	if (new_env)
 		free_matc(new_env);
 	free(ret);
-	exit(status);
+	exit(g_status);
 }

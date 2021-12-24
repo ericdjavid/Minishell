@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_3dimlen.c                                       :+:      :+:    :+:   */
+/*   ft_strIsNum.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/24 14:58:39 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/24 14:58:42 by abrun            ###   ########.fr       */
+/*   Created: 2021/12/15 16:45:50 by abrun             #+#    #+#             */
+/*   Updated: 2021/12/24 15:01:04 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_3dimlen(char ***mat)
+int	ft_str_is_num(char *str)
 {
-	int	len;
-
-	len = 0;
-	while (mat[len])
-		len++;
-	return (len);
+	if (!(ft_isdigit(*str)
+			|| ((*str == '+' || *str == '-')
+				&& ft_isdigit(*(str + 1)))))
+		return (0);
+	str++;
+	while (*str)
+	{
+		if (!ft_isdigit(*str))
+			return (0);
+		str++;
+	}
+	return (1);
 }

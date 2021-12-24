@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:18:03 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/15 16:50:09 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/24 15:00:15 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_putnbr_fd(long long int nb, int fd);
 
 size_t	ft_3dimlen(char ***mat);
 
-int		ft_strIsNum(char *str);
+int		ft_str_is_num(char *str);
 
 int		ft_atoi(const char *str);
 

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:02:04 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 19:06:15 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/24 18:17:55 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,13 @@ int	ft_read_input(char ***newargv, char **paths)
 	while ((*newargv)[c])
 	{
 		if (!ft_strncmp((*newargv)[c], "<<",
-				ft_strlen((*newargv)[c])))
+					ft_strlen((*newargv)[c])))
 		{
 			if (!(*newargv)[c + 1])
+			{
+				write(2, "minishell: syntax error near unexpected token `newline'\n", 56);
 				return (0);
+			}
 			heredoc = get_heredoc((*newargv)[c + 1]);
 			if (!heredoc)
 				return (0);
@@ -56,7 +59,7 @@ char	*get_heredoc(char *lim)
 		return (0);
 	heredoc[0] = 0;
 	ret = 1;
-	status = 9;
+	g_status = 9;
 	while (ret)
 	{
 		buf = readline("> ");
@@ -96,17 +99,20 @@ char	**get_newargv_rdin(char **newargv, int c, char **paths)
 	{
 		if (c_2 == c)
 			c_2 += 2;
-		new[c_3] = ft_strdup_rdin(newargv[c_2], newargv, new);
-		if (!new[c_3])
-			return (0);
-		if (c_3 == c)
+		if (newargv[c_2])
 		{
-			new[c_3] = init_cmd_path(new[c_3], paths);
+			new[c_3] = ft_strdup_rdin(newargv[c_2], newargv, new);
 			if (!new[c_3])
 				return (0);
+			if (c_3 == c)
+			{
+				new[c_3] = init_cmd_path(new[c_3], paths);
+				if (!new[c_3])
+					return (0);
+			}
+			c_2++;
+			c_3++;
 		}
-		c_2++;
-		c_3++;
 	}
 	new[c_3] = 0;
 	free_matc(newargv);
