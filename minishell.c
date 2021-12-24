@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:31:49 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 19:01:29 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/24 14:43:39 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	main(int ac, char **av, char **envp)
 	ft_minishell(paths, &list);
 	free_matc(paths);
 	free_all(&list);
-	printf("status : %d\n", status);
 	return (status);
 }
 

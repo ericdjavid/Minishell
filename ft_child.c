@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:44:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 18:48:39 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/24 14:55:00 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 	ret = ft_manage_fds(newargv, paths, fds);
 	if (!ret)
 		exit(status);
-	else if (ft_builtins(*newargv, list))
+	else if (ft_builtins(*newargv, list) > -1)
 		;
 	else if (!ft_strchr((*newargv)[0], '/') || access((*newargv)[0], F_OK))
 	{
-			ft_printf_fd(2, "cmd : %s\n", (*newargv)[0]);
+		ft_printf_fd(2, "cmd : %s\n", (*newargv)[0]);
 		if (ft_strchr((*newargv)[0], '/'))
 		{
 			fDir = opendir((*newargv)[0]);
@@ -114,7 +114,7 @@ int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 	// rmplcacer NULL par les vars d env avec une valeur
 	//  incrementer SHLVL au debut de minishell (si aucun set 1)
 	else if (execve((*newargv)[0],
-		(*newargv), new_env) < 0)
+				(*newargv), new_env) < 0)
 		status = 1;
 	if (new_env)
 		free_matc(new_env);

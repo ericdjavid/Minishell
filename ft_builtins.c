@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:42:20 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 18:47:24 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/24 14:55:04 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_builtins(char **newargv, t_control *list)
 	else if (!ft_strncmp(newargv[0], "cd", len_0))
 		return (ft_cd(newargv));
 	else if (!ft_strncmp(newargv[0], "export", len_0))
-			return (ft_export(list, newargv));
+		return (ft_export(list, newargv));
 	else if (!ft_strncmp(newargv[0], "env", len_0))
 		return (ft_env(list));
 	else if (!ft_strncmp(newargv[0], "exit", len_0))
@@ -33,7 +33,7 @@ int	ft_builtins(char **newargv, t_control *list)
 	// 		return (ft_unset(list, newargv));
 	if (!ft_strncmp(newargv[0], "/usr/bin/clear", len_0))
 		return (ft_clear(newargv));
-	return (0);
+	return (-1);
 }
 
 int	is_builtins(char *newargv)
