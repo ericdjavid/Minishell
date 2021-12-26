@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:40:53 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/26 17:04:57 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 18:04:59 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,35 +85,22 @@ char	*add_value_name(char *str)
 	int		j;
 	int		k;
 
-	i = 0;
-	if (str == NULL)
-		return (NULL);
-	while (str[i] != '\0')
+	i = -1;
+	while (str[++i] != '\0')
 	{
-		if (str[i] == '=')
-		{
-			i++;
+		if (str[i] == '=' && i++)
 			break ;
-		}
-		i++;
 	}
 	k = i;
-	j = 0;
-	while (str[i])
-	{
-		j++;
+	j = -1;
+	while (str[i] && ++j >= 0)
 		i++;
-	}
 	tmp = malloc(sizeof(char) * (j + 1));
 	if (!tmp)
 		return (NULL);
-	i = 0;
+	i = -1;
 	while (str[k] != '\0')
-	{
-		tmp[i] = str[k];
-		k++;
-		i++;
-	}
+		tmp[++i] = str[k++];
 	tmp[i] = '\0';
 	return (tmp);
 }

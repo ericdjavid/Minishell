@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 16:31:10 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/26 16:33:55 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 18:04:37 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*ft_get_dollar_var(char *str, t_control *list)
 		deal_space = ft_deal_space(str);
 	(void)deal_space;
 	tmp = ft_is_in_list(list, str);
-	if (!tmp)
+	if (!tmp || !tmp->str)
 		return (NULL);
 	free(tmp_char);
 	tmp_char = NULL;
