@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 20:08:32 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/23 19:03:09 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 17:23:48 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,18 @@ t_bool	ft_bad_entries(char *str)
 	return (FALSE);
 }
 
+char	*ft_is_dollar3(t_control *control, char *new_str)
+{
+	char	*str_good;
+
+	str_good = is_in_list(control->first_env, new_str);
+	if (str_good == NULL)
+		str_good = is_in_list(control->first_env_var, new_str);
+	if (str_good == NULL && new_str[1] == '?')
+		str_good = ft_itoa(status);
+	return (str_good);
+}
+
 char	*ft_is_dollar2(char *str, t_control *control)
 {
 	int		i;
@@ -42,34 +54,24 @@ char	*ft_is_dollar2(char *str, t_control *control)
 	char	*new_str;
 	int		size;
 
-	i = 0;
+	i = -1;
 	size = 0;
-	// TODO: Finish to test $?
-	while (str[i])
+	while (str[++i])
 	{
-		if (str[i] == '$' && str[i + 1] != ' '
-			&& str[i + 1])
+		if (str[i] == '$' && str[i + 1] != ' ' && str[i + 1])
 		{
 			new_str = get_new_str(str, i, &size);
-			str_good = is_in_list(control->first_env, new_str);
-			if (str_good == NULL)
-				str_good = is_in_list(control->first_env_var, new_str);
-			if (str_good == NULL && new_str[1] == '?')
-				str_good = ft_itoa(status);
+			str_good = ft_is_dollar3(control, new_str);
+			free(new_str);
 			if (str_good != NULL)
 			{
 				str = get_new_line_cmd(str, i, size, str_good);
-				i = 0;
-				free(new_str);
-				free(str_good);
+				if (str[i + 1] == '?')
+					free(str_good);
+				i = -1;
 				continue ;
 			}
-			if (new_str)
-				free(new_str);
-			if (str_good)
-				free(str_good);
 		}
-		i++;
 	}
 	return (str);
 }
@@ -80,19 +82,16 @@ char	*get_new_line_cmd(char *str, int i, int size, char *str_good)
 	int		j;
 	int		k;
 
-	neo_line_cmd = malloc(sizeof(char) * ((int)ft_strlen(str_good) + (int)ft_strlen(str) - size + 1));
-	j = 0;
-	while (str[j] && j < i)
-	{
+	neo_line_cmd = malloc(sizeof(char) * ((int)ft_strlen(str_good)
+				+ (int)ft_strlen(str) - size + 1));
+	j = -1;
+	while (str[++j] && j < i)
 		neo_line_cmd[j] = str[j];
-		j++;
-	}
-	k = 0;
-	while (str_good[k] && k < (int)ft_strlen(str_good))
+	k = -1;
+	while (str_good[++k] && k < (int)ft_strlen(str_good))
 	{
 		neo_line_cmd[j] = str_good[k];
 		j++;
-		k++;
 	}
 	k = (i + size);
 	while (str[k])
@@ -101,10 +100,7 @@ char	*get_new_line_cmd(char *str, int i, int size, char *str_good)
 		j++;
 		k++;
 	}
-	if (str)
-		free(str);
-	// if (str_good)
-	// 	free(str_good);
+	free(str);
 	neo_line_cmd[j] = '\0';
 	return (neo_line_cmd);
 }

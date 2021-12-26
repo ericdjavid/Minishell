@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:44:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/26 14:46:19 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 17:11:40 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,7 @@ char	**ft_get_envs_var(t_control *list)
 	neo_env = malloc(sizeof(char *) * (list->size + 1));
 	if (!neo_env)
 		return (0);
-	ft_print_stuff(list->first_env_var, "new envs");
 	i = ft_add_from_list(neo_env, list->first_env, i);
-
 	tmp = list->first_env_var;
 	while (tmp && tmp->str)
 	{
@@ -80,16 +78,9 @@ int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 	int		*ret;
 	DIR		*fDir;
 	char	**new_env;
-	int		i;
 
 	new_env = NULL;
 	new_env = ft_get_envs_var(list);
-	i = 0;
-	while (new_env[i])
-	{
-		printf("%s\n", new_env[i]);
-		i++;
-	}
 	signal(SIGQUIT, SIG_DFL);
 	ret = ft_manage_fds(newargv, paths, fds);
 	if (!ret)

@@ -6,44 +6,18 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 14:03:18 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/26 14:18:12 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 17:55:18 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_print_stuff(t_element *first, char *str)
-{
-	t_element	*tmp;
-
-	if (!first)
-	{
-		printf("list is empty !\n");
-		return (FAILURE);
-	}
-	tmp = first;
-	printf(YELLOW"---LIST %s---\n", str);
-	while (tmp != NULL)
-	{
-		printf("[%s]\n", tmp->str);
-		if (tmp->next == NULL)
-			break ;
-		tmp = tmp->next;
-	}
-	printf("----------\n" END);
-	return (1);
-}
 
 void	ft_replace_str(t_element *tmp)
 {
 	if (tmp == NULL)
 		return ;
 	if (tmp->next == NULL)
-	{
-		free(tmp->str);
-		free(tmp->var_name);
-		free(tmp);
-	}
+		free_elm(tmp);
 	while (tmp)
 	{
 		if (tmp->next->next == NULL)
@@ -84,6 +58,46 @@ t_element	*ft_good_find_in_list(t_element *first, char *noequal_str)
 	return (NULL);
 }
 
+void	ft_unset_export(t_control *control, char *newargv)
+{
+	t_element	*tmp;
+
+	tmp = ft_good_find_in_list(control->first_export, newargv);
+	if (tmp == control->first_export)
+	{
+		if (control->first_export->next)
+			control->first_export = control->first_export->next;
+		free_elm(tmp);
+	}
+	else
+	{
+		if (tmp && tmp->next == NULL)
+			ft_delete_last(control->first_export);
+		else if (tmp)
+			ft_replace_str(tmp);
+	}
+}
+
+void	ft_unset_env(t_control *control, char *newargv)
+{
+	t_element	*tmp;
+
+	tmp = ft_good_find_in_list(control->first_env, newargv);
+	if (tmp == control->first_env)
+	{
+		if (control->first_env->next)
+			control->first_env = control->first_env->next;
+		free_elm(tmp);
+	}
+	else
+	{
+		if (tmp && tmp->next == NULL)
+			ft_delete_last(control->first_env);
+		else if (tmp)
+			ft_replace_str(tmp);
+	}
+}
+
 //if = in uset word, print "not a valid identifier"
 int	ft_unset(t_control *control, char **newargv)
 {
@@ -91,55 +105,22 @@ int	ft_unset(t_control *control, char **newargv)
 	int			i;
 
 	i = 0;
-	printf("lolcat\n");
 	while (newargv[++i])
 	{
-		ft_print_stuff(control->first_env_var, "before unset");
+		if (ft_strchr(newargv[i], '='))
+			ft_printf_fd(1, "\'%s\' : not a valid identifier\n", newargv[i]);
 		tmp = ft_good_find_in_list(control->first_env_var, newargv[i]);
 		if (tmp)
 		{
-			ft_remove_from_list(elem_in_list(control->first_export, tmp->var_name), control->first_export);
-			ft_remove_from_list(elem_in_list(control->first_env, tmp->var_name), control->first_env);
+			ft_remove_from_list(elem_in_list(control->first_export,
+					tmp->var_name), control->first_export);
+			ft_remove_from_list(elem_in_list(control->first_env,
+					tmp->var_name), control->first_env);
 			ft_remove_from_env(tmp, control);
-			ft_print_stuff(control->first_env_var, "after unset");
 			continue ;
 		}
-		tmp = ft_good_find_in_list(control->first_env, newargv[i]);
-		if (tmp == control->first_env)
-		{
-			if (control->first_env->next)
-				control->first_env = control->first_env->next;
-			free(tmp->str);
-			free(tmp->var_name);
-			free(tmp);
-		}
-		else
-		{
-			if (tmp && tmp->next == NULL)
-				ft_delete_last(control->first_env);
-			else if (tmp)
-				ft_replace_str(tmp);
-		}
-		tmp = ft_good_find_in_list(control->first_export, newargv[i]);
-		if (tmp == control->first_export)
-		{
-			if (control->first_export->next)
-				control->first_export = control->first_export->next;
-			free(tmp->str);
-			free(tmp->var_name);
-			free(tmp);
-		}
-		else
-		{
-			if (tmp && tmp->next == NULL)
-				ft_delete_last(control->first_export);
-			else if (tmp)
-				ft_replace_str(tmp);
-		}
+		ft_unset_env(control, newargv[i]);
+		ft_unset_export(control, newargv[i]);
 	}
 	return (1);
 }
-/*
-0    All name operands were successfully unset.
->0    At least one name could not be unset.
-*/
