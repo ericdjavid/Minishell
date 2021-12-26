@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 14:59:06 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/24 17:40:29 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 14:29:36 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,10 @@ void	ft_remove_from_env(t_element *to_supp, t_control *control)
 
 void	ft_remove_from_list(t_element *to_supp, t_element *first)
 {
-	// ft_print_stuff(first, "before target list");
-	// if (to_supp == control->first_env_var)
-	// 	ft_remove_first_env(control);
 	if (to_supp->next == NULL)
 		ft_delete_last(first);
 	else
 		ft_replace_str(to_supp);
-	// ft_print_stuff(first, "after target list");
 	return ;
 }
 
