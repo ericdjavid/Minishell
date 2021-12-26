@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 19:18:36 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/24 17:53:06 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 14:33:57 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ char	*ft_remove_quotes(char *str)
 }
 
 //add the simple quotes before =
-//TODO: when creating a new env with " ", bad behavior (double quotes)
 char	*add_str2(char *str, int type)
 {
 	char	*tmp;
@@ -149,7 +148,6 @@ int	add_end_list(char *str, t_element *first, int type)
 	tmp2->var_name = add_var_name(str_new);
 	tmp2->next = NULL;
 	tmp2->index = 0;
-	// first->control = control;
 	tmp->next = tmp2;
 	return (SUCCESS);
 }
@@ -232,8 +230,6 @@ int ft_get_new_var(t_control *list, char **newargv)
 			ft_printf_fd(1, "\"%s\" : not a valid identifier\n", retreat);
 			continue ;
 		}
-		// tmp = ft_is_in_list(list, retreat);
-		printf("retreat is now %s\n", retreat);
 		var_name = add_var_name(retreat);
 		tmp = elem_in_list(list->first_env_var, var_name);
 		if ((ft_is_space_before_qual(retreat))
@@ -245,14 +241,13 @@ int ft_get_new_var(t_control *list, char **newargv)
 		}
 		if (tmp)
 		{
-			printf("tmp str is %s\n", tmp->str);
 			if (!ft_strchr(retreat, '='))
 				continue ;
-			printf("should be modified\n");
 			free(tmp->str);
 			tmp->str = ft_strdup(retreat);
 			ft_remove_from_list(elem_in_list(list->first_export, var_name), list->first_export);
 			ft_remove_from_list(elem_in_list(list->first_env, var_name), list->first_env);
+			free(var_name);
 			continue ;
 		}
 		if (list->first_env_var->str == NULL)
@@ -261,6 +256,7 @@ int ft_get_new_var(t_control *list, char **newargv)
 			list->first_env_var->var_name
 				= add_var_name(list->first_env_var->str);
 			list->first_env_var->next = NULL;
+			free(var_name);
 			continue ;
 		}
 		tmp = list->first_env_var;
@@ -274,15 +270,11 @@ int ft_get_new_var(t_control *list, char **newargv)
 		new->next = NULL;
 		new->index = i;
 		tmp->next = new;
+		free(var_name);
 	}
 	if (retreat)
 		free (retreat);
-	// ft_print_stuff(list->first_env_var, "new env arr");
-
-	// TODO: if some existing var has been updated, just nodify where it needs to be
-	// ft_remove_new_vars_from_lists(list);
 	ft_add_new_var(list, DEAL_EXPORT);
 	ft_add_new_var(list, DEAL_ENV);
-	// ft_print_stuff(list->first_export, "Export list");
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 15:10:49 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/26 14:17:20 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 14:27:25 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	ft_add_new_var(t_control *list, int type)
 	tmp = list->first_env_var;
 	if (!tmp)
 		return (FAILURE);
-
-	// not working when modifying value
 	while (tmp && tmp->str)
 	{
 		if (elem_in_list(list->first_env, tmp->var_name))
@@ -79,7 +77,6 @@ void	ft_remove_first_env(t_control *control)
 	free(tmp->str);
 	tmp->var_name = NULL;
 	tmp->str  = NULL;
-	// free(tmp);
 }
 
 /* liste toutes les variables d’environnement dans un ordre random. sous la forme : nom=valeur */
@@ -87,7 +84,6 @@ int	ft_env(t_control *list)
 {
 	(void)list;
 	ft_print_stuff(list->first_env_var, "str" );
-	// ft_add_new_var(list, DEAL_ENV);
 	ft_print_export(list->first_env, FALSE);
 	return (1);
 }

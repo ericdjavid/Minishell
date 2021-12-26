@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:18:13 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/24 17:50:37 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 14:34:11 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,8 @@ t_element*	elem_in_list(t_element *first, char *str)
 	tmp = first;
 	while (tmp)
 	{
-		printf("comparing %s with %s\n", tmp->var_name, str);
 		if (ft_strncmp(tmp->var_name, new_str, ft_strlen(new_str)) == 0)
-		{
-			printf("found a value\n");
 			return (tmp);
-		}
 		if (tmp->next == NULL)
 			break ;
 		tmp = tmp->next;
