@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/24 17:32:03 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 16:53:54 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,7 @@ int			ft_init_list(t_control *list, char **envp);
 
 t_element	*ft_init(void);
 
-void	ft_deal_SHLVL(t_control *control);
+void	ft_deal_shlvl(t_control *control);
 
 		//	FREE GARBAGE COLLECTOR
 
@@ -265,6 +265,8 @@ int		ft_print_stuff(t_element *first, char *str);
 t_element	*ft_good_find_in_list(t_element *first, char *noequal_str);
 
 		//	TOOLS2.C
+
+char	*add_value_name(char *str);
 
 char	*ft_remove_simple_quotes(char *str);
 
@@ -302,10 +304,20 @@ char	*get_new_str(char *str, int i, int *size);
 
 void	ft_is_dollar(char **str, t_control *control);
 
+		//	TOOLS5.C
+
+void	ft_delete_last(t_element *first);
+
+int		ft_is_space_before_qual(char *str);
+
+char	*ft_deal_space(char *str);
+
+char	*ft_get_dollar_var(char *str, t_control *list);
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 		//	FT_EXIT.C
 
 int		ft_exit(char **arg);
-
 
 		//	FT_CLOSE_FDS.C
 

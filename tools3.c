@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 20:08:32 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/26 15:17:09 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 17:23:48 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ char	*ft_is_dollar2(char *str, t_control *control)
 			if (str_good != NULL)
 			{
 				str = get_new_line_cmd(str, i, size, str_good);
+				if (str[i + 1] == '?')
+					free(str_good);
 				i = -1;
 				continue ;
 			}
@@ -82,18 +84,14 @@ char	*get_new_line_cmd(char *str, int i, int size, char *str_good)
 
 	neo_line_cmd = malloc(sizeof(char) * ((int)ft_strlen(str_good)
 				+ (int)ft_strlen(str) - size + 1));
-	j = 0;
-	while (str[j] && j < i)
-	{
+	j = -1;
+	while (str[++j] && j < i)
 		neo_line_cmd[j] = str[j];
-		j++;
-	}
-	k = 0;
-	while (str_good[k] && k < (int)ft_strlen(str_good))
+	k = -1;
+	while (str_good[++k] && k < (int)ft_strlen(str_good))
 	{
 		neo_line_cmd[j] = str_good[k];
 		j++;
-		k++;
 	}
 	k = (i + size);
 	while (str[k])
@@ -102,8 +100,7 @@ char	*get_new_line_cmd(char *str, int i, int size, char *str_good)
 		j++;
 		k++;
 	}
-	if (str)
-		free(str);
+	free(str);
 	neo_line_cmd[j] = '\0';
 	return (neo_line_cmd);
 }

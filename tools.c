@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 09:24:21 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/26 14:54:11 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 16:28:38 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,7 @@ t_element	*ft_is_in_list(t_control *list, char *str)
 	}
 	tmp2 = check_in_list(list->first_env_var, str2);
 	if (tmp2)
-	{
-		if (str2)
-			free(str2);
 		return (tmp2);
-	}
-	if (str2)
-		free(str2);
 	return (NULL);
 }
 
