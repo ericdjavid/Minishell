@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/24 17:56:45 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/26 15:05:39 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,9 @@ int 		ft_env(t_control *list);
 
 		//	FT_READ_INPUT.C
 
-int		ft_read_input(char ***newargv, char **paths);
+int			ft_read_input(char ***newargv, char **paths);
+
+char		**init_files(char **newargv);	
 
 char		*get_heredoc(char *lim);
 
@@ -230,6 +232,8 @@ char		**free_redirection(char **newargv, char **new);
 int			*assign_config(int *ret, int config);
 
 int			exit_redirection(int *ret);
+
+int			is_other_redin(char **newargv);
 
 		// FT_LINKED_LISTS
 

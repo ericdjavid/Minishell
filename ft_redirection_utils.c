@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 17:55:12 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/24 17:55:38 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/26 14:51:51 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,18 @@ int	exit_redirection(int *ret)
 	if (!value)
 		return (1);
 	return (value);
+}
+
+int	is_other_redin(char **newargv)
+{
+	int	c;
+
+	c = 0;
+	while (newargv[c])
+	{
+		if (!ft_strncmp(newargv[c], "<", ft_strlen(newargv[c])))
+			return (1);
+		c++;
+	}
+	return (0);
 }

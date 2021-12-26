@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:58:06 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/24 18:16:15 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/26 17:51:35 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ char	***loop_redirection(char ***newargv, int config, int *ret, int c)
 	}
 	if (config == 3 || config == 4)
 		ft_dup2(fd, STDOUT_FILENO);
-	else
-		ft_dup2(fd, STDIN_FILENO);
 	ft_close_fd(fd);
 	ret = assign_config(ret, config);
 	return (newargv);
@@ -71,8 +69,6 @@ int	which_redirection(char *s)
 	s_len = ft_strlen(s);
 	if (!ft_strncmp(s, ">", s_len))
 		return (3);
-	else if (!ft_strncmp(s, "<", s_len))
-		return (2);
 	else if (!ft_strncmp(s, ">>", s_len))
 		return (4);
 	return (0);
@@ -94,10 +90,15 @@ int	get_outfd(char *file, int config)
 	{
 		outfd = get_outfd_2(file, config);
 	}
-	else
+	else if (config != 2)
 	{
 		outfd = open(file, O_CREAT | O_RDWR | O_TRUNC,
 				S_IRUSR | S_IRGRP | S_IWUSR | S_IROTH);
+	}
+	else
+	{
+		ft_printf_fd(2, "minishell: %s: No such file or directory\n",
+			file);
 	}
 	return (outfd);
 }
@@ -106,10 +107,11 @@ int	get_outfd_2(char *file, int config)
 {
 	int	outfd;
 
+	outfd = -1;
 	if (config == 3 && !access(file, W_OK))
 		outfd = open(file, O_TRUNC | O_WRONLY);
 	else if (config == 2 && !access(file, R_OK))
-		outfd = open(file, O_TRUNC | O_RDONLY);
+		outfd = open(file, O_RDONLY);
 	else if (config == 4 && !access(file, W_OK))
 		outfd = open(file, O_WRONLY | O_APPEND);
 	else
