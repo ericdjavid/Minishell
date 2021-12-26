@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:40:53 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/17 19:56:43 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/24 15:50:25 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,11 +183,9 @@ char	*ft_get_dollar_var(char *str, t_control *list)
 	tmp = ft_is_in_list(list, str);
 	if (!tmp)
 		return (NULL);
-	// printf("(ft_get_doll)tmp->str is |%s|\n", tmp->str);
 	free(tmp_char);
 	tmp_char = NULL;
 	tmp_char = add_value_name(tmp->str);
-	// printf("(ft_get_doll)new value name is |%s|\n", tmp_char);
 	return (tmp_char);
 }
 

@@ -6,11 +6,33 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 14:59:06 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/20 17:30:56 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/24 17:40:29 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_remove_new_vars_from_lists(t_control *list)
+{
+	t_element *tmp;
+
+	tmp = list->first_env;
+	if (tmp == NULL || tmp->str == NULL)
+	{
+		printf("is returning\n");
+		return ;
+	}
+	while (tmp)
+	{
+		ft_remove_from_list(elem_in_list(list->first_export, tmp->var_name), list->first_export);
+		ft_remove_from_list(elem_in_list(list->first_env, tmp->var_name), list->first_env);
+		if (tmp->next == NULL)
+			break;
+		tmp = tmp->next;
+	}
+	return ;
+
+}
 
 void	ft_is_dollar(char **str, t_control *control)
 {
@@ -76,6 +98,19 @@ void	ft_remove_from_env(t_element *to_supp, t_control *control)
 		ft_delete_last(control->first_env_var);
 	else
 		ft_replace_str(to_supp);
+	return ;
+}
+
+void	ft_remove_from_list(t_element *to_supp, t_element *first)
+{
+	// ft_print_stuff(first, "before target list");
+	// if (to_supp == control->first_env_var)
+	// 	ft_remove_first_env(control);
+	if (to_supp->next == NULL)
+		ft_delete_last(first);
+	else
+		ft_replace_str(to_supp);
+	// ft_print_stuff(first, "after target list");
 	return ;
 }
 

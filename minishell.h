@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 14:50:59 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/24 17:32:03 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,10 @@ int			exit_redirection(int *ret);
 
 		// FT_LINKED_LISTS
 
+void	ft_remove_from_list(t_element *to_supp, t_element *first);
+
+t_element*	elem_in_list(t_element *first, char *str);
+
 char		*is_in_list(t_element *first, char *str);
 
 void		add_index(t_element *elem);
@@ -287,6 +291,8 @@ int		ft_clear(char **newargv);
 int		is_OptionOfClear(char **newargv);
 
 		//	TOOLS4.C
+
+void	ft_remove_new_vars_from_lists(t_control *list);
 
 void	ft_delete_last(t_element *first);
 
