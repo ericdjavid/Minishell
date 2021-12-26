@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:44:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 17:43:08 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 14:46:19 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,13 @@ int	ft_add_from_list(char **neo_env, t_element *first, int i)
 	t_element *tmp;
 
 	tmp = first;
-	printf(RED "lolcat\n"END);
 	if (!tmp)
-	{
-		printf("list is empty\n");
 		return (FAILURE);
-	}
 	while (tmp)
 	{
 		if (tmp->next == NULL)
 			break ;
 		neo_env[i] = ft_fill_env(tmp);
-		// printf("Sending |%s|\n", neo_env[i]);
 		i++;
 		tmp = tmp->next;
 	}
@@ -56,7 +51,7 @@ int	ft_add_from_list(char **neo_env, t_element *first, int i)
 char	**ft_get_envs_var(t_control *list)
 {
 	char		**neo_env;
-	// t_element	*tmp;
+	t_element	*tmp;
 	int			i;
 
 	i = 0;
@@ -64,33 +59,37 @@ char	**ft_get_envs_var(t_control *list)
 	if (!neo_env)
 		return (0);
 	ft_print_stuff(list->first_env_var, "new envs");
-	// ft_add_new_var(list, DEAL_ENV);
 	i = ft_add_from_list(neo_env, list->first_env, i);
 
-	//TODO: think I have to add also new envs
-	// i = ft_add_from_list(neo_env, list->first_env_var, i);
-
+	tmp = list->first_env_var;
+	while (tmp && tmp->str)
+	{
+		neo_env[i] = ft_strdup(tmp->str);
+		i++;
+		if (tmp->next == NULL)
+			break ;
+		tmp = tmp->next;
+	}
 	neo_env[i] = 0;
 	return (neo_env);
 }
 
-//  when deleting the folder where we are and pwd
-// pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
 // TODO: test if free is good each time
 int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 {
 	int		*ret;
-	DIR	*fDir;
+	DIR		*fDir;
 	char	**new_env;
+	int		i;
 
 	new_env = NULL;
 	new_env = ft_get_envs_var(list);
-	// i = 0;
-	// while (new_env[i])
-	// {
-	// 	printf("%s\n", new_env[i]);
-	// 	i++;
-	// }
+	i = 0;
+	while (new_env[i])
+	{
+		printf("%s\n", new_env[i]);
+		i++;
+	}
 	signal(SIGQUIT, SIG_DFL);
 	ret = ft_manage_fds(newargv, paths, fds);
 	if (!ret)
