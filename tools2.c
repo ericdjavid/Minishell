@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:40:53 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/26 14:29:59 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 14:56:51 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ char	*ft_remove_simple_quotes(char *str)
 
 	i = -1;
 	nb = 0;
-	if (!str)
-		return (NULL);
+	// if (!str)
+	// 	return (NULL);
 	while (str[++i])
 	{
 		if (str[i] == '\'')
@@ -169,10 +169,8 @@ char	*ft_get_dollar_var(char *str, t_control *list)
 
 	tmp_char = NULL;
 	deal_space = NULL;
-	if (ft_strchr(str, ' ') )
-	{
+	if (ft_strchr(str, ' '))
 		deal_space = ft_deal_space(str);
-	}
 	(void)deal_space;
 	tmp = ft_is_in_list(list, str);
 	if (!tmp)

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 14:59:10 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/20 14:57:03 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 14:52:23 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	add_beg(t_control *list, char *str)
 	return (SUCCESS);
 }
 
-int swap_elem(int pos1, int pos2, t_control *list)
+int	swap_elem(int pos1, int pos2, t_control *list)
 {
 	t_element	*tmp;
 	t_element	*node1;

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 09:24:21 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/24 15:33:44 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 14:54:11 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,7 @@ t_element	*ft_is_in_list(t_control *list, char *str)
 	tmp1 = check_in_list(list->first_export, str2);
 	if (tmp1)
 	{
-		printf(RED "STR2 is %s\n" END, str2);
 		tmp2 = check_in_list(list->first_env, str2);
-		
-		printf(RED "TMP2->STR is %s\n" END, tmp2->str);
 		free(tmp2->str);
 		tmp2->str = ft_strdup(str);
 		if (str2)
