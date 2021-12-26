@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 15:10:49 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/24 18:20:31 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 14:17:20 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_export(t_control *list, char **newargv)
 	else
 	{
 		printf("print_export\n");
-		ft_print_stuff(list->first_env_var, "new env arr");
+		// ft_print_stuff(list->first_env_var, "new env arr");
 		// ft_add_new_var(list, DEAL_EXPORT);
 		ft_print_export(list->first_export, TRUE);
 	}
@@ -77,7 +77,9 @@ void	ft_remove_first_env(t_control *control)
 		control->first_env_var = control->first_env_var->next;
 	free(tmp->var_name);
 	free(tmp->str);
-	free(tmp);
+	tmp->var_name = NULL;
+	tmp->str  = NULL;
+	// free(tmp);
 }
 
 /* liste toutes les variables d’environnement dans un ordre random. sous la forme : nom=valeur */

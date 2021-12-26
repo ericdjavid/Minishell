@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 14:03:18 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/24 17:06:32 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 14:18:12 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,15 @@ int	ft_unset(t_control *control, char **newargv)
 	int			i;
 
 	i = 0;
+	printf("lolcat\n");
 	while (newargv[++i])
 	{
 		ft_print_stuff(control->first_env_var, "before unset");
 		tmp = ft_good_find_in_list(control->first_env_var, newargv[i]);
 		if (tmp)
 		{
+			ft_remove_from_list(elem_in_list(control->first_export, tmp->var_name), control->first_export);
+			ft_remove_from_list(elem_in_list(control->first_env, tmp->var_name), control->first_env);
 			ft_remove_from_env(tmp, control);
 			ft_print_stuff(control->first_env_var, "after unset");
 			continue ;
