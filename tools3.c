@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 20:08:32 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/27 14:13:05 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/27 19:47:19 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ char	*ft_is_dollar2(char *str, t_control *control)
 			new_str = get_new_str(str, i, &size);
 			str_good = ft_is_dollar3(control, new_str);
 			free(new_str);
+			if (str_good == NULL)
+				return (str = get_new_line_cmd(str, i, size, ""));
 			if (str_good != NULL)
 			{
 				str = get_new_line_cmd(str, i, size, str_good);
