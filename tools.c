@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 09:24:21 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/24 15:24:10 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/27 14:06:55 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_element	*check_in_list(t_element *first, char *str)
 
 	tmp = first;
 	if (!tmp || !tmp->str || !tmp->var_name)
-		return (FALSE);
+		return (NULL);
 	while (tmp)
 	{
 		if (ft_strncmp(str, tmp->var_name, ft_strlen(str)) == 0)
@@ -66,13 +66,7 @@ t_element	*ft_is_in_list(t_control *list, char *str)
 	}
 	tmp2 = check_in_list(list->first_env_var, str2);
 	if (tmp2)
-	{
-		if (str2)
-			free(str2);
 		return (tmp2);
-	}
-	if (str2)
-		free(str2);
 	return (NULL);
 }
 

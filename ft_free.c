@@ -6,11 +6,18 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 16:51:08 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/18 19:01:03 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 17:35:11 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_elm(t_element *tmp)
+{
+	free(tmp->str);
+	free(tmp->var_name);
+	free(tmp);
+}
 
 void	free_elms(t_element *first)
 {
@@ -22,9 +29,7 @@ void	free_elms(t_element *first)
 	while (tmp)
 	{
 		first = first->next;
-		free(tmp->str);
-		free(tmp->var_name);
-		free(tmp);
+		free_elm(tmp);
 		tmp = first;
 	}
 	return ;

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:18:13 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/21 17:03:33 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 16:53:11 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,24 @@ char	*is_in_list(t_element *first, char *str)
 	return (NULL);
 }
 
+t_element	*elem_in_list(t_element *first, char *str)
+{
+	t_element	*tmp;
+	char		*new_str;
+
+	new_str = str;
+	tmp = first;
+	while (tmp)
+	{
+		if (ft_strncmp(tmp->var_name, new_str, ft_strlen(new_str)) == 0)
+			return (tmp);
+		if (tmp->next == NULL)
+			break ;
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
 void	add_index(t_element *elem)
 {
 	int	i;
@@ -86,34 +104,4 @@ void	add_index(t_element *elem)
 	}
 	elem->index = ++i;
 	return ;
-}
-
-int	ft_init_list(t_control *list, char **envp)
-{
-	int			i;
-	t_element	*first_env;
-	t_element	*first_export;
-	t_element	*first_env_var;
-
-	first_env = ft_init();
-	first_export = ft_init();
-	first_env_var = ft_init();
-	if ((!first_export) || (!first_env) || (!first_env_var))
-		return (FAILURE);
-	list->first_env = first_env;
-	list->first_export = first_export;
-	list->first_env_var = first_env_var;
-	list->size = 0;
-	i = -1;
-	while (envp[++i])
-	{
-		list->size++;
-		add_end_list(envp[i], list->first_export, DEAL_EXPORT);
-		add_end_list(envp[i], list->first_env, 0);
-	}
-	ft_deal_SHLVL(list);
-	add_index(list->first_export);
-	while (check_order(list) == FALSE)
-		order_ascii(list);
-	return (SUCCESS);
 }

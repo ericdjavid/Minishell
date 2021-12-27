@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:44:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/26 17:45:44 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/27 14:08:08 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,24 @@ char	*ft_fill_env(t_element *tmp)
 	return (str);
 }
 
+int	ft_add_from_list(char **neo_env, t_element *first, int i)
+{
+	t_element *tmp;
+
+	tmp = first;
+	if (!tmp)
+		return (FAILURE);
+	while (tmp)
+	{
+		if (tmp->next == NULL)
+			break ;
+		neo_env[i] = ft_fill_env(tmp);
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
+
 char	**ft_get_envs_var(t_control *list)
 {
 	char		**neo_env;
@@ -40,40 +58,29 @@ char	**ft_get_envs_var(t_control *list)
 	neo_env = malloc(sizeof(char *) * (list->size + 1));
 	if (!neo_env)
 		return (0);
-	tmp = list->first_env;
-	if (!tmp)
-		return 0;
-	while (tmp)
+	i = ft_add_from_list(neo_env, list->first_env, i);
+	tmp = list->first_env_var;
+	while (tmp && tmp->str)
 	{
+		neo_env[i] = ft_strdup(tmp->str);
+		i++;
 		if (tmp->next == NULL)
 			break ;
-		neo_env[i] = ft_fill_env(tmp);
-		i++;
 		tmp = tmp->next;
 	}
-	//TODO: think I have to add also new envs
 	neo_env[i] = 0;
 	return (neo_env);
 }
 
-//  when deleting the folder where we are and pwd
-// pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
 // TODO: test if free is good each time
 int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 {
 	int		*ret;
-	DIR	*fDir;
+	DIR		*fDir;
 	char	**new_env;
 
 	new_env = NULL;
-	// ft_deal_SHLVL(list);
 	new_env = ft_get_envs_var(list);
-	// i = 0;
-	// while (new_env[i])
-	// {
-	// 	printf("%s\n", new_env[i]);
-	// 	i++;
-	// }
 	signal(SIGQUIT, SIG_DFL);
 	ret = ft_manage_fds(newargv, paths, fds);
 	if (!ret)
@@ -111,8 +118,6 @@ int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 				(*newargv)[0]);
 		g_status = 126;
 	}
-	// rmplcacer NULL par les vars d env avec une valeur
-	//  incrementer SHLVL au debut de minishell (si aucun set 1)
 	else if (execve((*newargv)[0],
 				(*newargv), new_env) < 0)
 		g_status = 1;
