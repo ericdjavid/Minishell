@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 14:59:10 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/27 18:21:47 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/27 19:36:26 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,12 @@ void	swap_elem(int pos1, int pos2, t_control *list, int i)
 			node2 = tmp;
 		tmp = tmp->next;
 	}
+	ft_get_value(prev1, prev2, node2, node1);
 	if (prev1 == NULL)
 		list->first_export = node2;
 	else if (prev2 == NULL)
 		list->first_export = node1;
 	add_index(list->first_export);
-	ft_get_value(prev1, prev2, node2, node1);
 }
 
 t_bool	is_ascii_ordered(char *str1, char *str2)
