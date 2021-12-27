@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:44:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/27 14:08:08 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/27 16:13:42 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_fill_env(t_element *tmp)
 
 int	ft_add_from_list(char **neo_env, t_element *first, int i)
 {
-	t_element *tmp;
+	t_element	*tmp;
 
 	tmp = first;
 	if (!tmp)
