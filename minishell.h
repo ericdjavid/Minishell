@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/27 14:07:38 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/27 16:30:47 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,23 @@ char		*ft_deal_dollar(char *str, t_control *list);
 void		ft_print_export(t_element *first, t_bool bool);
 
 int			ft_get_new_var(t_control *list, char **newargv);
+
+		// EXPORT3.C
+
+int			add_end_list(char *str, t_element *first, int type);
+
+char		*add_str2(char *str, int type);
+
+int			ft_assign(t_element *tmp, t_control *list, char *retreat, int i);
+
+		// EXPORT5.C
+
+int			process_retreat(char *newargv, char *retreat);
+
+int			ft_get_new_var(t_control *list, char **newargv);
+
+int			get_tmp(char *retreat, t_element *tmp, t_control *list, char *var_name);
+
 		// FT_ENV.C
 
 int 		ft_env(t_control *list);
@@ -204,7 +221,7 @@ int 		ft_env(t_control *list);
 
 int			ft_read_input(char ***newargv, char **paths);
 
-char		**init_files(char **newargv);	
+char		**init_files(char **newargv);
 
 char		*get_heredoc(char *lim);
 
@@ -339,7 +356,6 @@ char	*ft_deal_space(char *str);
 
 char	*ft_get_dollar_var(char *str, t_control *list);
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 		//	FT_EXIT.C
 
 int		ft_exit(char **arg);
