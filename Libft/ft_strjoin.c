@@ -6,14 +6,11 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 09:02:55 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/14 16:38:55 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/24 15:02:28 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "../minishell.h"
+#include "libft.h"
 
 static int	ft_count(char *s, int cnts)
 {

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:56:08 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 13:54:14 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/24 17:21:19 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,15 @@ char	***init_newargv(char *cmd_line, char **paths)
 char	***init_param_in(char ***split, char *cmd_line, int *c_1, int *c)
 {
 	char	***newargv;
-	char	*charset;
+	char	charset[3];
 
 	newargv = malloc(sizeof(char **) * (get_n_cmd(cmd_line) + 2));
 	if (!newargv)
 		return (0);
-	charset = malloc(3);
-	if (!charset)
-	{
-		free(newargv);
-		return (0);
-	}
 	charset[0] = 32;
 	charset[1] = 9;
 	charset[2] = 0;
-	*split = ft_split(cmd_line, charset);
-	free(charset);
+	*split = ft_split(cmd_line, &charset[0]);
 	if (!*split || is_syntax_er_spl(*split))
 	{
 		free(newargv);
@@ -102,9 +95,10 @@ int	is_syntax_er_spl(char **split)
 			c_2++;
 		if (c_2 > 1)
 		{
-			ft_printf_fd(2, "minishell: syntax error near unexpected token `|'\n");
+			ft_printf_fd(2,
+				"minishell: syntax error near unexpected token `|'\n");
 			free_matc(split);
-			status = 2;
+			g_status = 2;
 			return (1);
 		}
 		c_1++;

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 17:39:49 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 14:55:03 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/24 15:38:23 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ int	ft_cd(char **newargv)
 	int			ret;
 	static char	*old_path = NULL;
 
+	ret = 0;
 	if (!old_path)
-		old_path = get_absolutePath();
+		old_path = get_absolute_path();
 	if (ft_matlen(newargv) > 2)
 	{
 		ft_printf_fd(2, "minishell: cd: too many arguments\n");
@@ -32,32 +33,42 @@ int	ft_cd(char **newargv)
 	}
 	else
 	{
-		free(old_path);
-		old_path = get_absolutePath();
-		if (ft_matlen(newargv) == 1)
-			ret = chdir(getenv("HOME"));
-		else if (newargv[1][0] != '~')
-			ret = chdir(newargv[1]);
-		else
-		{
-			chdir(getenv("HOME"));
-			newargv[1] += 2;
-			ret = chdir(newargv[1]);
-			newargv[1] -= 2;
-		}
-		// TODO: changer la valeur de la variable PWD et OLDPWD de env
-		if (ret)
-		{
-			ft_printf_fd(2,
-				"minishell: cd: %s: No such file or directory\n",
-				newargv[1]);
-			status = 1;
-		}
+		old_path = ft_cd_2(newargv, ret, old_path);
+		if (!old_path)
+			return (-1);
 	}
 	return (1);
 }
 
-char	*get_absolutePath(void)
+char	*ft_cd_2(char **newargv, int ret, char *old_path)
+{
+	free(old_path);
+	old_path = get_absolute_path();
+	if (!old_path)
+		return (0);
+	if (ft_matlen(newargv) == 1)
+		ret = chdir(getenv("HOME"));
+	else if (newargv[1][0] != '~')
+		ret = chdir(newargv[1]);
+	else
+	{
+		chdir(getenv("HOME"));
+		newargv[1] += 2;
+		ret = chdir(newargv[1]);
+		newargv[1] -= 2;
+	}
+	// TODO: changer la valeur de la variable PWD et OLDPWD de env
+	if (ret)
+	{
+		ft_printf_fd(2,
+			"minishell: cd: %s: No such file or directory\n",
+			newargv[1]);
+		g_status = 1;
+	}
+	return (old_path);
+}
+
+char	*get_absolute_path(void)
 {
 	char	buf[4096];
 	char	*path;

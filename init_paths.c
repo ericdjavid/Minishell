@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 12:32:07 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 14:51:31 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/24 17:03:42 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**init_paths(char **envp)
 	while (ft_strncmp(envp[c], "PATH", 4))
 		c++;
 	c_2 = 0;
-	while (envp[c][c_2] && envp[c][c_2] != '/') //pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory)
+	while (envp[c][c_2] && envp[c][c_2] != '/')
 		c_2++;
 	paths = fill_paths(envp[c], c_2);
 	return (paths);
@@ -72,16 +72,12 @@ int	get_path_len(char *envp, int count)
 char	*ft_add_one_path(char *envp, int *count)
 {
 	char	*path;
-	int		path_len;
 	int		n;
+	int		path_len;
 
-	path_len = 0;
-	while (envp[*count + path_len] && envp[*count + path_len] != ':')
-		path_len++;
-	path = malloc(path_len + 2);
+	path = init_param_path(envp, *count, &path_len, &n);
 	if (!path)
 		return (0);
-	n = 0;
 	while (path_len-- && envp[*count])
 	{
 		if (envp[*count] != 32)
@@ -96,5 +92,19 @@ char	*ft_add_one_path(char *envp, int *count)
 	path[n] = 0;
 	if (envp[*count])
 		*count += 1;
+	return (path);
+}
+
+char	*init_param_path(char *envp, int count, int *path_len, int *n)
+{
+	char	*path;
+
+	*path_len = 0;
+	while (envp[count + *path_len] && envp[count + *path_len] != ':')
+		*path_len += 1;
+	path = malloc(*path_len + 2);
+	if (!path)
+		return (0);
+	*n = 0;
 	return (path);
 }

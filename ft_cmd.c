@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/26 18:30:31 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/27 14:07:51 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,15 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list)
 	c = 0;
 	while (c < n_newargv - 1)
 	{
-		waitpid(0, &status, 0);
-		if (WIFEXITED(status))
-			status = WEXITSTATUS(status);
-		if (status == 131)
+		waitpid(0, &g_status, 0);
+		if (WIFEXITED(g_status))
+			g_status = WEXITSTATUS(g_status);
+		if (g_status == 131)
 			write(1, "\n", 1);
 		c++;
 	}
 	free_mati(fds, n_newargv);
-	return (status);
+	return (g_status);
 }
 
 int	*init_ret(void)
@@ -103,7 +103,7 @@ int	**init_fds(char ***newargv)
 int	status_free(int **fds)
 {
 	free_mati(fds, 2);
-	return (status);
+	return (g_status);
 }
 
 int	get_n_cmd(char *cmd_line)
