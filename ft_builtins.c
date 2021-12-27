@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:42:20 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/27 14:08:20 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/27 15:51:25 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_builtins(char **newargv, t_control *list)
 	else if (!ft_strncmp(newargv[0], "exit", len_0))
 		return (ft_exit(newargv));
 	else if (!ft_strncmp(newargv[0], "unset", len_0))
-			return (ft_unset(list, newargv));
+		return (ft_unset(list, newargv));
 	if (!ft_strncmp(newargv[0], "/usr/bin/clear", len_0))
 		return (ft_clear(newargv));
 	return (-1);

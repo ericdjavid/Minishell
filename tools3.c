@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 20:08:32 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/27 14:06:43 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/27 14:18:09 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*ft_is_dollar3(t_control *control, char *new_str)
 	if (str_good == NULL)
 		str_good = is_in_list(control->first_env_var, new_str);
 	if (str_good == NULL && new_str[1] == '?')
-		str_good = ft_itoa(status);
+		str_good = ft_itoa(g_status);
 	return (str_good);
 }
 
