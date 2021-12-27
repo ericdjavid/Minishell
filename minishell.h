@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/27 15:54:02 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/27 17:59:35 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_control
 
 		//	MINISHELL.C
 
-void	ft_minishell(char **paths, t_control *list);
+void	ft_minishell(t_control *list);
 
 void	sigint_handler(int sig);
 
@@ -107,6 +107,8 @@ char	*prompt_msg(void);
 		//	FT_BUILTINS.C
 
 int		ft_builtins(char **newargv, t_control *list);
+
+int		exec_builtins(char ***newargv, t_control *list, char **paths);
 
 int		is_builtins(char *newargv);
 

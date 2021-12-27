@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/27 15:53:37 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/27 18:00:56 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 		return (-1);
 	}
 	if (ft_3dimlen(newargv + 1) == 1 && is_builtins(newargv[1][0]))
-		ret = ft_builtins(newargv[1], list);
+		ret = exec_builtins(&newargv[1], list, paths);
 	else
 		ft_cmd(newargv, paths, list, n_pid(newargv));
 	return (exit_exec(ret, newargv, new_line));

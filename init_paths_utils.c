@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 17:03:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/24 17:05:58 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/27 18:00:39 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*init_cmd_path(char *cmd, char **paths)
 		return (cmd);
 	n_path = 0;
 	cmd_len = ft_strlen(cmd);
-	while (paths[n_path])
+	while (paths && paths[n_path])
 	{
 		cmd_path = malloc(ft_strlen(paths[n_path]) + cmd_len + 1);
 		ft_strcpy(cmd_path, paths[n_path]);
