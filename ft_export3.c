@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 18:11:48 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/26 18:19:15 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/26 18:19:15by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,61 @@ char	*ft_deal_dollar(char *str, t_control *list)
 	return (ret2);
 }
 
+int	ft_assign(t_element *tmp, t_control *list, char *retreat, int i)
+{
+	t_element	*new;
+
+	tmp = list->first_env_var;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	new = malloc(sizeof(*new));
+	if (!new)
+		return (FAILURE);
+	new->str = ft_strdup(retreat);
+	new->var_name = add_var_name(new->str);
+	new->next = NULL;
+	new->index = i;
+	tmp->next = new;
+	return (SUCCESS);
+}
+
+int	process_retreat(char *newargv, char *retreat)
+{
+	if (!(ft_check_position('$', '=', newargv)) || (newargv[0] <= 'Z'
+			&& newargv[0] >= 'A') || (newargv[0] == '='
+			|| ((retreat[0] <= '9') && (retreat[0] >= '0'))))
+	{
+		ft_printf_fd(1, "\"%s\" : not a valid identifier\n", retreat);
+		return (FAILURE);
+	}
+	return (SUCCESS);
+}
+
+int	get_tmp(char *retreat, t_element *tmp, t_control *list, char *var_name)
+{
+	if (!ft_strchr(retreat, '='))
+		return (1);
+	free(tmp->str);
+	tmp->str = ft_strdup(retreat);
+	ft_remove_from_list(elem_in_list(list->first_export, var_name), list->first_export);
+	ft_remove_from_list(elem_in_list(list->first_env, var_name), list->first_env);
+	free(var_name);
+	return (1);
+}
+
+int	get_f(t_control *list, char *var_name, char *retreat)
+{
+	list->first_env_var->str = ft_strdup(retreat);
+	list->first_env_var->var_name
+		= add_var_name(list->first_env_var->str);
+	list->first_env_var->next = NULL;
+	free(var_name);
+	return (1);
+}
+
 int	ft_get_new_var(t_control *list, char **newargv)
 {
 	int			i;
-	t_element	*new;
 	t_element	*tmp;
 	char		*retreat;
 	char		*var_name;
@@ -91,13 +142,8 @@ int	ft_get_new_var(t_control *list, char **newargv)
 		retreat = ft_deal_dollar(newargv[i], list);
 		if (retreat == NULL)
 			retreat = ft_remove_simple_quotes(newargv[i]);
-		if (!(ft_check_position('$', '=', newargv[i])) || (newargv[i][0] <= 'Z'
-			&& newargv[i][0] >= 'A') || (newargv[i][0] == '='
-			|| ((retreat[0] <= '9') && (retreat[0] >= '0'))))
-		{
-			ft_printf_fd(1, "\"%s\" : not a valid identifier\n", retreat);
+		if (process_retreat(newargv[i], retreat) == FAILURE)
 			continue ;
-		}
 		var_name = add_var_name(retreat);
 		tmp = elem_in_list(list->first_env_var, var_name);
 		if ((ft_is_space_before_qual(retreat))
@@ -107,37 +153,12 @@ int	ft_get_new_var(t_control *list, char **newargv)
 			free(tmp);
 			continue ;
 		}
-		if (tmp)
-		{
-			if (!ft_strchr(retreat, '='))
-				continue ;
-			free(tmp->str);
-			tmp->str = ft_strdup(retreat);
-			ft_remove_from_list(elem_in_list(list->first_export, var_name), list->first_export);
-			ft_remove_from_list(elem_in_list(list->first_env, var_name), list->first_env);
-			free(var_name);
+		if (tmp && get_tmp(retreat, tmp, list, var_name))
 			continue ;
-		}
-		if (list->first_env_var->str == NULL)
-		{
-			list->first_env_var->str = ft_strdup(retreat);
-			list->first_env_var->var_name
-				= add_var_name(list->first_env_var->str);
-			list->first_env_var->next = NULL;
-			free(var_name);
+		if (list->first_env_var->str == NULL && get_f(list, var_name, retreat))
 			continue ;
-		}
-		tmp = list->first_env_var;
-		while (tmp->next != NULL)
-			tmp = tmp->next;
-		new = malloc(sizeof(*new));
-		if (!new)
+		if (ft_assign(tmp, list, retreat, i))
 			return (FAILURE);
-		new->str = ft_strdup(retreat);
-		new->var_name = add_var_name(new->str);
-		new->next = NULL;
-		new->index = i;
-		tmp->next = new;
 		free(var_name);
 	}
 	if (retreat)

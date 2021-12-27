@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 16:31:10 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/26 18:04:37 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/27 14:28:44 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,31 +72,4 @@ char	*ft_get_dollar_var(char *str, t_control *list)
 	tmp_char = NULL;
 	tmp_char = add_value_name(tmp->str);
 	return (tmp_char);
-}
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
-{
-	char		*d;
-	const char	*s;
-	size_t		n;
-
-	d = dst;
-	n = size;
-	s = src;
-	if (n != 0)
-	{
-		while (--n != 0)
-		{
-			if ((*d++ = *s++) == '\0')
-				break ;
-		}
-	}
-	if (n == 0)
-	{
-		if (size != 0)
-			*d = '\0';
-		while (*s++)
-			;
-	}
-	return (s - src - 1);
 }
