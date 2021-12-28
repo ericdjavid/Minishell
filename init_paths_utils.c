@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 17:03:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/27 18:00:39 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/28 14:11:15 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*init_cmd_path(char *cmd, char **paths)
 	size_t	cmd_len;
 	char	*cmd_path;
 
-	if (is_builtins(cmd) || *cmd == '/')
+	if (is_builtins(cmd) || ft_strchr(cmd, '/'))
 		return (cmd);
 	n_path = 0;
 	cmd_len = ft_strlen(cmd);
