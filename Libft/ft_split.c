@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:07:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/28 15:57:19 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/28 17:04:19 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,10 @@ char	**ft_split(char *str, char *charset)
 		count++;
 	}
 	split[count] = 0;
+	if (ft_bad_entries(split) == TRUE)
+	{
+		printf("bad entry\n");
+		return (0);
+	}
 	return (split);
 }
