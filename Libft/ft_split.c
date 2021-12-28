@@ -6,12 +6,13 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:07:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/15 18:19:43 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/28 18:12:24 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "../minishell.h"
+
 
 int	browse_str(char *str, char *charset)
 {
@@ -24,6 +25,16 @@ int	browse_str(char *str, char *charset)
 		{
 			n++;
 			while (str[n] && str[n] != '"')
+				n++;
+			n++;
+			if (!str[n])
+				return (n);
+			browse_str(str + n, charset);
+		}
+		else if (str[n] == 39)
+		{
+			n++;
+			while (str[n] && str[n] != 39)
 				n++;
 			n++;
 			if (!str[n])
@@ -58,22 +69,23 @@ char	*fill_split(char *str, char *charset)
 	int		len_str;
 	char	*split;
 	int		count;
-	char	*splitted2;
+	int		c_2;
 
 	len_str = browse_str(str, charset);
 	split = malloc(len_str + 1);
 	if (!split)
 		return (0);
 	count = 0;
+	c_2 = 0;
 	while (count < len_str)
 	{
-		split[count] = str[count];
+		if (!((count == 0 || !str[count + 1])
+			&& (str[count] == '"' || str[count] == 39)))
+			split[c_2++] = str[count];
 		count++;
 	}
-	split[count] = 0;
-	splitted2 = ft_remove_quotes(split);
-	free(split);
-	return (splitted2);
+	split[c_2] = 0;
+	return (split);
 }
 
 char	*get_next_str(char *str, char *charset, int count)
@@ -107,7 +119,7 @@ char	**ft_split(char *str, char *charset)
 	{
 		str = get_next_str(str, charset, count);
 		split[count] = fill_split(str, charset);
-		if (!*split)
+		if (!split[count])
 		{
 			free_matc(split);
 			return (0);

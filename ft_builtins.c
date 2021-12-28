@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:42:20 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/27 17:55:37 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/28 15:48:15 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ int	exec_builtins(char ***newargv, t_control *list, char **paths)
 	ret = ft_manage_fds(newargv, paths, fds);
 	if (!ret)
 	{
-		free_mati(fds, 1);
+		free_mati(fds, 2);
 		return (-1);
 	}
 	exec = ft_builtins(*newargv, list);
-	free_mati(fds, 1);
+	ft_close_fd(fds[1][1]);
+	free_mati(fds, 2);
 	free(ret);
 	return (exec);
 }
