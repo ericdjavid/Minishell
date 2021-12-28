@@ -6,33 +6,63 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 20:08:32 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/27 19:47:19 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/28 15:00:03 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool	ft_bad_entries(char *str)
-{
-	int	sq;
-	int	dq;
-	int	i;
+// void	count_entries(char *str, int *sq, int *dq)
+// {
+// 	int	nsq;
+// 	int	ndq;
 
-	if (!str)
-		return (TRUE);
-	sq = 0;
-	dq = 0;
-	i = -1;
-	while (str[++i])
+// 	nsq = 0;
+// 	ndq = 0;
+// 	i = -1;
+// 	while (str[++i])
+// 	{
+// 		if (str[i] == '\'')
+// 			sq++;
+// 		if (str[i] == '\"')
+// 			dq++;
+// 	}
+// }
+
+t_bool	ft_bad_entries(char ***str)
+{
+	int i;
+	int	h = 0;
+
+	while (str[++h])
 	{
-		if (str[i] == '\'')
-			sq++;
-		if (str[i] == '\"')
-			dq++;
+		i = -1;
+		while (str[h][++i])
+		{
+			printf(RED"str to process : %s\n"END, str[h][i]);
+		}
 	}
-	if (sq % 2 != 0 || dq % 2 != 0)
-		return (TRUE);
-	return (FALSE);
+	return FALSE;
+
+	// int	sq;
+	// int	dq;
+	// int	i;
+
+	// if (!str)
+	// 	return (TRUE);
+	// sq = 0;
+	// dq = 0;
+	// i = -1;
+	// while (str[++i])
+	// {
+	// 	if (str[i] == '\'')
+	// 		sq++;
+	// 	if (str[i] == '\"')
+	// 		dq++;
+	// }
+	// if ((sq % 2 != 0 || dq % 2 != 0) && (str[0] != '\"' && str[i] != '\"') && (str[0] != '\'' && str[i] != '\''))
+	// 	return (TRUE);
+	// return (FALSE);
 }
 
 char	*ft_is_dollar3(t_control *control, char *new_str)
