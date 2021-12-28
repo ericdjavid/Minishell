@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 12:32:07 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/24 17:03:42 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/28 14:09:58 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ char	**init_paths(char **envp)
 	char	**paths;
 
 	c = 0;
-	while (ft_strncmp(envp[c], "PATH", 4))
+	while (envp[c] && ft_strncmp(envp[c], "PATH", 4))
 		c++;
+	if (!envp[c])
+		return (0);
 	c_2 = 0;
 	while (envp[c][c_2] && envp[c][c_2] != '/')
 		c_2++;

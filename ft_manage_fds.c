@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 20:59:11 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/26 17:37:07 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/27 17:42:32 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	*ft_manage_fds(char ***newargv, char **paths, int **fds)
 		return (0);
 	}
 	else if (check_ret_stdin(ret)
-			&& ((ft_matlen((*newargv)) > 1) || *(newargv - 1))
-			&& fds[0][0] > 1)
+		&& ((ft_matlen((*newargv)) > 1) || *(newargv - 1))
+		&& fds[0][0] > 1)
 	{
 		ft_dup2(fds[fds[0][0] - 1][0], STDIN_FILENO);
 		ft_close_fd(fds[fds[0][0] - 1][0]);
@@ -43,7 +43,7 @@ int	*ft_manage_fds(char ***newargv, char **paths, int **fds)
 int	check_ret_stdin(int *ret)
 {
 	if (ret[0] == 1 && ret[1] != 2 && ret[1] != 5
-			&& ret[1] != 9 && ret[1] != 6)
+		&& ret[1] != 9 && ret[1] != 6)
 		return (1);
 	return (0);
 }
@@ -51,7 +51,19 @@ int	check_ret_stdin(int *ret)
 int	check_ret_stdout(int *ret)
 {
 	if (ret[1] != 3 && ret[1] != 5
-			&& ret[1] != 9 && ret[1] != 6)
+		&& ret[1] != 9 && ret[1] != 6)
 		return (1);
 	return (0);
+}
+
+int	*init_ret(void)
+{
+	int	*ret;
+
+	ret = malloc(sizeof(int) * 2);
+	if (!ret)
+		return (0);
+	ret[0] = 1;
+	ret[1] = 1;
+	return (ret);
 }

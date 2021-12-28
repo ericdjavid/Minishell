@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 08:55:55 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/17 16:57:43 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/27 15:56:45 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	print_x(unsigned int arg, int fd)
 {
-	int	len;
+	int		len;
 	char	*hexa;
 
 	hexa = convert_hexa(arg);

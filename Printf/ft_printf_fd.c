@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 14:46:28 by abrun             #+#    #+#             */
-/*   Updated: 2021/11/17 17:05:55 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/27 16:36:56 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,19 @@ int	print_arg(char c, va_list lst, int fd)
 int	ft_printf_fd(int fd, const char *s, ...)
 {
 	va_list	lst;
-	int		ret;
-	int		n_ktr;
-	
+
 	va_start(lst, s);
-	n_ktr = 0;
 	while (*s)
 	{
 		if (*s == '%')
 		{
 			s++;
-			ret = print_arg(*s, lst, fd);
-			if (ret >= 0)
-				n_ktr += ret;
-			else
-				return (1);
+			print_arg(*s, lst, fd);
 		}
 		else
-		{
 			write(fd, s, 1);
-			n_ktr++;
-		}
 		if (*s)
 			s++;
 	}
-	return (n_ktr);
+	return (1);
 }

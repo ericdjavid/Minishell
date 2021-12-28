@@ -6,11 +6,33 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:42:20 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/27 14:08:20 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/27 17:55:37 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	exec_builtins(char ***newargv, t_control *list, char **paths)
+{
+	int	*ret;
+	int	**fds;
+	int	exec;
+
+	fds = init_fds(1);
+	if (!fds)
+		return (-1);
+	fds[0][0]++;
+	ret = ft_manage_fds(newargv, paths, fds);
+	if (!ret)
+	{
+		free_mati(fds, 1);
+		return (-1);
+	}
+	exec = ft_builtins(*newargv, list);
+	free_mati(fds, 1);
+	free(ret);
+	return (exec);
+}
 
 int	ft_builtins(char **newargv, t_control *list)
 {
@@ -30,7 +52,7 @@ int	ft_builtins(char **newargv, t_control *list)
 	else if (!ft_strncmp(newargv[0], "exit", len_0))
 		return (ft_exit(newargv));
 	else if (!ft_strncmp(newargv[0], "unset", len_0))
-			return (ft_unset(list, newargv));
+		return (ft_unset(list, newargv));
 	if (!ft_strncmp(newargv[0], "/usr/bin/clear", len_0))
 		return (ft_clear(newargv));
 	return (-1);

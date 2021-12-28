@@ -6,35 +6,24 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:35:36 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/23 13:54:24 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/27 15:50:45 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	copy_split_in_newargv(char **split, char ***newargv, int *c)
+int	get_n_cmd(char *cmd_line)
 {
-	int	c_2;
+	int	n_cmd;
+	int	c;
 
-	c_2 = 0;
-	while (split[*c] && ft_strncmp(split[*c], "|", ft_strlen(split[*c])))
+	n_cmd = 1;
+	c = 0;
+	while (cmd_line[c])
 	{
-		if (ft_strncmp(split[*c], "exit", ft_strlen(split[*c])))
-		{
-			newargv[0][c_2] = split[*c];
-			c_2++;
-		}
-		else
-			free(split[*c]);
-		*c += 1;
-		if (split[*c] && !ft_strncmp(split[*c], "|", ft_strlen(split[*c]))
-			&& !c_2)
-		{
-			free(split[*c]);
-			*c += 1;
-		}
+		if (cmd_line[c] == '|')
+			n_cmd++;
+		c++;
 	}
-	if (!c_2)
-		newargv[0][0] = 0;
-	return (c_2);
+	return (n_cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/28 14:46:18 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/28 15:01:26 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_control
 
 		//	MINISHELL.C
 
-void	ft_minishell(char **paths, t_control *list);
+void	ft_minishell(t_control *list);
 
 void	sigint_handler(int sig);
 
@@ -93,6 +93,13 @@ char	*put_sp_around_pipes(char *str);
 
 char	*init_param_put_sp(char *str);
 
+
+		//	EXEC_CMD.C
+
+int		n_pid(char ***newargv);
+
+int		exit_exec(int ret, char ***newargv, char *cmd_line);
+
 		//	PROMPT_MSG.C
 
 char	*prompt_msg(void);
@@ -100,6 +107,8 @@ char	*prompt_msg(void);
 		//	FT_BUILTINS.C
 
 int		ft_builtins(char **newargv, t_control *list);
+
+int		exec_builtins(char ***newargv, t_control *list, char **paths);
 
 int		is_builtins(char *newargv);
 
@@ -125,11 +134,11 @@ char	*get_absolute_path(void);
 
 		//	FT_CMD.C
 
-int		ft_cmd(char ***newargv, char **paths, t_control *list);
+int		ft_cmd(char ***newargv, char **paths, t_control *list, int n_pid);
 
 int		*init_ret(void);
 
-int		**init_fds(char ***newargv);
+int		**init_fds(int n_cmd);
 
 int		status_free(int **fds);
 
@@ -219,17 +228,47 @@ int 		ft_env(t_control *list);
 
 		//	FT_READ_INPUT.C
 
-int			ft_read_input(char ***newargv, char **paths);
+int		ft_read_input(char ***newargv, char **paths);
 
-char		**init_files(char **newargv);
+char	**init_files(char **newargv);
+
+int		init_config(char **newargv, int *c);
+
+int		is_unexpected(char *arg);
+
+
+		//	MAKE_CONFIGS_RDIN.C
+
+int		make_configs_rdin(char ***newargv, char **files, char **heredoc, int *c);
+
+int		make_config_1(char **heredoc, char *lim, int *last);
+
+int		make_config_2(char **files, char *arg, int *last);
 
 char		*get_heredoc(char *lim);
 
-int			init_param_heredoc(char *lim, char **buf, char **heredoc, int *ret);
+char	*print_error_rdin(int ret, char *lim, char *heredoc);
+
+
+		//	GET_NEWARGV_RDIN.C
 
 char		**get_newargv_rdin(char **newargv, int c, char **paths);
 
+char	**add_one_arg_rdin(char **newargv, char **new,
+		char **paths, int *counter);
+
 char		*ft_strdup_rdin(char *s, char **mat1, char **mat2);
+
+
+		//	RETURNS_RDIN.C
+
+int	dup_readin(char ***files, char **heredoc, int last);
+
+int	dup_readin_2(char **heredoc, char ***files, int last, int fdin);
+
+int	exit_readin(char **files, char *heredoc);
+
+
 
 		//	FT_REDIRECTION.C
 

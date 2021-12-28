@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:14 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/24 15:06:18 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/27 15:19:37 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	ft_echo(char **newargv)
 	{
 		write_newargv(newargv, 1);
 	}
-	write(1, &c, 1);
 	g_status = 0;
 	return (1);
 }
