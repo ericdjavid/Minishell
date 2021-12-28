@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:07:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/15 18:19:43 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/28 15:57:19 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*fill_split(char *str, char *charset)
 	int		len_str;
 	char	*split;
 	int		count;
-	char	*splitted2;
+	// char	*splitted2;
 
 	len_str = browse_str(str, charset);
 	split = malloc(len_str + 1);
@@ -71,9 +71,10 @@ char	*fill_split(char *str, char *charset)
 		count++;
 	}
 	split[count] = 0;
-	splitted2 = ft_remove_quotes(split);
-	free(split);
-	return (splitted2);
+	// splitted2 = ft_remove_quotes(split);
+	// free(split);
+	// return (splitted2);
+	return (split);
 }
 
 char	*get_next_str(char *str, char *charset, int count)
