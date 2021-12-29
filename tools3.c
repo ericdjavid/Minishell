@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 20:08:32 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/29 19:38:08 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/29 19:59:18 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,25 @@ char	*ft_is_dollar3(t_control *control, char *new_str)
 	return (str_good);
 }
 
+int		no_unpair_char_before(char *str, int i, char c)
+{
+	int	j;
+	int	count;
+
+	j = 0;
+	count = 0;
+	while (str[j] && j < i)
+	{
+		if (str[j] == c)
+			count++;
+		j++;
+	}
+	if (count % 2 == 0)
+		return (1);
+	return (0);
+
+}
+
 char	*ft_is_dollar2(char *str, t_control *control)
 {
 	int		i;
@@ -129,12 +148,13 @@ char	*ft_is_dollar2(char *str, t_control *control)
 	size = 0;
 	while (str[++i])
 	{
-		if (str[i] && str[i] == '\'')
+		if (str[i] && str[i] == '\'' && no_unpair_char_before(str, i, '"'))
 		{
 			i++;
 			while (str[i] && str[i] != '\'')
 				i++;
-			// i++;
+			if (str[i] != '\'')
+				break ;
 		}
 		if (str[i] && str[i] == '$' && str[i + 1] != ' ' && str[i + 1])
 		{

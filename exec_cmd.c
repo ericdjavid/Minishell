@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/29 19:26:41 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/29 20:23:59y edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 	new_line = get_new_line(cmd_line, list);
 	if (!new_line)
 		return (-1);
-	// ft_process_the_line(new_line);
 	newargv = init_newargv(new_line, paths);
 	if (!newargv)
 	{
@@ -40,6 +39,50 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 	return (exit_exec(ret, newargv, new_line));
 }
 
+int	ft_deal_bad_sq_dq(char *str)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' && no_unpair_char_before(str, i, '"'))
+		{
+			while (str[i] != '\0')
+			{
+				if (str[i] == '\'')
+					count++;
+				i++;
+			}
+			if (count % 2 != 0)
+			{
+				printf("impair nb : %d\n", count);
+				free(str);
+				return (-1);
+			}
+			if (str[i] == '"' && no_unpair_char_before(str, i, '\''))
+			{
+				while (str[i] != '\0')
+				{
+					if (str[i] == '"')
+						count++;
+					i++;
+				}
+				if (count % 2 != 0)
+				{
+					printf("impair nb : %d\n", count);
+					free(str);
+					return (-1);
+				}
+			}
+		}
+		i++;
+	}
+	return (SUCCESS);
+}
+
 char	*get_new_line(char *cmd_line, t_control *list)
 {
 	char	*new_line;
@@ -49,6 +92,9 @@ char	*get_new_line(char *cmd_line, t_control *list)
 	if (!new_line)
 		return (0);
 	new_line = ft_is_dollar2(new_line, list);
+	// bad entries to be dealt here
+	if (ft_deal_bad_sq_dq(new_line) == -1)
+		return (0);
 	printf("old new : %s\n", new_line);
 	new_line = put_sp_around_pipes(new_line);
 	if (!new_line)

@@ -118,18 +118,18 @@ char	***init_param_in(char ***split, char *cmd_line, int *c_1, int *c)
 {
 	char	***newargv;
 	char	charset[3];
-	char	*new_cmd_line;
+	// char	*new_cmd_line;
 
-	new_cmd_line = ft_strdup(cmd_line);
-	new_cmd_line = add_spaces_to_cmd_line(new_cmd_line);
-	newargv = malloc(sizeof(char **) * (get_n_cmd(new_cmd_line) + 2));
+	// new_cmd_line = ft_strdup(cmd_line);
+	// cmd_line = add_spaces_to_cmd_line(new_cmd_line);
+	newargv = malloc(sizeof(char **) * (get_n_cmd(cmd_line) + 2));
 	if (!newargv)
 		return (0);
 	charset[0] = 32;
 	charset[1] = 9;
 	charset[2] = 0;
 
-	*split = ft_split(new_cmd_line, &charset[0]);
+	*split = ft_split(cmd_line, &charset[0]);
 	if (!*split || is_syntax_er_spl(*split))
 	{
 		free(newargv);
@@ -139,7 +139,7 @@ char	***init_param_in(char ***split, char *cmd_line, int *c_1, int *c)
 	*c_1 = 1;
 	*c = 0;
 
-	free(new_cmd_line);
+	// free(cmd_line);
 	return (newargv);
 }
 

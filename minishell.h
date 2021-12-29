@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/29 13:39:06 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/29 20:10:35 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,8 @@ char	*ft_get_good_str(char *str);
 // void	ft_is_dollar(char **str, t_control *control);
 
 char	*ft_is_dollar2(char *str, t_control *control);
+
+int		no_unpair_char_before(char *str, int i, char c);
 
 t_element	*ft_is_in_list(t_control *list, char *str);
 
