@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/28 16:54:07 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/29 13:01:12 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ char	*put_sp_around_pipes(char *str)
 	int		c_1;
 	int		c_2;
 
+	new = NULL;
 	new = init_param_put_sp(str);
 	if (!new)
 		return (0);
@@ -84,14 +85,33 @@ char	*put_sp_around_pipes(char *str)
 		if (str[c_1] == '|')
 		{
 			new[c_1 + c_2++] = 32;
-			new[c_1 + c_2++] = '|';
+			while (str[c_1] && str[c_1] == '|')
+			{
+				new[c_1 + c_2] = '|';
+				c_1++;
+			}
+			c_2++;
 			new[c_1 + c_2] = 32;
 		}
+		else if (str[c_1] == '<')
+		{
+			new[c_1 + c_2++] = 32;
+			while (str[c_1] && str[c_1] == '<')
+			{
+				new[c_1 + c_2] = '<';
+				c_1++;
+			}
+			new[c_1 + c_2] = 32;
+			c_2++;
+		}
 		else
+		{
 			new[c_1 + c_2] = str[c_1];
-		c_1++;
+			c_1++;
+		}
 	}
 	new[c_1 + c_2] = 0;
+	printf("new : %s\n", new);
 	free(str);
 	return (new);
 }
@@ -109,8 +129,19 @@ char	*init_param_put_sp(char *str)
 	while (str[c_1])
 	{
 		if (str[c_1] == '|')
+		{
+			while (str[c_1] && str[c_1] == '|')
+				c_1++;
 			c_2 += 2;
-		c_1++;
+		}
+		else if (str[c_1] == '<')
+		{
+			while (str[c_1] && str[c_1] == '<')
+				c_1++;
+			c_2 += 2;
+		}
+		else
+			c_1++;
 	}
 	new = malloc(c_1 + c_2 + 1);
 	if (!new)
