@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/28 19:21:59 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/29 12:44:36 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ char	*put_sp_around_pipes(char *str)
 	int		c_1;
 	int		c_2;
 
+	new = NULL;
 	new = init_param_put_sp(str);
 	if (!new)
 		return (0);

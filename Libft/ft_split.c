@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:07:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/28 18:12:24 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/29 12:51:33 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*fill_split(char *str, char *charset)
 	while (count < len_str)
 	{
 		if (!((count == 0 || !str[count + 1])
-			&& (str[count] == '"' || str[count] == 39)))
+			&& (str[count] == '"' || str[count] == '\'')))
 			split[c_2++] = str[count];
 		count++;
 	}
@@ -127,5 +127,10 @@ char	**ft_split(char *str, char *charset)
 		count++;
 	}
 	split[count] = 0;
+	int i = -1;
+	while (split[++i])
+	{
+		printf("[%d]|%s|\n", i, split[i]);
+	}
 	return (split);
 }
