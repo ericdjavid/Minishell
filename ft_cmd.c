@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/27 17:41:30 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/28 18:16:59 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list, int n_pid)
 		else
 			close_fds_in_parent(fds);
 	}
+	ft_close_fd(fds[fds[0][0]][0]);
+	if (fds[0][0] > 1)
+		ft_close_fd(fds[fds[0][0] - 1][0]);
 	wait_cmds_free(n_pid, child_pid, fds);
 	return (g_status);
 }
@@ -89,7 +92,9 @@ int	**init_fds(int n_cmd)
 		return (0);
 	fds[c][0] = 0;
 	c++;
-	while (c < n_cmd + 1)
+	if (n_cmd == 1)
+		n_cmd++;
+	while (c < n_cmd)
 	{
 		fds[c] = malloc(sizeof(int) * 2);
 		if (!fds[c] || pipe(fds[c]) == -1)

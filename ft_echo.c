@@ -6,14 +6,13 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:14 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/27 15:19:37 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/28 16:06:38 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // TODO: echo truc | cat | cat | cat -e | cat -e
-//  ^@
 int	ft_echo(char **newargv)
 {
 	char	c;
