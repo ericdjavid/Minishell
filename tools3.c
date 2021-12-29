@@ -6,13 +6,13 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 20:08:32 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/28 14:17:03 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/29 13:13:16 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool	ft_bad_entries(char *str)
+t_bool	is_pair(char *str, t_bool *sq_pair, t_bool *dq_pair)
 {
 	int	sq;
 	int	dq;
@@ -30,10 +30,121 @@ t_bool	ft_bad_entries(char *str)
 		if (str[i] == '\"')
 			dq++;
 	}
-	if (sq % 2 != 0 || dq % 2 != 0)
+	if (sq % 2 != 0)
+		*sq_pair = FALSE;
+	if (dq % 2 != 0)
+		*dq_pair = FALSE;
+	if ((*sq_pair == TRUE) && (*dq_pair == TRUE))
 		return (TRUE);
 	return (FALSE);
 }
+
+t_bool	is_surrounded(char *str, size_t size, char c)
+{
+	if (str[0] == c && str[size] == c)
+		return (TRUE);
+	return (FALSE);
+}
+
+t_bool	ft_str_bad_entry(char *str)
+{
+	t_bool	sq_pair;
+	t_bool	dq_pair;
+	size_t	size;
+
+	sq_pair = TRUE;
+	dq_pair = TRUE;
+	size = ft_strlen(str) - 1;
+	if (!(is_pair(str, &sq_pair, &dq_pair)))
+	{
+		printf("dq pair is %d amd sq ppair is %d\n", dq_pair,  sq_pair);
+		printf("str h i 0 = %c and last is %c\n", str[0], str[size]);
+		if (str[0] == '\'' && str[size] == '\'' && sq_pair == FALSE)
+			return (TRUE);
+		if (str[0] == '\"' && str[size] == '\"' && dq_pair == FALSE)
+			return (TRUE);
+		if (is_surrounded(str, size, '\'') == FALSE && is_surrounded(str, size, '\"') == FALSE &&
+			(sq_pair == FALSE || dq_pair == FALSE))
+		{
+			printf("it s inside\n");
+			return (TRUE);
+		}
+	}
+	return (FALSE);
+}
+
+t_bool	ft_bad_entries(char **str)
+{
+	int i;
+	t_bool	sq_pair;
+	t_bool	dq_pair;
+	size_t	size;
+
+	sq_pair = TRUE;
+	dq_pair = TRUE;
+	i = -1;
+	while (str[++i])
+	{
+		printf(RED"str to process : %s\n"END, str[i]);
+		size = ft_strlen(str[i]) - 1;
+		if (!(is_pair(str[i], &sq_pair, &dq_pair)))
+		{
+			printf("dq pair is %d amd sq ppair is %d\n", dq_pair,  sq_pair);
+			printf("str h i 0 = %c and last is %c\n", str[i][0], str[i][size]);
+			if (str[i][0] == '\'' && str[i][size] == '\'' && sq_pair == FALSE)
+				return (TRUE);
+			if (str[i][0] == '\"' && str[i][size] == '\"' && dq_pair == FALSE)
+				return (TRUE);
+			if (is_surrounded(str[i], size, '\'') == FALSE && is_surrounded(str[i], size, '\"') == FALSE &&
+				(sq_pair == FALSE || dq_pair == FALSE))
+			{
+				printf("it s inside\n");
+				return (TRUE);
+			}
+		}
+	}
+	return (FALSE);
+}
+
+
+
+// t_bool	ft_bad_entries(char ***str)
+// {
+// 	int i;
+// 	int	h = 0;
+// 	t_bool	sq_pair;
+// 	t_bool	dq_pair;
+// 	size_t	size;
+
+// 	sq_pair = TRUE;
+// 	dq_pair = TRUE;
+// 	while (str[++h])
+// 	{
+// 		i = -1;
+// 		while (str[h][++i])
+// 		{
+// 			printf(RED"str to process : %s\n"END, str[h][i]);
+// 			size = ft_strlen(str[h][i]) - 1;
+// 			if (!(is_pair(str[h][i], &sq_pair, &dq_pair)))
+// 			{
+// 				printf("dq pair is %d amd sq ppair is %d\n", dq_pair,  sq_pair);
+// 				printf("str h i 0 = %c and last is %c\n", str[h][i][0], str[h][i][size]);
+// 				if (str[h][i][0] == '\'' && str[h][i][size] == '\'' && sq_pair == FALSE)
+// 					return (TRUE);
+// 				if (str[h][i][0] == '\"' && str[h][i][size] == '\"' && dq_pair == FALSE)
+// 					return (TRUE);
+// 				if (is_surrounded(str[h][i], size, '\'') == FALSE && is_surrounded(str[h][i], size, '\"') == FALSE &&
+// 					(sq_pair == FALSE || dq_pair == FALSE))
+// 				{
+// 					printf("it s inside\n");
+// 					return (TRUE);
+// 				}
+// 			}
+// 		}
+
+// 	}
+// 	return (FALSE);
+// }
 
 char	*ft_is_dollar3(t_control *control, char *new_str)
 {
@@ -63,6 +174,8 @@ char	*ft_is_dollar2(char *str, t_control *control)
 			new_str = get_new_str(str, i, &size);
 			str_good = ft_is_dollar3(control, new_str);
 			free(new_str);
+			if (str_good == NULL)
+				return (str = get_new_line_cmd(str, i, size, ""));
 			if (str_good != NULL)
 			{
 				str = get_new_line_cmd(str, i, size, str_good);

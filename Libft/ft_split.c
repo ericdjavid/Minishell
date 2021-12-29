@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:07:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/29 12:51:33 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/29 13:45:04 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int	browse_str(char *str, char *charset)
 				return (n);
 			browse_str(str + n, charset);
 		}
-		else if (str[n] == 39)
+		else if (str[n] == '\'')
 		{
 			n++;
-			while (str[n] && str[n] != 39)
+			while (str[n] && str[n] != '\'')
 				n++;
 			n++;
 			if (!str[n])
@@ -70,8 +70,12 @@ char	*fill_split(char *str, char *charset)
 	char	*split;
 	int		count;
 	int		c_2;
+	char	*neo_split;
+
+	printf(RED "str to modify is |%s|\n"END, str);
 
 	len_str = browse_str(str, charset);
+		printf(PINK "size of str is %d\n" END, len_str);
 	split = malloc(len_str + 1);
 	if (!split)
 		return (0);
@@ -79,12 +83,34 @@ char	*fill_split(char *str, char *charset)
 	c_2 = 0;
 	while (count < len_str)
 	{
-		if (!((count == 0 || !str[count + 1])
-			&& (str[count] == '"' || str[count] == '\'')))
-			split[c_2++] = str[count];
+
+		split[c_2++] = str[count];
 		count++;
+		// if (!((count == 0 || !str[count + 1])
+		// 	&& (str[count] == '"' || str[count] == '\'')))
+		// 	split[c_2++] = str[count];
+		// count++;
 	}
 	split[c_2] = 0;
+	printf(YELLOW "new split is |%s|\n"END, split);
+	if (ft_str_bad_entry(split) == TRUE)
+	{
+		printf("this is a bad entry\n");
+		free(split);
+		return (0);
+	}
+	if (is_surrounded(split, len_str - 1, '"') == TRUE)
+	{
+		neo_split = ft_remove_quotes(split);
+		free(split);
+		return (neo_split);
+	}
+	if (is_surrounded(split, len_str - 1, '\'') == TRUE)
+	{
+		neo_split = ft_remove_simple_quotes(split);
+		free(split);
+		return (neo_split);
+	}
 	return (split);
 }
 
