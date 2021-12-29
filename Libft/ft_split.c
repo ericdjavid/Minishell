@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:07:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/29 13:59:57 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/29 18:21:23 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,21 +83,23 @@ char	*fill_split(char *str, char *charset)
 	c_2 = 0;
 	while (count < len_str)
 	{
-
 		split[c_2++] = str[count];
 		count++;
-		// if (!((count == 0 || !str[count + 1])
-		// 	&& (str[count] == '"' || str[count] == '\'')))
-		// 	split[c_2++] = str[count];
-		// count++;
 	}
 	split[c_2] = 0;
-	printf(YELLOW "new split is |%s|\n"END, split);
 	if (ft_str_bad_entry(split) == TRUE)
 	{
 		printf("this is a bad entry\n");
 		free(split);
 		return (0);
+	}
+	if (len_str == 2 && (is_surrounded(split, len_str - 1, '"') == TRUE
+		|| is_surrounded(split, len_str - 1, '\'') == TRUE))
+	{
+		free(split);
+		split = malloc(2);
+		split[0] = ' ';
+		split[1] = '\0';
 	}
 	if (is_surrounded(split, len_str - 1, '"') == TRUE)
 	{
@@ -158,5 +160,6 @@ char	**ft_split(char *str, char *charset)
 	{
 		printf("[%d]|%s|\n", i, split[i]);
 	}
+
 	return (split);
 }

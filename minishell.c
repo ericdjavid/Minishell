@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:31:49 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/29 13:01:23 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/29 15:50:45 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ void	ft_minishell(t_control *list)
 		free_matc(paths);
 	if (env)
 		free_matc(env);
-	// if (ret == -2)
-	// 	ft_printf_fd(2, "Erreur : Simple quote ou double quote orphelin !\n");
 }
 
 void	sigint_handler(int sig)

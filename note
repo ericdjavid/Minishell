@@ -1,8 +1,9 @@
 
-echo "" "" "" a : seglaut
-pense au quote dans les quotes, se sont des characteres
-echo "boujour  'a"
+echo "" "" "" a : segfault
+--> fix mais 6 espaces au lieu de 3 qd wc -c
+
 echo je"suis"' 'la : il faut enlever les singles quotes
+--> ko : prendpas en compte l absence d espace qd split
 
 (une var d'env c'est de $--> tant que c;est un alpha num + _)
 echo $jfd : si env invalide affiche rien k
@@ -16,24 +17,12 @@ pour les heredoc, le limitor n'expend pas les variables d'env
 bjr
 bash :...)
 
-
-
 pour le heredoc : le limitor a deux etats telque :
 - limitor non expend (pas de quote dedans) le contenue dans le heredoc est donc expend
 - limitor expend (some quote inside) le contenue dans le heredoc n'est pas expend 
-
-
-
-cat | cat | ls ----->>>> ici ce test check si tu closes correctement tes fds. 
-Du coup ici -->dans ton processus fils (ou' tu execes tu dois close TOUT les fd open (TOUS), puis tu execs et dans ton processus parent, tu dois close uniquement les deux fds que tu utilises 
-
 
 pour les redirections, tu dois les creer/open dans l'ordre qu'on te les donnes, si jamias ca fail, les precedents doivent etre creer.aSeul le dernier fils creer sera remplit si les redirections sont correct
 
 pour les buitlins en cas d'error return sur sortie d'error (write(2)) et remplir le fdout avec null
 
-other pbm
-touch ls
-chmod 000 ls
-./ls --> should say permission denied
-
+si $lsdghhksdgj => retour a la ligne
