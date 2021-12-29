@@ -6,11 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:07:16 by abrun             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/12/28 17:04:19 by edjavid          ###   ########.fr       */
-=======
-/*   Updated: 2021/12/29 12:51:33 by edjavid          ###   ########.fr       */
->>>>>>> master
+/*   Updated: 2021/12/29 13:03:58 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +69,8 @@ char	*fill_split(char *str, char *charset)
 	int		len_str;
 	char	*split;
 	int		count;
-<<<<<<< HEAD
 	// char	*splitted2;
-=======
 	int		c_2;
->>>>>>> master
 
 	len_str = browse_str(str, charset);
 	split = malloc(len_str + 1);
@@ -92,14 +85,7 @@ char	*fill_split(char *str, char *charset)
 			split[c_2++] = str[count];
 		count++;
 	}
-<<<<<<< HEAD
-	split[count] = 0;
-	// splitted2 = ft_remove_quotes(split);
-	// free(split);
-	// return (splitted2);
-=======
 	split[c_2] = 0;
->>>>>>> master
 	return (split);
 }
 
@@ -146,6 +132,7 @@ char	**ft_split(char *str, char *charset)
 	{
 		printf("bad entry\n");
 		return (0);
+	}
 	int i = -1;
 	while (split[++i])
 	{
