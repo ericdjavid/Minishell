@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 20:08:32 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/29 13:13:16 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/29 15:16:08 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,46 +106,6 @@ t_bool	ft_bad_entries(char **str)
 	return (FALSE);
 }
 
-
-
-// t_bool	ft_bad_entries(char ***str)
-// {
-// 	int i;
-// 	int	h = 0;
-// 	t_bool	sq_pair;
-// 	t_bool	dq_pair;
-// 	size_t	size;
-
-// 	sq_pair = TRUE;
-// 	dq_pair = TRUE;
-// 	while (str[++h])
-// 	{
-// 		i = -1;
-// 		while (str[h][++i])
-// 		{
-// 			printf(RED"str to process : %s\n"END, str[h][i]);
-// 			size = ft_strlen(str[h][i]) - 1;
-// 			if (!(is_pair(str[h][i], &sq_pair, &dq_pair)))
-// 			{
-// 				printf("dq pair is %d amd sq ppair is %d\n", dq_pair,  sq_pair);
-// 				printf("str h i 0 = %c and last is %c\n", str[h][i][0], str[h][i][size]);
-// 				if (str[h][i][0] == '\'' && str[h][i][size] == '\'' && sq_pair == FALSE)
-// 					return (TRUE);
-// 				if (str[h][i][0] == '\"' && str[h][i][size] == '\"' && dq_pair == FALSE)
-// 					return (TRUE);
-// 				if (is_surrounded(str[h][i], size, '\'') == FALSE && is_surrounded(str[h][i], size, '\"') == FALSE &&
-// 					(sq_pair == FALSE || dq_pair == FALSE))
-// 				{
-// 					printf("it s inside\n");
-// 					return (TRUE);
-// 				}
-// 			}
-// 		}
-
-// 	}
-// 	return (FALSE);
-// }
-
 char	*ft_is_dollar3(t_control *control, char *new_str)
 {
 	char	*str_good;
@@ -175,7 +135,7 @@ char	*ft_is_dollar2(char *str, t_control *control)
 			str_good = ft_is_dollar3(control, new_str);
 			free(new_str);
 			if (str_good == NULL)
-				return (str = get_new_line_cmd(str, i, size, ""));
+				return (str = get_new_line_cmd(str, i, size, "\n"));
 			if (str_good != NULL)
 			{
 				str = get_new_line_cmd(str, i, size, str_good);

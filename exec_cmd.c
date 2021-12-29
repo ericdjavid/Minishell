@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/29 13:01:12 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/29 15:13:26 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 		free(new_line);
 		return (-1);
 	}
-	// if (ft_bad_entries(newargv) == TRUE)
-	// 	return (-2);
 	if (ft_3dimlen(newargv + 1) == 1 && is_builtins(newargv[1][0]))
 		ret = exec_builtins(&newargv[1], list, paths);
 	else
@@ -85,30 +83,29 @@ char	*put_sp_around_pipes(char *str)
 		if (str[c_1] == '|')
 		{
 			new[c_1 + c_2++] = 32;
-			while (str[c_1] && str[c_1] == '|')
-			{
-				new[c_1 + c_2] = '|';
-				c_1++;
-			}
-			c_2++;
+			new[c_1 + c_2++] = '|';
+			// while (str[c_1] && str[c_1] == '|')
+			// {
+			// 	new[c_1 + c_2] = '|';
+			// 	c_1++;
+			// }
+			// c_2++;
 			new[c_1 + c_2] = 32;
 		}
-		else if (str[c_1] == '<')
-		{
-			new[c_1 + c_2++] = 32;
-			while (str[c_1] && str[c_1] == '<')
-			{
-				new[c_1 + c_2] = '<';
-				c_1++;
-			}
-			new[c_1 + c_2] = 32;
-			c_2++;
-		}
+		// else if (str[c_1] == '<')
+		// {
+		// 	new[c_1 + c_2++] = 32;
+		// 	while (str[c_1] && str[c_1] == '<')
+		// 	{
+		// 		new[c_1 + c_2] = '<';
+		// 		c_1++;
+		// 	}
+		// 	new[c_1 + c_2] = 32;
+		// 	c_2++;
+		// }
 		else
-		{
 			new[c_1 + c_2] = str[c_1];
-			c_1++;
-		}
+		c_1++;
 	}
 	new[c_1 + c_2] = 0;
 	printf("new : %s\n", new);
