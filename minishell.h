@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/28 17:00:46 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/29 13:39:06 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -366,6 +366,10 @@ int		ft_check_position(char c, char c2, char *str);
 char	*get_new_line_cmd(char *str, int i, int size, char *str_good);
 
 t_bool	ft_bad_entries(char **str);
+
+t_bool	ft_str_bad_entry(char *str);
+
+t_bool	is_surrounded(char *str, size_t size, char c);
 
 		//	ft_clear.c
 
