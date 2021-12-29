@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 20:08:32 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/29 15:16:08 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/29 19:38:08 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,13 +129,20 @@ char	*ft_is_dollar2(char *str, t_control *control)
 	size = 0;
 	while (str[++i])
 	{
-		if (str[i] == '$' && str[i + 1] != ' ' && str[i + 1])
+		if (str[i] && str[i] == '\'')
+		{
+			i++;
+			while (str[i] && str[i] != '\'')
+				i++;
+			// i++;
+		}
+		if (str[i] && str[i] == '$' && str[i + 1] != ' ' && str[i + 1])
 		{
 			new_str = get_new_str(str, i, &size);
 			str_good = ft_is_dollar3(control, new_str);
 			free(new_str);
 			if (str_good == NULL)
-				return (str = get_new_line_cmd(str, i, size, "\n"));
+				return (str);
 			if (str_good != NULL)
 			{
 				str = get_new_line_cmd(str, i, size, str_good);

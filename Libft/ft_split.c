@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:07:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/29 18:21:23 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/29 19:30:15 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ char	*fill_split(char *str, char *charset)
 	int		c_2;
 	char	*neo_split;
 
-	printf(RED "str to modify is |%s|\n"END, str);
+	// printf(RED "str to modify is |%s|\n"END, str);
 
 	len_str = browse_str(str, charset);
-		printf(PINK "size of str is %d\n" END, len_str);
+		// printf(PINK "size of str is %d\n" END, len_str);
 	split = malloc(len_str + 1);
 	if (!split)
 		return (0);
@@ -155,11 +155,8 @@ char	**ft_split(char *str, char *charset)
 		count++;
 	}
 	split[count] = 0;
-	int i = -1;
-	while (split[++i])
-	{
-		printf("[%d]|%s|\n", i, split[i]);
-	}
-
+	// int i = -1;
+	// while (split[++i])
+	// 	printf("[%d]|%s|\n", i, split[i]);
 	return (split);
 }

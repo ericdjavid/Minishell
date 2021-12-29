@@ -84,31 +84,27 @@ char	*add_spaces_to_cmd_line(char *cmd_line)
 	{
 		if (cmd_line[i] == '\'')
 		{
-			if (cmd_line[i - 1] && cmd_line[i - 1] != ' ')
+			if (i >= 1 && cmd_line[i - 1] != ' ')
 			{
 				cmd_line = ft_append(cmd_line, i);
 				i++;
 			}
 			i++;
 			while (cmd_line[i] && cmd_line[i] != '\'')
-			{
 				i++;
-			}
 			i++;
 			cmd_line = ft_append(cmd_line, i);
 		}
 		if (cmd_line[i] == '"')
 		{
-			if (cmd_line[i - 1] && cmd_line[i - 1] != ' ')
+			if (i >= 1 && cmd_line[i - 1] != ' ')
 			{
 				cmd_line = ft_append(cmd_line, i);
 				i++;
 			}
 			i++;
 			while (cmd_line[i] && cmd_line[i] != '"')
-			{
 				i++;
-			}
 			i++;
 			cmd_line = ft_append(cmd_line, i);
 		}

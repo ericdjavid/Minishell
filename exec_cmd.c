@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/29 15:13:26 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/29 19:26:41 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 	new_line = get_new_line(cmd_line, list);
 	if (!new_line)
 		return (-1);
+	// ft_process_the_line(new_line);
 	newargv = init_newargv(new_line, paths);
 	if (!newargv)
 	{
@@ -44,9 +45,11 @@ char	*get_new_line(char *cmd_line, t_control *list)
 	char	*new_line;
 
 	new_line = ft_strdup(cmd_line);
+	printf("old new : %s\n", new_line);
 	if (!new_line)
 		return (0);
 	new_line = ft_is_dollar2(new_line, list);
+	printf("old new : %s\n", new_line);
 	new_line = put_sp_around_pipes(new_line);
 	if (!new_line)
 		return (0);
