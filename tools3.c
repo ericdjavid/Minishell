@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 20:08:32 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/31 18:18:51 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/02 16:14:58 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,33 @@ int		no_unpair_char_before(char *str, int i, char c)
 	if (count % 2 == 0)
 		return (1);
 	return (0);
+}
 
+char	*ft_strcut(char *str, int size, int pos)
+{
+	int		i;
+	int		j;
+	char	*new;
+
+	new = malloc(sizeof(char) * (ft_strlen(str) - size + 1));
+	i = 0;
+	j = 0;
+	while (str[i] && i < pos)
+	{
+		new[j] = str[i];
+		j++;
+		i++;
+	}
+	i += size;
+	while (str[i])
+	{
+		new[j] = str[i];
+		j++;
+		i++;
+	}
+	new[j] = '\0';
+	free(str);
+	return (new);
 }
 
 char	*ft_is_dollar2(char *str, t_control *control, int *modif)
@@ -162,14 +188,16 @@ char	*ft_is_dollar2(char *str, t_control *control, int *modif)
 		{
 			new_str = get_new_str(str, i, &size);
 			str_good = ft_is_dollar3(control, new_str);
-			free(new_str);
 			if (str_good == NULL)
 			{
+				str = ft_strcut(str, size, i);
 				//TODO : can t do it, need to modify value of $nothing to nothin in the string
-				*modif = 1;
-				// return (NULL);
-				return (str);
+				*modif = 0;
+				free(new_str);
+				i++;
+				continue ;
 			}
+			free(new_str);
 			if (str_good != NULL)
 			{
 				str = get_new_line_cmd(str, i, size, str_good);

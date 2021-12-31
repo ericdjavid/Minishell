@@ -26,7 +26,7 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 	if (!*cmd_line)
 		return (1);
 	new_line = get_new_line(cmd_line, list, &i);
-	printf("i is %d\n", i);
+	// printf("i is %d\n", i);
 	if (i == 1)
 		return (1);
 	if (!new_line)
