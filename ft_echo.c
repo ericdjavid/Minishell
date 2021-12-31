@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:14 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/31 17:24:59 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/31 18:25:11 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	write_newargv(char **newargv, int c)
 	int	ret;
 
 	ret = c;
+	printf(RED "c is >>>> %d\n", c);
 	while (newargv[c])
 	{
 		if (!ft_strncmp(newargv[c], "$?", ft_strlen(newargv[c])))
