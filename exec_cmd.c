@@ -58,27 +58,26 @@ int	ft_deal_bad_sq_dq(char *str)
 			}
 			if (count % 2 != 0)
 			{
-				printf("impair nb : %d\n", count);
 				free(str);
 				return (-1);
 			}
-			if (str[i] == '"' && no_unpair_char_before(str, i, '\''))
+		}
+		if (str[i] == '"' && no_unpair_char_before(str, i, '\''))
+		{
+			while (str[i] != '\0')
 			{
-				while (str[i] != '\0')
-				{
-					if (str[i] == '"')
-						count++;
-					i++;
-				}
-				if (count % 2 != 0)
-				{
-					printf("impair nb : %d\n", count);
-					free(str);
-					return (-1);
-				}
+				if (str[i] == '"')
+					count++;
+				i++;
+			}
+			if (count % 2 != 0)
+			{
+				free(str);
+				return (-1);
 			}
 		}
-		i++;
+		if (str[i] != '\0')
+			i++;
 	}
 	return (SUCCESS);
 }
@@ -88,14 +87,11 @@ char	*get_new_line(char *cmd_line, t_control *list)
 	char	*new_line;
 
 	new_line = ft_strdup(cmd_line);
-	printf("old new : %s\n", new_line);
 	if (!new_line)
 		return (0);
 	new_line = ft_is_dollar2(new_line, list);
-	// bad entries to be dealt here
 	if (ft_deal_bad_sq_dq(new_line) == -1)
 		return (0);
-	printf("old new : %s\n", new_line);
 	new_line = put_sp_around_pipes(new_line);
 	if (!new_line)
 		return (0);
@@ -157,7 +153,7 @@ char	*put_sp_around_pipes(char *str)
 		c_1++;
 	}
 	new[c_1 + c_2] = 0;
-	printf("new : %s\n", new);
+	// printf("new : %s\n", new);
 	free(str);
 	return (new);
 }

@@ -20,6 +20,7 @@ char	***init_newargv(char *cmd_line, char **paths)
 	int		c;
 	char	**split;
 
+	c_1 = 0;
 	newargv = init_param_in(&split, cmd_line, &c_1, &c);
 	if (!newargv)
 		return (0);
@@ -29,6 +30,7 @@ char	***init_newargv(char *cmd_line, char **paths)
 		if (!newargv[c_1])
 			return (free_init_new(newargv, split));
 		c_2 = 0;
+		newargv[c_1][0] = NULL;
 		while (split[c] && ft_strncmp(split[c], "|", ft_strlen(split[c])))
 			newargv[c_1][c_2++] = split[c++];
 		newargv[c_1][0] = init_cmd_path(newargv[c_1][0], paths);
@@ -41,78 +43,77 @@ char	***init_newargv(char *cmd_line, char **paths)
 	return (newargv);
 }
 
-char	*ft_append(char *cmd_line, int pos)
-{
-	int		i;
-	int		j;
-	char	*snew;
+// char	*ft_append(char *cmd_line, int pos)
+// {
+// 	int		i;
+// 	int		j;
+// 	char	*snew;
 
-	i = 0;
-	j = 0;
-	snew = malloc(sizeof(char) * (ft_strlen(cmd_line) + 1 + 100));
-	if (!snew)
-		return NULL;
-	while (cmd_line[i] && i < pos)
-	{
-		snew[i] = cmd_line[i];
-		i++;
-	}
-	printf("is is %d and j is %d", i, j );
-	j = i;
-	snew[j] = ' ';
-	j++;
-	while (cmd_line[i] != '\0')
-	{
-		snew[j] = cmd_line[i];
-		i++;
-		j++;
-	}
-	snew[j] = 0;
-	printf(PINK "NEW str is |%s|\n" END, snew);
-	free(cmd_line);
-	return (snew);
-}
+// 	i = 0;
+// 	j = 0;
+// 	snew = malloc(sizeof(char) * (ft_strlen(cmd_line) + 1 + 100));
+// 	if (!snew)
+// 		return NULL;
+// 	while (cmd_line[i] && i < pos)
+// 	{
+// 		snew[i] = cmd_line[i];
+// 		i++;
+// 	}
+// 	printf("is is %d and j is %d", i, j );
+// 	j = i;
+// 	snew[j] = ' ';
+// 	j++;
+// 	while (cmd_line[i] != '\0')
+// 	{
+// 		snew[j] = cmd_line[i];
+// 		i++;
+// 		j++;
+// 	}
+// 	snew[j] = 0;
+// 	printf(PINK "NEW str is |%s|\n" END, snew);
+// 	free(cmd_line);
+// 	return (snew);
+// }
 
-char	*add_spaces_to_cmd_line(char *cmd_line)
-{
-	int	i;
+// char	*add_spaces_to_cmd_line(char *cmd_line)
+// {
+// 	int	i;
 
-	if (!(ft_strchr(cmd_line, '"')) && !(ft_strchr(cmd_line, '\'')))
-		return (cmd_line);
-	i = 0;
-	while(cmd_line[i])
-	{
-		if (cmd_line[i] == '\'')
-		{
-			if (i >= 1 && cmd_line[i - 1] != ' ')
-			{
-				cmd_line = ft_append(cmd_line, i);
-				i++;
-			}
-			i++;
-			while (cmd_line[i] && cmd_line[i] != '\'')
-				i++;
-			i++;
-			cmd_line = ft_append(cmd_line, i);
-		}
-		if (cmd_line[i] == '"')
-		{
-			if (i >= 1 && cmd_line[i - 1] != ' ')
-			{
-				cmd_line = ft_append(cmd_line, i);
-				i++;
-			}
-			i++;
-			while (cmd_line[i] && cmd_line[i] != '"')
-				i++;
-			i++;
-			cmd_line = ft_append(cmd_line, i);
-		}
-		i++;
-	}
-	return (cmd_line);
-
-}
+// 	if (!(ft_strchr(cmd_line, '"')) && !(ft_strchr(cmd_line, '\'')))
+// 		return (cmd_line);
+// 	i = 0;
+// 	while(cmd_line[i])
+// 	{
+// 		if (cmd_line[i] == '\'')
+// 		{
+// 			if (i >= 1 && cmd_line[i - 1] != ' ')
+// 			{
+// 				cmd_line = ft_append(cmd_line, i);
+// 				i++;
+// 			}
+// 			i++;
+// 			while (cmd_line[i] && cmd_line[i] != '\'')
+// 				i++;
+// 			i++;
+// 			cmd_line = ft_append(cmd_line, i);
+// 		}
+// 		if (cmd_line[i] == '"')
+// 		{
+// 			if (i >= 1 && cmd_line[i - 1] != ' ')
+// 			{
+// 				cmd_line = ft_append(cmd_line, i);
+// 				i++;
+// 			}
+// 			i++;
+// 			while (cmd_line[i] && cmd_line[i] != '"')
+// 				i++;
+// 			i++;
+// 			cmd_line = ft_append(cmd_line, i);
+// 		}
+// 		i++;
+// 	}
+// 	return (cmd_line);
+// }
 
 char	***init_param_in(char ***split, char *cmd_line, int *c_1, int *c)
 {

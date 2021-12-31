@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 20:08:32 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/29 19:59:18 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/31 14:56:54 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ int		no_unpair_char_before(char *str, int i, char c)
 
 	j = 0;
 	count = 0;
+	if (i == 0)
+		return (1);
 	while (str[j] && j < i)
 	{
 		if (str[j] == c)
