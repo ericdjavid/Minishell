@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:31:49 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/29 20:22:24 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/31 15:00:00 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_minishell(t_control *list)
 	if (cmd_line)
 		free(cmd_line);
 	if (ret == -1)
-		ft_printf_fd(2, "Erreur : Quote orphelin ou malloc qui echoue !\n");
+		ft_printf_fd(2, RED "Erreur : Quote orphelin ou malloc qui echoue !\n" END);
 	if (paths)
 		free_matc(paths);
 	if (env)

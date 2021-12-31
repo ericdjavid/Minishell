@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 20:08:32 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/29 19:59:18 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/31 18:18:51 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ int		no_unpair_char_before(char *str, int i, char c)
 
 	j = 0;
 	count = 0;
+	if (i == 0)
+		return (1);
 	while (str[j] && j < i)
 	{
 		if (str[j] == c)
@@ -137,7 +139,7 @@ int		no_unpair_char_before(char *str, int i, char c)
 
 }
 
-char	*ft_is_dollar2(char *str, t_control *control)
+char	*ft_is_dollar2(char *str, t_control *control, int *modif)
 {
 	int		i;
 	char	*str_good;
@@ -162,7 +164,12 @@ char	*ft_is_dollar2(char *str, t_control *control)
 			str_good = ft_is_dollar3(control, new_str);
 			free(new_str);
 			if (str_good == NULL)
+			{
+				//TODO : can t do it, need to modify value of $nothing to nothin in the string
+				*modif = 1;
+				// return (NULL);
 				return (str);
+			}
 			if (str_good != NULL)
 			{
 				str = get_new_line_cmd(str, i, size, str_good);

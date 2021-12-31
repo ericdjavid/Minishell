@@ -1,11 +1,10 @@
 
-echo "" "" "" a : segfault
---> fix mais 6 espaces au lieu de 3 qd wc -c
+echo """""" | wc -c
+---> doit display 1
+echo "" "" "" | wc -c 
+---> doit display 4
 
-echo je"suis"' 'la : il faut enlever les singles quotes
---> ko : prendpas en compte l absence d espace qd split
-
-(une var d'env c'est de $--> tant que c;est un alpha num + _)
+(une var d'env c'est de $--> tant que c est un alpha num + _)
 echo $jfd : si env invalide affiche rien k
 
 pour les noms de fichier, l'expend est legerement differents; telils est considere comme 1 seul mot (export l="ls -la"; echo bonjour > $l; ls --> 'ls -la')
