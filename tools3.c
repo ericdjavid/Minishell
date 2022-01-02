@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 20:08:32 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/02 16:24:20 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/02 19:06:17 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,11 @@ char	*ft_strcut(char *str, int size, int pos)
 	int		j;
 	char	*new;
 
+	if (ft_strlen(str) - size == 0)
+	{
+		free(str);
+		return (NULL);
+	}
 	new = malloc(sizeof(char) * (ft_strlen(str) - size + 1));
 	i = 0;
 	j = 0;
@@ -174,7 +179,7 @@ char	*ft_is_dollar2(char *str, t_control *control, int *modif)
 
 	i = -1;
 	size = 0;
-	while (str[++i])
+	while (str && str[++i])
 	{
 		if (str[i] && str[i] == '\'' && no_unpair_char_before(str, i, '"'))
 		{
@@ -194,7 +199,7 @@ char	*ft_is_dollar2(char *str, t_control *control, int *modif)
 				//TODO : can t do it, need to modify value of $nothing to nothin in the string
 				*modif = 0;
 				free(new_str);
-				i++;
+				i = -1;
 				continue ;
 			}
 			free(new_str);
