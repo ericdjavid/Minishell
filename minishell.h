@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/29 13:39:06 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/31 18:12:37 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*init_param_path(char *envp, int count, int *path_len, int *n);
 
 int		exec_cmd(char *cmd_line, char **paths, t_control *list);
 
-char	*get_new_line(char *cmd_line, t_control *list);
+char	*get_new_line(char *cmd_line, t_control *list, int *i);
 
 char	*init_cmd_path(char *cmd, char **paths);
 
@@ -172,7 +172,9 @@ char	*ft_get_good_str(char *str);
 
 // void	ft_is_dollar(char **str, t_control *control);
 
-char	*ft_is_dollar2(char *str, t_control *control);
+char	*ft_is_dollar2(char *str, t_control *control, int *i);
+
+int		no_unpair_char_before(char *str, int i, char c);
 
 t_element	*ft_is_in_list(t_control *list, char *str);
 

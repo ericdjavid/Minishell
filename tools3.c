@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 20:08:32 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/29 15:16:08 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/02 16:24:20 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,54 @@ char	*ft_is_dollar3(t_control *control, char *new_str)
 	return (str_good);
 }
 
-char	*ft_is_dollar2(char *str, t_control *control)
+int		no_unpair_char_before(char *str, int i, char c)
+{
+	int	j;
+	int	count;
+
+	j = 0;
+	count = 0;
+	if (i == 0)
+		return (1);
+	while (str[j] && j < i)
+	{
+		if (str[j] == c)
+			count++;
+		j++;
+	}
+	if (count % 2 == 0)
+		return (1);
+	return (0);
+}
+
+char	*ft_strcut(char *str, int size, int pos)
+{
+	int		i;
+	int		j;
+	char	*new;
+
+	new = malloc(sizeof(char) * (ft_strlen(str) - size + 1));
+	i = 0;
+	j = 0;
+	while (str[i] && i < pos)
+	{
+		new[j] = str[i];
+		j++;
+		i++;
+	}
+	i += size;
+	while (str[i])
+	{
+		new[j] = str[i];
+		j++;
+		i++;
+	}
+	new[j] = '\0';
+	free(str);
+	return (new);
+}
+
+char	*ft_is_dollar2(char *str, t_control *control, int *modif)
 {
 	int		i;
 	char	*str_good;
@@ -129,13 +176,28 @@ char	*ft_is_dollar2(char *str, t_control *control)
 	size = 0;
 	while (str[++i])
 	{
-		if (str[i] == '$' && str[i + 1] != ' ' && str[i + 1])
+		if (str[i] && str[i] == '\'' && no_unpair_char_before(str, i, '"'))
+		{
+			i++;
+			while (str[i] && str[i] != '\'')
+				i++;
+			if (str[i] != '\'')
+				break ;
+		}
+		if (str[i] && str[i] == '$' && str[i + 1] != ' ' && str[i + 1])
 		{
 			new_str = get_new_str(str, i, &size);
 			str_good = ft_is_dollar3(control, new_str);
-			free(new_str);
 			if (str_good == NULL)
-				return (str = get_new_line_cmd(str, i, size, "\n"));
+			{
+				str = ft_strcut(str, size, i);
+				//TODO : can t do it, need to modify value of $nothing to nothin in the string
+				*modif = 0;
+				free(new_str);
+				i++;
+				continue ;
+			}
+			free(new_str);
 			if (str_good != NULL)
 			{
 				str = get_new_line_cmd(str, i, size, str_good);

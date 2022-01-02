@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:07:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/29 13:59:57 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/31 18:25:38 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,20 @@ int	get_n_cases(char *str, char *charset)
 	return (n);
 }
 
+int		ft_only_quotes(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != '\'' && str[i] != '"')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 char	*fill_split(char *str, char *charset)
 {
 	int		len_str;
@@ -72,10 +86,7 @@ char	*fill_split(char *str, char *charset)
 	int		c_2;
 	char	*neo_split;
 
-	printf(RED "str to modify is |%s|\n"END, str);
-
 	len_str = browse_str(str, charset);
-		printf(PINK "size of str is %d\n" END, len_str);
 	split = malloc(len_str + 1);
 	if (!split)
 		return (0);
@@ -83,21 +94,21 @@ char	*fill_split(char *str, char *charset)
 	c_2 = 0;
 	while (count < len_str)
 	{
-
 		split[c_2++] = str[count];
 		count++;
-		// if (!((count == 0 || !str[count + 1])
-		// 	&& (str[count] == '"' || str[count] == '\'')))
-		// 	split[c_2++] = str[count];
-		// count++;
 	}
 	split[c_2] = 0;
-	printf(YELLOW "new split is |%s|\n"END, split);
-	if (ft_str_bad_entry(split) == TRUE)
+	if (len_str == 2 && (is_surrounded(split, len_str - 1, '"') == TRUE
+		|| is_surrounded(split, len_str - 1, '\'') == TRUE))
 	{
-		printf("this is a bad entry\n");
 		free(split);
-		return (0);
+		split = NULL;
+		return (split);
+	}
+	if (ft_only_quotes(split))
+	{
+		split = NULL;
+		return (split);
 	}
 	if (is_surrounded(split, len_str - 1, '"') == TRUE)
 	{
@@ -153,10 +164,5 @@ char	**ft_split(char *str, char *charset)
 		count++;
 	}
 	split[count] = 0;
-	int i = -1;
-	while (split[++i])
-	{
-		printf("[%d]|%s|\n", i, split[i]);
-	}
 	return (split);
 }
