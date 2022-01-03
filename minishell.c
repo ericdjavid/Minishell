@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:31:49 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/31 15:00:00 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/02 19:09:34 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_minishell(t_control *list)
 		ret = exec_cmd(cmd_line, paths, list);
 	else
 		ret = 0;
-	while (ret > 0 && cmd_line)
+	while ((ret > 0 && cmd_line) || ret == -2)
 	{
 		if (paths)
 			free_matc(paths);

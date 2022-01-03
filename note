@@ -5,7 +5,7 @@ echo "" "" "" | wc -c
 ---> doit display 4
 
 (une var d'env c'est de $--> tant que c est un alpha num + _)
-echo $jfd : si env invalide affiche rien k
+echo $jfd : si env invalide affiche rien k--> ok
 
 pour les noms de fichier, l'expend est legerement differents; telils est considere comme 1 seul mot (export l="ls -la"; echo bonjour > $l; ls --> 'ls -la')
 pour les fichiers simple ( < ou > ) les variables d'env sont expend comme entre double quote)
@@ -24,4 +24,4 @@ pour les redirections, tu dois les creer/open dans l'ordre qu'on te les donnes, 
 
 pour les buitlins en cas d'error return sur sortie d'error (write(2)) et remplir le fdout avec null
 
-si $lsdghhksdgj => retour a la ligne
+si $lsdghhksdgj => retour a la ligne--->ok

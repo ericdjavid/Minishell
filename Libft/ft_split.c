@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:07:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/31 18:25:38 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/02 18:46:07 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,15 @@ int	get_n_cases(char *str, char *charset)
 	return (n);
 }
 
-int		ft_only_quotes(char *str)
+int		ft_only_quotes(char *str, char c)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
-	{
-		if (str[i] != '\'' && str[i] != '"')
-			return (0);
+	while (str[i] == c)
 		i++;
-	}
+	if (str[i] != '\0')
+		return (0);
 	return (1);
 }
 
@@ -102,12 +100,18 @@ char	*fill_split(char *str, char *charset)
 		|| is_surrounded(split, len_str - 1, '\'') == TRUE))
 	{
 		free(split);
-		split = NULL;
+		split = malloc(2);
+		// TODO: pbm avec espace, il faudrait mettre une valeur nulle
+		split[0] = ' ';
+		split[1] = 0;
 		return (split);
 	}
-	if (ft_only_quotes(split))
+	if (ft_only_quotes(split, '\'') || ft_only_quotes(split, '"'))
 	{
-		split = NULL;
+		free(split);
+		split = malloc(2);
+		split[0] = ' ';
+		split[1] = 0;
 		return (split);
 	}
 	if (is_surrounded(split, len_str - 1, '"') == TRUE)
