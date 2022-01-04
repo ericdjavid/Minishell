@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 14:45:23 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/27 14:48:19 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/04 18:01:09 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ char	*ft_remove_quotes(char *str)
 	char	*str2;
 	int		nb;
 
+	printf("str is %s\n", str);
 	if (!str)
 		return (NULL);
 	nb = ft_count(str, '\"');
@@ -77,5 +78,6 @@ char	*ft_remove_quotes(char *str)
 		j++;
 	}
 	str2[j] = '\0';
+	printf("str2 is %s\n", str2);
 	return (str2);
 }

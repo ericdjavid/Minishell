@@ -13,6 +13,9 @@ echo "cat| |lol.c| | |cat > lol.c"
 grep ldkfjh
 	double prompt
 
+>a cat <b >>c 	a est créé vide. c recoit le contenu de b
+--> gerer l'absence d espaces
+
 export USER=lol not a valid indentifier
 bash ne revoie rien lorsque tu crees une var en majuscule (et ne la cree pas) par contre il modifie les var d environnement deja en majuscule
 
