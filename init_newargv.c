@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/18 08:56:08 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/29 16:54:39by edjavid          ###   ########.fr       */
+/*   Created: 2022/01/04 14:11:46 by edjavid           #+#    #+#             */
+/*   Updated: 2022/01/04 14:23:01 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ char	***init_param_in(char ***split, char *cmd_line, int *c_1, int *c)
 	char	***newargv;
 	char	charset[3];
 	// char	*new_cmd_line;
-
 	// new_cmd_line = ft_strdup(cmd_line);
 	// cmd_line = add_spaces_to_cmd_line(new_cmd_line);
 	newargv = malloc(sizeof(char **) * (get_n_cmd(cmd_line) + 2));
@@ -129,7 +128,6 @@ char	***init_param_in(char ***split, char *cmd_line, int *c_1, int *c)
 	charset[0] = 32;
 	charset[1] = 9;
 	charset[2] = 0;
-
 	*split = ft_split(cmd_line, &charset[0]);
 	if (!*split || is_syntax_er_spl(*split))
 	{
@@ -139,8 +137,6 @@ char	***init_param_in(char ***split, char *cmd_line, int *c_1, int *c)
 	newargv[0] = 0;
 	*c_1 = 1;
 	*c = 0;
-
-	// free(cmd_line);
 	return (newargv);
 }
 

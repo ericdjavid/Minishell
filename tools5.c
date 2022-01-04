@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 16:31:10 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/27 14:28:44 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/04 14:18:18 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,11 @@ char	*ft_get_dollar_var(char *str, t_control *list)
 	tmp_char = NULL;
 	tmp_char = add_value_name(tmp->str);
 	return (tmp_char);
+}
+
+t_bool	is_surrounded(char *str, size_t size, char c)
+{
+	if (str[0] == c && str[size] == c)
+		return (TRUE);
+	return (FALSE);
 }
