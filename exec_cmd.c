@@ -29,7 +29,7 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 	printf("i is %d\n", i);
 	printf("new line in exec cmd is : |%s|\n", new_line);
 	if (i == 1)
-		return (-2);
+		return (-1);
 	if (!new_line)
 		return (-2);
 	newargv = init_newargv(new_line, paths);
@@ -100,7 +100,10 @@ char	*get_new_line(char *cmd_line, t_control *list, int *i)
 	if (!new_line)
 		return (0);
 	if (ft_deal_bad_sq_dq(new_line) == -1)
+	{
+		*i = 1;
 		return (0);
+	}
 	new_line = put_sp_around_pipes(new_line);
 	if (!new_line)
 		return (0);

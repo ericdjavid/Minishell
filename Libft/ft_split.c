@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:07:16 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/02 18:46:07 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/04 13:55:03 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ char	*fill_split(char *str, char *charset)
 		// TODO: pbm avec espace, il faudrait mettre une valeur nulle
 		split[0] = ' ';
 		split[1] = 0;
+		// split = malloc(1);
+		// split[0] = 0;
 		return (split);
 	}
 	if (ft_only_quotes(split, '\'') || ft_only_quotes(split, '"'))
@@ -112,6 +114,8 @@ char	*fill_split(char *str, char *charset)
 		split = malloc(2);
 		split[0] = ' ';
 		split[1] = 0;
+		// split = malloc(1);
+		// split[0] = 0;
 		return (split);
 	}
 	if (is_surrounded(split, len_str - 1, '"') == TRUE)
