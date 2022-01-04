@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:42:20 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/28 15:48:15 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/31 15:42:07 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	ft_builtins(char **newargv, t_control *list)
 {
 	size_t	len_0;
 
+	if (!newargv[0])
+		return (0);
 	len_0 = ft_strlen(newargv[0]);
 	if (!ft_strncmp(newargv[0], "echo", len_0))
 		return (ft_echo(newargv));

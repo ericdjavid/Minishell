@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 14:59:10 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/26 14:52:23 by edjavid          ###   ########.fr       */
+/*   Updated: 2021/12/27 19:36:26 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,43 @@ int	add_beg(t_control *list, char *str)
 	return (SUCCESS);
 }
 
-int	swap_elem(int pos1, int pos2, t_control *list)
+void	ft_get_value(t_element *prev1, t_element *prev2, t_element *node2,
+		t_element *node1)
+{
+	t_element	*tmp;
+
+	tmp = NULL;
+	if (prev1 != NULL)
+		prev1->next = node2;
+	if (prev2 != NULL)
+		prev2->next = node1;
+	if (node2->next == NULL)
+	{
+		node2->next = node1->next;
+		node1->next = NULL;
+	}
+	else
+	{
+		tmp = node1->next;
+		node1->next = node2->next;
+		node2->next = tmp;
+	}
+}
+
+void	swap_elem(int pos1, int pos2, t_control *list, int i)
 {
 	t_element	*tmp;
 	t_element	*node1;
 	t_element	*node2;
 	t_element	*prev1;
 	t_element	*prev2;
-	t_element	*tmp1;
-	int			i;
 
-	i = 0;
-	prev1 = NULL;
 	prev2 = NULL;
 	node1 = NULL;
+	prev1 = NULL;
 	node2 = NULL;
+	// node_init(prev2, node1, prev1, node2);
 	tmp = list->first_export;
-	if (pos1 == pos2)
-		return (SUCCESS);
-	if (pos1 <= 0 || pos1 > list->size || pos2 <= 0 || pos2 > list->size)
-		return (FAILURE);
 	while (tmp && ++i <= list->size)
 	{
 		if (tmp->index == pos1 - 1)
@@ -59,28 +76,12 @@ int	swap_elem(int pos1, int pos2, t_control *list)
 			node2 = tmp;
 		tmp = tmp->next;
 	}
-	if (prev1 != NULL)
-		prev1->next = node2;
-	if (prev2 != NULL)
-		prev2->next = node1;
-	if (node2->next == NULL)
-	{
-		tmp1 = node1->next;
-		node2->next = node1->next;
-		node1->next = NULL;
-	}
-	else
-	{
-		tmp1 = node1->next;
-		node1->next = node2->next;
-		node2->next = tmp1;
-	}
+	ft_get_value(prev1, prev2, node2, node1);
 	if (prev1 == NULL)
 		list->first_export = node2;
 	else if (prev2 == NULL)
 		list->first_export = node1;
 	add_index(list->first_export);
-	return (SUCCESS);
 }
 
 t_bool	is_ascii_ordered(char *str1, char *str2)
@@ -104,14 +105,16 @@ t_bool	is_ascii_ordered(char *str1, char *str2)
 int	order_ascii(t_control *list)
 {
 	t_element	*tmp;
+	int			i;
 
+	i = 0;
 	tmp = list->first_export;
 	while (1)
 	{
 		if (tmp == NULL || tmp->next == NULL)
 			break ;
 		if (!is_ascii_ordered(tmp->str, tmp->next->str))
-			swap_elem(tmp->index, tmp->next->index, list);
+			swap_elem(tmp->index, tmp->next->index, list, i);
 		tmp = tmp->next;
 	}
 	return (SUCCESS);

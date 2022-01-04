@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 14:59:06 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/26 17:13:46 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/02 15:33:21 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*get_new_str(char *str, int i, int *size)
 
 	j = i + 1;
 	while (str[j] && str[j] != '\0' && str[j] != '$' && str[j] != ' '
-		&& str[j] != '\"')
+		&& str[j] != '\"' && str[j] != '\'')
 		j++;
 	*size = j - i;
 	new_str = malloc(sizeof(char) * (j - i + 1));
@@ -80,7 +80,7 @@ char	*get_new_str(char *str, int i, int *size)
 	i++;
 	k++;
 	while (str[i] && str[i] != '\0' && str[i] != '$'
-		&& str[i] != ' ' && str[i] != '\"')
+		&& str[i] != ' ' && str[i] != '\"' && str[i] != '\'')
 	{
 		new_str[k] = str[i];
 		k++;

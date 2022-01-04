@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/28 14:18:58 by abrun            ###   ########.fr       */
+/*   Updated: 2021/12/31 18:12:37 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*init_param_path(char *envp, int count, int *path_len, int *n);
 
 int		exec_cmd(char *cmd_line, char **paths, t_control *list);
 
-char	*get_new_line(char *cmd_line, t_control *list);
+char	*get_new_line(char *cmd_line, t_control *list, int *i);
 
 char	*init_cmd_path(char *cmd, char **paths);
 
@@ -172,7 +172,9 @@ char	*ft_get_good_str(char *str);
 
 // void	ft_is_dollar(char **str, t_control *control);
 
-char	*ft_is_dollar2(char *str, t_control *control);
+char	*ft_is_dollar2(char *str, t_control *control, int *i);
+
+int		no_unpair_char_before(char *str, int i, char c);
 
 t_element	*ft_is_in_list(t_control *list, char *str);
 
@@ -230,7 +232,7 @@ int 		ft_env(t_control *list);
 
 int		ft_read_input(char ***newargv, char **paths);
 
-char	**init_files(char **newargv);	
+char	**init_files(char **newargv);
 
 int		init_config(char **newargv, int *c);
 
@@ -365,7 +367,11 @@ int		ft_check_position(char c, char c2, char *str);
 
 char	*get_new_line_cmd(char *str, int i, int size, char *str_good);
 
-t_bool	ft_bad_entries(char *str);
+t_bool	ft_bad_entries(char **str);
+
+t_bool	ft_str_bad_entry(char *str);
+
+t_bool	is_surrounded(char *str, size_t size, char c);
 
 		//	ft_clear.c
 
