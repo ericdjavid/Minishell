@@ -6,13 +6,13 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 20:08:32 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/04 14:18:14 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/04 15:56:11 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_is_dollar3(t_control *control, char *new_str)
+char	*ft_is_dollar3(t_control *control, char *new_str, int *is_mal)
 {
 	char	*str_good;
 
@@ -20,7 +20,10 @@ char	*ft_is_dollar3(t_control *control, char *new_str)
 	if (str_good == NULL)
 		str_good = is_in_list(control->first_env_var, new_str);
 	if (str_good == NULL && new_str[1] == '?')
+	{
+		*is_mal = 1;
 		str_good = ft_itoa(g_status);
+	}
 	return (str_good);
 }
 
@@ -82,8 +85,10 @@ char	*ft_is_dollar2(char *str, t_control *control, int *modif)
 	char	*str_good;
 	char	*new_str;
 	int		size;
+	int		is_mal;
 
 	i = -1;
+	is_mal = 0;
 	size = 0;
 	while (str && str[++i])
 	{
@@ -98,7 +103,7 @@ char	*ft_is_dollar2(char *str, t_control *control, int *modif)
 		if (str[i] && str[i] == '$' && str[i + 1] != ' ' && str[i + 1])
 		{
 			new_str = get_new_str(str, i, &size);
-			str_good = ft_is_dollar3(control, new_str);
+			str_good = ft_is_dollar3(control, new_str, &is_mal);
 			if (str_good == NULL)
 			{
 				str = ft_strcut(str, size, i);
@@ -108,12 +113,13 @@ char	*ft_is_dollar2(char *str, t_control *control, int *modif)
 				i = -1;
 				continue ;
 			}
-			free(new_str);
 			if (str_good != NULL)
 			{
 				str = get_new_line_cmd(str, i, size, str_good);
-				if (str[i + 1] == '?')
+				if (is_mal)
 					free(str_good);
+				is_mal = 0;
+				free(new_str);
 				i = -1;
 				continue ;
 			}

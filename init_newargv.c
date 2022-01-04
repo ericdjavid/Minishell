@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 14:11:46 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/04 14:23:01 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/04 14:27:07 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,78 +42,6 @@ char	***init_newargv(char *cmd_line, char **paths)
 	free(split);
 	return (newargv);
 }
-
-// char	*ft_append(char *cmd_line, int pos)
-// {
-// 	int		i;
-// 	int		j;
-// 	char	*snew;
-
-// 	i = 0;
-// 	j = 0;
-// 	snew = malloc(sizeof(char) * (ft_strlen(cmd_line) + 1 + 100));
-// 	if (!snew)
-// 		return NULL;
-// 	while (cmd_line[i] && i < pos)
-// 	{
-// 		snew[i] = cmd_line[i];
-// 		i++;
-// 	}
-// 	printf("is is %d and j is %d", i, j );
-// 	j = i;
-// 	snew[j] = ' ';
-// 	j++;
-// 	while (cmd_line[i] != '\0')
-// 	{
-// 		snew[j] = cmd_line[i];
-// 		i++;
-// 		j++;
-// 	}
-// 	snew[j] = 0;
-// 	printf(PINK "NEW str is |%s|\n" END, snew);
-// 	free(cmd_line);
-// 	return (snew);
-// }
-
-// char	*add_spaces_to_cmd_line(char *cmd_line)
-// {
-// 	int	i;
-
-// 	if (!(ft_strchr(cmd_line, '"')) && !(ft_strchr(cmd_line, '\'')))
-// 		return (cmd_line);
-// 	i = 0;
-// 	while(cmd_line[i])
-// 	{
-// 		if (cmd_line[i] == '\'')
-// 		{
-// 			if (i >= 1 && cmd_line[i - 1] != ' ')
-// 			{
-// 				cmd_line = ft_append(cmd_line, i);
-// 				i++;
-// 			}
-// 			i++;
-// 			while (cmd_line[i] && cmd_line[i] != '\'')
-// 				i++;
-// 			i++;
-// 			cmd_line = ft_append(cmd_line, i);
-// 		}
-// 		if (cmd_line[i] == '"')
-// 		{
-// 			if (i >= 1 && cmd_line[i - 1] != ' ')
-// 			{
-// 				cmd_line = ft_append(cmd_line, i);
-// 				i++;
-// 			}
-// 			i++;
-// 			while (cmd_line[i] && cmd_line[i] != '"')
-// 				i++;
-// 			i++;
-// 			cmd_line = ft_append(cmd_line, i);
-// 		}
-// 		i++;
-// 	}
-// 	return (cmd_line);
-// }
 
 char	***init_param_in(char ***split, char *cmd_line, int *c_1, int *c)
 {
