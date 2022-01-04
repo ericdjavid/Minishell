@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 16:23:17 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/04 18:44:28 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/04 19:35:28 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,14 @@ int	ft_get_new_var2(char *var_name, char *retreat, t_control *list, int i)
 		return (FAILURE);
 	if (tmp && get_tmp(retreat, tmp, list, var_name))
 		return (FAILURE);
+	if (tmp == NULL)
+	{
+		tmp = elem_in_list(list->first_export, var_name);
+		ft_remove_from_list(elem_in_list(list->first_export, var_name),
+			list->first_export);
+		ft_remove_from_list(elem_in_list(list->first_env, var_name),
+			list->first_env);
+	}
 	if (list->first_env_var->str == NULL && get_f(list, var_name, retreat))
 		return (FAILURE);
 	if (ft_assign(tmp, list, retreat, i))

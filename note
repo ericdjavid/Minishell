@@ -1,9 +1,3 @@
-
-echo """""" | wc -c
----> doit display 1
-echo "" "" "" | wc -c 
----> doit display 4
-
 echo -nnnnnnnnnnnn
 	ko
 
@@ -15,6 +9,9 @@ grep ldkfjh
 
 >a cat <b >>c 	a est créé vide. c recoit le contenu de b
 --> gerer l'absence d espaces
+
+export and modify value of USER and then unset USER 
+	--> malloc
 
 export USER=lol not a valid indentifier
 bash ne revoie rien lorsque tu crees une var en majuscule (et ne la cree pas) par contre il modifie les var d environnement deja en majuscule
