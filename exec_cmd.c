@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/29 20:23:59y edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/04 17:45:21 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 	if (!*cmd_line)
 		return (1);
 	new_line = get_new_line(cmd_line, list, &i);
-	printf("i is %d\n", i);
-	printf("new line in exec cmd is : |%s|\n", new_line);
 	if (i == 1)
 		return (-2);
 	if (!new_line)
@@ -96,13 +94,9 @@ char	*get_new_line(char *cmd_line, t_control *list, int *i)
 	if (!new_line)
 		return (0);
 	new_line = ft_is_dollar2(new_line, list, i);
-	printf("new line after ft is dollar 2 : |%s|\n", new_line);
 	if (!new_line)
 		return (0);
 	if (ft_deal_bad_sq_dq(new_line) == -1)
-		return (0);
-	new_line = put_sp_around_pipes(new_line);
-	if (!new_line)
 		return (0);
 	return (new_line);
 }
@@ -118,87 +112,4 @@ void	free_newargv(char ***matc)
 		n++;
 	}
 	free(matc);
-}
-
-char	*put_sp_around_pipes(char *str)
-{
-	char	*new;
-	int		c_1;
-	int		c_2;
-
-	new = NULL;
-	new = init_param_put_sp(str);
-	if (!new)
-		return (0);
-	c_2 = 0;
-	c_1 = 0;
-	while (str[c_1])
-	{
-		if (str[c_1] == '|')
-		{
-			new[c_1 + c_2++] = 32;
-			new[c_1 + c_2++] = '|';
-			// while (str[c_1] && str[c_1] == '|')
-			// {
-			// 	new[c_1 + c_2] = '|';
-			// 	c_1++;
-			// }
-			// c_2++;
-			new[c_1 + c_2] = 32;
-		}
-		// else if (str[c_1] == '<')
-		// {
-		// 	new[c_1 + c_2++] = 32;
-		// 	while (str[c_1] && str[c_1] == '<')
-		// 	{
-		// 		new[c_1 + c_2] = '<';
-		// 		c_1++;
-		// 	}
-		// 	new[c_1 + c_2] = 32;
-		// 	c_2++;
-		// }
-		else
-			new[c_1 + c_2] = str[c_1];
-		c_1++;
-	}
-	new[c_1 + c_2] = 0;
-	// printf("new : %s\n", new);
-	free(str);
-	return (new);
-}
-
-char	*init_param_put_sp(char *str)
-{
-	char	*new;
-	int		c_1;
-	int		c_2;
-
-	if (!str)
-		return (0);
-	c_2 = 0;
-	c_1 = 0;
-	while (str[c_1])
-	{
-		if (str[c_1] == '|')
-		{
-			while (str[c_1] && str[c_1] == '|')
-				c_1++;
-			c_2 += 2;
-		}
-		else if (str[c_1] == '<')
-		{
-			while (str[c_1] && str[c_1] == '<')
-				c_1++;
-			c_2 += 2;
-		}
-		else
-			c_1++;
-	}
-	new = malloc(c_1 + c_2 + 1);
-	if (!new)
-	{
-		free(str);
-		return (0);
-	}
-	return (new);
 }

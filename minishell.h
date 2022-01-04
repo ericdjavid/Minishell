@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/31 18:12:37 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/04 17:37:24 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,6 @@ char	*get_new_line(char *cmd_line, t_control *list, int *i);
 char	*init_cmd_path(char *cmd, char **paths);
 
 void	free_newargv(char ***matc);
-
-char	*put_sp_around_pipes(char *str);
-
-char	*init_param_put_sp(char *str);
 
 
 		//	EXEC_CMD.C
@@ -335,6 +331,8 @@ int		check_ret_stdout(int *ret);
 		//	FT_CHILD.C
 
 int		ft_child(char ***newargv, char **paths, t_control *list, int **fds);
+
+void	is_directory(char *arg);
 
 char	**ft_get_envs_var(t_control *list);
 

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:18:03 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/24 15:00:15 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/04 15:09:20 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,6 @@ int		ft_str_is_num(char *str);
 int		ft_atoi(const char *str);
 
 int		ft_isdigit(int c);
+
+int		ft_strlen2(char *s);
 #endif

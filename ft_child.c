@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:44:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/28 15:05:11 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/04 16:24:26 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,33 +72,6 @@ char	**ft_get_envs_var(t_control *list)
 	return (neo_env);
 }
 
-void	is_directory(char *arg)
-{
-	DIR	*fdir;
-
-	if (ft_strchr(arg, '/'))
-	{
-		fdir = opendir(arg);
-		if (!fdir)
-		{
-			ft_printf_fd(2, "minishell: %s: No such file or directory\n",
-				(arg));
-		}
-		else
-		{
-			ft_printf_fd(2, "minishell: %s: Is a directory\n",
-				(arg));
-			closedir(fdir);
-		}
-	}
-	else
-	{
-		ft_printf_fd(2, "minishell: %s: command not found\n",
-			(arg));
-	}
-	g_status = 127;
-}
-
 int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 {
 	int		*ret;
@@ -126,4 +99,31 @@ int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 		free_matc(new_env);
 	free(ret);
 	exit(g_status);
+}
+
+void	is_directory(char *arg)
+{
+	DIR	*fdir;
+
+	if (ft_strchr(arg, '/'))
+	{
+		fdir = opendir(arg);
+		if (!fdir)
+		{
+			ft_printf_fd(2, "minishell: %s: No such file or directory\n",
+				(arg));
+		}
+		else
+		{
+			ft_printf_fd(2, "minishell: %s: Is a directory\n",
+				(arg));
+			closedir(fdir);
+		}
+	}
+	else
+	{
+		ft_printf_fd(2, "minishell: %s: command not found\n",
+			(arg));
+	}
+	g_status = 127;
 }

@@ -6,35 +6,26 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:07:16 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/02 18:46:07 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/04 18:46:49 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "../minishell.h"
 
-
 int	browse_str(char *str, char *charset)
 {
-	int	n;
+	int		n;
+	char	c;
 
 	n = 0;
 	while (str[n] && !ft_strchr(charset, str[n]))
 	{
-		if (str[n] == '"')
+		if (str[n] == '"' || str[n] == 39)
 		{
+			c = str[n];
 			n++;
-			while (str[n] && str[n] != '"')
-				n++;
-			n++;
-			if (!str[n])
-				return (n);
-			browse_str(str + n, charset);
-		}
-		else if (str[n] == '\'')
-		{
-			n++;
-			while (str[n] && str[n] != '\'')
+			while (str[n] && str[n] != c)
 				n++;
 			n++;
 			if (!str[n])
@@ -64,25 +55,13 @@ int	get_n_cases(char *str, char *charset)
 	return (n);
 }
 
-int		ft_only_quotes(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] == c)
-		i++;
-	if (str[i] != '\0')
-		return (0);
-	return (1);
-}
-
 char	*fill_split(char *str, char *charset)
 {
 	int		len_str;
 	char	*split;
 	int		count;
 	int		c_2;
-	char	*neo_split;
+	char	k;
 
 	len_str = browse_str(str, charset);
 	split = malloc(len_str + 1);
@@ -92,40 +71,20 @@ char	*fill_split(char *str, char *charset)
 	c_2 = 0;
 	while (count < len_str)
 	{
-		split[c_2++] = str[count];
-		count++;
+		if (str[count] == 39 || str[count] == '"')
+		{
+			k = str[count];
+			while (++count < len_str && str[count] != k)
+				split[c_2++] = str[count];
+			count++;
+		}
+		else
+		{
+			split[c_2++] = str[count];
+			count++;
+		}
 	}
 	split[c_2] = 0;
-	if (len_str == 2 && (is_surrounded(split, len_str - 1, '"') == TRUE
-		|| is_surrounded(split, len_str - 1, '\'') == TRUE))
-	{
-		free(split);
-		split = malloc(2);
-		// TODO: pbm avec espace, il faudrait mettre une valeur nulle
-		split[0] = ' ';
-		split[1] = 0;
-		return (split);
-	}
-	if (ft_only_quotes(split, '\'') || ft_only_quotes(split, '"'))
-	{
-		free(split);
-		split = malloc(2);
-		split[0] = ' ';
-		split[1] = 0;
-		return (split);
-	}
-	if (is_surrounded(split, len_str - 1, '"') == TRUE)
-	{
-		neo_split = ft_remove_quotes(split);
-		free(split);
-		return (neo_split);
-	}
-	if (is_surrounded(split, len_str - 1, '\'') == TRUE)
-	{
-		neo_split = ft_remove_simple_quotes(split);
-		free(split);
-		return (neo_split);
-	}
 	return (split);
 }
 
@@ -167,6 +126,6 @@ char	**ft_split(char *str, char *charset)
 		}
 		count++;
 	}
-	split[count] = 0;
+	split[count] = NULL;
 	return (split);
 }
