@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:44:16 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/04 16:24:26 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/05 12:29:17 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 	ret = ft_manage_fds(newargv, paths, fds);
 	if (!ret)
 		exit(g_status);
-	else if (ft_builtins(*newargv, list) > -1)
+	else if (ft_builtins(*newargv, list, 1) > -1)
 		;
 	else if (!ft_strchr((*newargv)[0], '/') || access((*newargv)[0], F_OK))
 		is_directory((*newargv)[0]);

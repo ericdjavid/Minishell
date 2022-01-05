@@ -31,6 +31,9 @@ CFLAGS	= -Wall -Wextra -Werror
 
 READLINE	= -lreadline
 
+LIBFT:
+		@make -C Libft
+
 %.o: %.c
 			@gcc -g $(CFLAGS) $(INC) -o $@ -c $?
 
@@ -40,7 +43,7 @@ RM		= rm -rf
 
 INC		= -I includes/
 
-$(NAME):	$(OBJS_P) $(OBJS) 
+$(NAME):	$(OBJS_P) $(OBJS)
 	@echo "$<[$(C_PURPLE)COMPILING$(C_END)]"
 	@make -C Libft
 	@gcc -g $(CFLAGS) -o $(NAME) $(OBJS) $(OBJS_P) Libft/libft.a $(READLINE)

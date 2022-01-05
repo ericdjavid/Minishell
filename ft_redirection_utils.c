@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 17:55:12 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/26 14:51:51 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/05 12:52:58 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,33 +48,34 @@ char	**free_redirection(char **newargv, char **new)
 	return (0);
 }
 
-int	*assign_config(int *ret, int config)
+int	*assign_config(int *box, int config)
 {
-	if (config == 2)
-		ret[0] = 1;
 	if (config == 3)
-		ret[1] = 1;
+		box[1] = 1;
 	if (config == 4)
-		ret[2] = 1;
-	return (ret);
+		box[2] = 1;
+	return (box);
 }
 
-int	exit_redirection(int *ret)
+int	*exit_redirection(int *box, int *ret)
 {
 	int	c;
 	int	value;
 
 	c = 0;
 	value = 0;
-	while (c < 3)
+	while (c < 2)
 	{
-		value += (ret[c] * (c + 2));
+		value += box[c];
 		c++;
 	}
-	free(ret);
-	if (!value)
-		return (1);
-	return (value);
+	ret[1] = value + 1;
+	if (box[3])
+		ret[2] = box[3];
+	else
+		ret[2] = 1;
+	free(box);
+	return (ret);
 }
 
 int	is_other_redin(char **newargv)

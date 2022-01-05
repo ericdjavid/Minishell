@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 20:59:11 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/04 16:35:43 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/05 13:00:56 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,20 @@ int	*ft_manage_fds(char ***newargv, char **paths, int **fds)
 		return (0);
 	ft_close_fds(fds, fds[0][0]);
 	ret[0] = ft_read_input(newargv, paths);
-	ret[1] = ft_redirection(newargv);
+	ret = ft_redirection(newargv, ret);
 	(*newargv)[0] = init_cmd_path((*newargv)[0], paths);
 	if (!ret[0] || !ret[1])
 	{
 		free(ret);
 		return (0);
 	}
-	else if (check_ret_stdin(ret)
-		&& ((ft_matlen((*newargv)) > 1) || *(newargv - 1))
+	else if (ret[0] && ((ft_matlen((*newargv)) > 1) || *(newargv - 1))
 		&& fds[0][0] > 1)
 	{
 		ft_dup2(fds[fds[0][0] - 1][0], STDIN_FILENO);
 		ft_close_fd(fds[fds[0][0] - 1][0]);
 	}
-	if (check_ret_stdout(ret) && *(newargv + 1))
+	if (ret[1] == 1 && *(newargv + 1))
 		ft_dup2(fds[fds[0][0]][1], STDOUT_FILENO);
 	return (ret);
 }
@@ -60,7 +59,7 @@ int	*init_ret(void)
 {
 	int	*ret;
 
-	ret = malloc(sizeof(int) * 2);
+	ret = malloc(sizeof(int) * 3);
 	if (!ret)
 		return (0);
 	ret[0] = 1;

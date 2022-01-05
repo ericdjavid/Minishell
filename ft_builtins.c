@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:42:20 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/04 16:40:41 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/05 12:54:50 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ int	exec_builtins(char ***newargv, t_control *list, char **paths)
 		free_mati(fds, 2);
 		return (-1);
 	}
-	exec = ft_builtins(*newargv, list);
+	exec = ft_builtins(*newargv, list, ret[2]);
 	ft_close_fd(fds[1][1]);
 	free_mati(fds, 2);
 	free(ret);
 	return (exec);
 }
 
-int	ft_builtins(char **newargv, t_control *list)
+int	ft_builtins(char **newargv, t_control *list, int fd)
 {
 	size_t	len_0;
 
@@ -43,9 +43,9 @@ int	ft_builtins(char **newargv, t_control *list)
 		return (0);
 	len_0 = ft_strlen(newargv[0]);
 	if (!ft_strncmp(newargv[0], "echo", len_0))
-		return (ft_echo(newargv));
+		return (ft_echo(newargv, fd));
 	else if (!ft_strncmp(newargv[0], "pwd", len_0))
-		return (ft_pwd(newargv));
+		return (ft_pwd(newargv, fd));
 	else if (!ft_strncmp(newargv[0], "cd", len_0))
 		return (ft_cd(newargv));
 	else if (!ft_strncmp(newargv[0], "export", len_0))

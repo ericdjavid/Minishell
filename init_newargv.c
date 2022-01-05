@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:56:08 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/04 18:46:46 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/05 12:10:49 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	***init_newargv(char *cmd_line, char **paths)
 	int		c;
 	char	**split;
 
+	c_1 = 0;
 	newargv = init_param_in(&split, cmd_line, &c_1, &c);
 	if (!newargv)
 		return (0);

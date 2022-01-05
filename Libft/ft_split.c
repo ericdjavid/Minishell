@@ -6,20 +6,21 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:07:16 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/04 18:54:27 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/05 12:51:15 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "../minishell.h"
 
-int	browse_str(char *str, char *charset)
+int	browse_classic(char *str, char *charset, char *specs)
 {
 	int		n;
 	char	c;
 
 	n = 0;
-	while (str[n] && !ft_strchr(charset, str[n]))
+	while (str[n] && !ft_strchr(specs, str[n])
+		&& !ft_strchr(charset, str[n]))
 	{
 		if (str[n] == '"' || str[n] == 39)
 		{
@@ -30,9 +31,31 @@ int	browse_str(char *str, char *charset)
 			n++;
 			if (!str[n])
 				return (n);
-			browse_str(str + n, charset);
+			browse_classic(str + n, charset, specs);
 		}
 		else
+			n++;
+	}
+	return (n);
+}
+
+int	browse_str(char *str, char *charset)
+{
+	char	specs[4];
+	char	c;
+	int		n;
+
+	specs[0] = '|';
+	specs[1] = '>';
+	specs[2] = '<';
+	specs[3] = 0;
+	n = 0;
+	if (!ft_strchr(specs, *str) && !ft_strchr(charset, *str))
+		return (browse_classic(str, charset, specs));
+	else if (ft_strchr(specs, *str))
+	{
+		c = *str;
+		while (str[n] && str[n] == c)
 			n++;
 	}
 	return (n);

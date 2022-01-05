@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/04 17:45:21 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/05 11:45:53 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,13 @@ char	*get_new_line(char *cmd_line, t_control *list, int *i)
 	if (!new_line)
 		return (0);
 	new_line = ft_is_dollar2(new_line, list, i);
+	if (!new_line)
+		return (0);
+	if (ft_deal_bad_sq_dq(new_line) == -1)
+	{
+		*i = 1;
+		return (0);
+	}
 	if (!new_line)
 		return (0);
 	if (ft_deal_bad_sq_dq(new_line) == -1)

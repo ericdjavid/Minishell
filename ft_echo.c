@@ -6,38 +6,37 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:14 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/04 15:33:58 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/05 12:24:22 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// TODO: echo truc | cat | cat | cat -e | cat -e
-int	ft_echo(char **newargv)
+int	ft_echo(char **newargv, int fd)
 {
 	char	c;
 
 	c = 0;
 	if (ft_matlen(newargv) == 1)
 	{
-		write(1, "\n", 1);
+		write(fd, "\n", 1);
 		return (1);
 	}
 	else if (!ft_strncmp(newargv[1], "-n", 2))
 	{
 		while (check_echo_arg(newargv[1 + c]))
 			c++;
-		write_newargv(newargv, 1 + c);
+		write_newargv(newargv, 1 + c, fd);
 	}
 	else
 	{
-		write_newargv(newargv, 1);
+		write_newargv(newargv, 1, fd);
 	}
 	g_status = 0;
 	return (1);
 }
 
-void	write_newargv(char **newargv, int c)
+void	write_newargv(char **newargv, int c, int fd)
 {
 	int	ret;
 
@@ -45,15 +44,15 @@ void	write_newargv(char **newargv, int c)
 	while (newargv[c])
 	{
 		if (!ft_strncmp(newargv[c], "$?", ft_strlen(newargv[c])))
-			ft_putnbr_fd(g_status, 1);
+			ft_putnbr_fd(g_status, fd);
 		else
-			write(1, newargv[c], ft_strlen(newargv[c]));
+			write(fd, newargv[c], ft_strlen(newargv[c]));
 		c++;
 		if (newargv[c])
-			write(1, " ", 1);
+			write(fd, " ", 1);
 	}
 	if (ret == 1)
-		write(1, "\n", 1);
+		write(fd, "\n", 1);
 }
 
 int	check_echo_arg(char *newargv)

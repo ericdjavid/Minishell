@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/04 17:37:24 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/05 12:52:01 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*prompt_msg(void);
 
 		//	FT_BUILTINS.C
 
-int		ft_builtins(char **newargv, t_control *list);
+int		ft_builtins(char **newargv, t_control *list, int fd);
 
 int		exec_builtins(char ***newargv, t_control *list, char **paths);
 
@@ -110,15 +110,15 @@ int		is_builtins(char *newargv);
 
 		//	FT_ECHO.C
 
-int		ft_echo(char **newargv);
+int		ft_echo(char **newargv, int fd);
 
-void	write_newargv(char **newargv, int c);
+void	write_newargv(char **newargv, int c, int fd);
 
 int		check_echo_arg(char *newargv);
 
 		//	FT_PWD.C
 
-int		ft_pwd(char **newargv);
+int		ft_pwd(char **newargv, int fd);
 
 		//	FT_CD.C
 
@@ -270,7 +270,7 @@ int	exit_readin(char **files, char *heredoc);
 
 		//	FT_REDIRECTION.C
 
-int			ft_redirection(char ***newargv);
+int			*ft_redirection(char ***newargv, int *ret);
 
 char		***loop_redirection(char ***newargv, int config, int *ret, int c);
 
@@ -288,7 +288,7 @@ char		**free_redirection(char **newargv, char **new);
 
 int			*assign_config(int *ret, int config);
 
-int			exit_redirection(int *ret);
+int			*exit_redirection(int *box, int *ret);
 
 int			is_other_redin(char **newargv);
 

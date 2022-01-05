@@ -6,59 +6,63 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:58:06 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/04 16:35:46 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/05 13:00:53 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_redirection(char ***newargv)
+int	*ft_redirection(char ***newargv, int *ret)
 {
 	int	c;
 	int	config;
-	int	*ret;
+	int	*box;
 
 	c = 0;
-	ret = malloc(sizeof(int) * 3);
-	while (c < 3)
-		ret[c++] = 0;
+	box = malloc(sizeof(int) * 4);
+	while (c < 4)
+		box[c++] = 0;
 	c = 0;
 	while ((*newargv)[c])
 	{
 		config = which_redirection((*newargv)[c]);
 		if (config)
 		{
-			newargv = loop_redirection(newargv, config, ret, c);
+			newargv = loop_redirection(newargv, config, box, c);
 			if (!newargv)
 				return (0);
 		}
 		else
 			c++;
 	}
-	return (exit_redirection(ret));
+	return (exit_redirection(box, ret));
 }
 
-char	***loop_redirection(char ***newargv, int config, int *ret, int c)
+char	***loop_redirection(char ***newargv, int config, int *box, int c)
 {
 	int	fd;
 
 	fd = get_outfd((*newargv)[c + 1], config);
 	if (fd < 0)
 	{
-		free(ret);
+		free(box);
 		return (0);
 	}
 	*newargv = get_new_redir(*newargv, c);
 	if (!(*newargv))
 	{
 		ft_close_fd(fd);
-		free(ret);
+		free(box);
 		return (0);
 	}
+	box = assign_config(box, config);
 	if (config == 3 || config == 4)
-		ft_dup2(fd, STDOUT_FILENO);
+	{
+		if (ft_strncmp(**newargv, "echo", ft_strlen(**newargv)))
+			ft_dup2(fd, STDOUT_FILENO);
+		box[3] = fd;
+	}
 	ft_close_fd(fd);
-	ret = assign_config(ret, config);
 	return (newargv);
 }
 
@@ -110,8 +114,6 @@ int	get_outfd_2(char *file, int config)
 	outfd = -1;
 	if (config == 3 && !access(file, W_OK))
 		outfd = open(file, O_TRUNC | O_WRONLY);
-	else if (config == 2 && !access(file, R_OK))
-		outfd = open(file, O_RDONLY);
 	else if (config == 4 && !access(file, W_OK))
 		outfd = open(file, O_WRONLY | O_APPEND);
 	else
