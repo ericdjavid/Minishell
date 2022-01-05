@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 14:10:39 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/05 19:12:58 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 19:13:46 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*get_new_line(char *cmd_line, t_control *list, int *i)
 	new_line = ft_strdup(cmd_line);
 	if (!new_line)
 		return (0);
-	new_line = ft_is_dollar2(new_line, list, is_mal count);
+	new_line = ft_is_dollar2(new_line, list, is_mal, count);
 	if (!new_line)
 		return (0);
 	if (ft_deal_bad_sq_dq(new_line) == -1)
