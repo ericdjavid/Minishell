@@ -5,27 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/17 20:08:32 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/05 16:28:22 by edjavid          ###   ########.fr       */
+/*   Created: 2022/01/05 17:25:15 by edjavid           #+#    #+#             */
+/*   Updated: 2022/01/05 17:27:57 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*ft_is_dollar3(t_control *control, char *new_str, int *is_mal)
-{
-	char	*str_good;
-
-	str_good = is_in_list(control->first_env, new_str);
-	if (str_good == NULL)
-		str_good = is_in_list(control->first_env_var, new_str);
-	if (str_good == NULL && new_str[1] == '?')
-	{
-		*is_mal = 1;
-		str_good = ft_itoa(g_status);
-	}
-	return (str_good);
-}
 
 int	no_unpair_char_before(char *str, int i, char c)
 {
@@ -69,89 +54,58 @@ char	*ft_strcut(char *str, int size, int pos)
 	}
 	i += size;
 	while (str[i])
-	{
-		new[j] = str[i];
-		j++;
-		i++;
-	}
+		new[j++] = str[i++];
 	new[j] = '\0';
 	free(str);
 	return (new);
 }
 
-char	*ft_is_dollar2(char *str, t_control *control, int *modif)
+int	check_unpair_chars(char *str, int i)
+{
+	if (str[i] && str[i] == '\'' && no_unpair_char_before(str, i, '"'))
+	{
+		i++;
+		while (str[i] && str[i] != '\'')
+			i++;
+		if (str[i] != '\'')
+			return (-1);
+	}
+	return (i);
+}
+
+char	*ft_change_str_value(char *str_good, char *str, int size, int i)
+{
+	if (str_good == NULL)
+		str = ft_strcut(str, size, i);
+	else
+		str = get_new_line_cmd(str, i, size, str_good);
+	return (str);
+}
+
+char	*ft_is_dollar2(char *str, t_control *control, int is_mal, int size)
 {
 	int		i;
 	char	*str_good;
 	char	*new_str;
-	int		size;
-	int		is_mal;
 
 	i = -1;
-	is_mal = 0;
-	size = 0;
 	while (str && str[++i])
 	{
-		if (str[i] && str[i] == '\'' && no_unpair_char_before(str, i, '"'))
-		{
-			i++;
-			while (str[i] && str[i] != '\'')
-				i++;
-			if (str[i] != '\'')
-				break ;
-		}
+		i = check_unpair_chars(str, i);
+		if (i == -1)
+			break ;
 		if (str[i] && str[i] == '$' && str[i + 1] != ' ' && str[i + 1])
 		{
 			new_str = get_new_str(str, i, &size);
 			str_good = ft_is_dollar3(control, new_str, &is_mal);
-			if (str_good == NULL)
-			{
-				str = ft_strcut(str, size, i);
-				*modif = 0;
-				free(new_str);
-				i = -1;
-				continue ;
-			}
-			if (str_good != NULL)
-			{
-				str = get_new_line_cmd(str, i, size, str_good);
-				if (is_mal)
-					free(str_good);
-				is_mal = 0;
-				free(new_str);
-				i = -1;
-				continue ;
-			}
+			str = ft_change_str_value(str_good, str, size, i);
+			if (is_mal)
+				free(str_good);
+			is_mal = 0;
+			free(new_str);
+			i = -1;
+			continue ;
 		}
 	}
 	return (str);
-}
-
-char	*get_new_line_cmd(char *str, int i, int size, char *str_good)
-{
-	char	*neo_line_cmd;
-	int		j;
-	int		k;
-
-	neo_line_cmd = malloc(sizeof(char) * ((int)ft_strlen(str_good)
-				+ (int)ft_strlen(str) - size + 1));
-	j = -1;
-	while (str[++j] && j < i)
-		neo_line_cmd[j] = str[j];
-	k = -1;
-	while (str_good[++k] && k < (int)ft_strlen(str_good))
-	{
-		neo_line_cmd[j] = str_good[k];
-		j++;
-	}
-	k = (i + size);
-	while (str[k])
-	{
-		neo_line_cmd[j] = str[k];
-		j++;
-		k++;
-	}
-	free(str);
-	neo_line_cmd[j] = '\0';
-	return (neo_line_cmd);
 }
