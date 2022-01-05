@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 17:55:12 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/05 12:52:58 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/05 17:22:11 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,13 @@ char	**free_redirection(char **newargv, char **new)
 	return (0);
 }
 
-int	*assign_config(int *box, int config)
+int	*assign_config(int *box, int config, int fd)
 {
 	if (config == 3)
 		box[1] = 1;
 	if (config == 4)
 		box[2] = 1;
+	box[3] = fd;
 	return (box);
 }
 

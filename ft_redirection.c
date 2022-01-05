@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:58:06 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/05 15:33:41 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/05 17:20:34 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,15 @@ int	*ft_redirection(char ***newargv, int *ret, int forked)
 		{
 			newargv = loop_redirection(newargv, box, c, forked);
 			if (!newargv)
+			{
+				free(box);
 				return (0);
+			}
 		}
 		else
 			c++;
 	}
 	return (exit_redirection(box, ret));
-}
-
-int	is_other_wrout(char **newargv)
-{
-	int	c;
-
-	c = 0;
-	while (newargv[c])
-	{
-		if (which_redirection(newargv[c]))
-			return (1);
-		c++;
-	}
-	return (0);
 }
 
 char	***loop_redirection(char ***newargv, int *box, int c, int forked)
@@ -58,26 +47,24 @@ char	***loop_redirection(char ***newargv, int *box, int c, int forked)
 	config = which_redirection((*newargv)[c]);
 	fd = get_outfd((*newargv)[c + 1], config);
 	if (fd < 0)
-	{
-		free(box);
 		return (0);
-	}
 	*newargv = get_new_redir(*newargv, c);
 	if (!(*newargv))
 	{
 		ft_close_fd(fd);
-		free(box);
 		return (0);
 	}
 	if (is_other_wrout(*newargv))
+	{
+		ft_close_fd(fd);
 		return (newargv);
-	box = assign_config(box, config);
+	}
+	box = assign_config(box, config, fd);
 	if (forked)
 	{
 		ft_dup2(fd, STDOUT_FILENO);
 		ft_close_fd(fd);
 	}
-	box[3] = fd;
 	return (newargv);
 }
 

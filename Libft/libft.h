@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:18:03 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/04 15:09:20 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/05 17:32:19 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,16 @@ void	ft_strcpy(char *dst, const char *str);
 void	ft_strcat(char *dst, const char *str);
 
 char	**ft_split(char *s, char *charset);
+
+char	*get_next_str(char *str, char *charset, int count);
+
+char	*fill_split(char *str, char *charset);
+
+int		get_n_cases(char *str, char *charset);
+
+int		browse_str(char *str, char *charset);
+
+int		browse_classic(char *str, char *charset, char *specs);
 
 int		ft_matlen(char **mat);
 

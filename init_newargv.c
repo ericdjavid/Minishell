@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:56:08 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/05 16:41:32 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/05 17:14:46 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,29 @@
 char	***init_newargv(char *cmd_line, char **paths)
 {
 	char	***newargv;
-	int		c_1;
-	int		c_2;
-	int		c;
-	char	**split;
+	int		c[3];
+	char	**spl;
 
-	c_1 = 0;
-	newargv = init_param_in(&split, cmd_line, &c_1, &c);
+	c[1] = 0;
+	newargv = init_param_in(&spl, cmd_line, &c[1], &c[0]);
 	if (!newargv)
 		return (0);
-	while (split[c])
+	while (spl[c[0]])
 	{
-		newargv[c_1] = malloc(sizeof(char *) * (ft_split_len(split, c) + 1));
-		if (!newargv[c_1])
-			return (free_init_new(newargv, split));
-		c_2 = 0;
-		newargv[c_1][0] = NULL;
-		while (split[c] && ft_strncmp(split[c], "|", ft_strlen(split[c])))
-			newargv[c_1][c_2++] = split[c++];
-		newargv[c_1][0] = init_cmd_path(newargv[c_1][0], paths);
-		if (split[c])
-			free(split[c++]);
-		newargv[c_1++][c_2] = 0;
+		newargv[c[1]] = malloc(sizeof(char *) * (ft_splen(spl, c[0]) + 1));
+		if (!newargv[c[1]])
+			return (free_init_new(newargv, spl));
+		c[2] = 0;
+		newargv[c[1]][0] = NULL;
+		while (spl[c[0]] && ft_strncmp(spl[c[0]], "|", ft_strlen(spl[c[0]])))
+			newargv[c[1]][c[2]++] = spl[c[0]++];
+		newargv[c[1]][0] = init_cmd_path(newargv[c[1]][0], paths);
+		if (spl[c[0]])
+			free(spl[c[0]++]);
+		newargv[c[1]++][c[2]] = 0;
 	}
-	newargv[c_1] = 0;
-	free(split);
+	newargv[c[1]] = 0;
+	free(spl);
 	return (newargv);
 }
 
@@ -66,7 +64,7 @@ char	***init_param_in(char ***split, char *cmd_line, int *c_1, int *c)
 	return (newargv);
 }
 
-int	ft_split_len(char **split, int c)
+int	ft_splen(char **split, int c)
 {
 	int	len;
 

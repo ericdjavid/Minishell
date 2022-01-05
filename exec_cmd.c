@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 14:10:39 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/05 16:50:16 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/05 17:15:52 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 	if (!*cmd_line)
 		return (1);
 	new_line = get_new_line(cmd_line, list, &i);
-	if (i == 1)
-		return (-2);
-	if (!new_line)
+	if (i == 1 || !new_line)
 		return (-2);
 	newargv = init_newargv(new_line, paths);
 	if (!newargv)

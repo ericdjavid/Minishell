@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   ft_redirection_utils2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/17 17:32:46 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/05 17:14:53 by abrun            ###   ########.fr       */
+/*   Created: 2022/01/05 17:19:31 by abrun             #+#    #+#             */
+/*   Updated: 2022/01/05 17:20:01 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_pwd(char **newargv, int fd)
+int	is_other_wrout(char **newargv)
 {
-	char	buf[1024];
-	char	*ret;
+	int	c;
 
-	if (ft_matlen(newargv) != 1)
-		return (0);
-	else
-		ret = getcwd(buf, 1024);
-	if (!ret)
+	c = 0;
+	while (newargv[c])
 	{
-		write(2, "pwd: error retrieving current directory: getcwd: can", 52);
-		write(2, "not access parent directories:", 30);
-		write(2, " No such file or directory\n", 27);
-		g_status = 1;
+		if (which_redirection(newargv[c]))
+			return (1);
+		c++;
 	}
-	else
-		ft_printf_fd(fd, "%s\n", ret);
-	return (1);
+	return (0);
 }
