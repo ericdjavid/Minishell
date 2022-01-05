@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/05 12:52:01 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/05 14:39:46 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,9 +270,9 @@ int	exit_readin(char **files, char *heredoc);
 
 		//	FT_REDIRECTION.C
 
-int			*ft_redirection(char ***newargv, int *ret);
+int			*ft_redirection(char ***newargv, int *ret, int forked);
 
-char		***loop_redirection(char ***newargv, int config, int *ret, int c);
+char		***loop_redirection(char ***newargv, int *ret, int c, int forked);
 
 int			which_redirection(char *s);
 
@@ -322,7 +322,7 @@ void		free_elms(t_element *first);
 
 		//	FT_MANAGE_FDS.C
 
-int		*ft_manage_fds(char ***newargv, char **paths, int **fds);
+int		*ft_manage_fds(char ***newargv, char **paths, int **fds, int forked);
 
 int		check_ret_stdin(int *ret);
 

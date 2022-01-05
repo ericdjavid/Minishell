@@ -31,9 +31,6 @@ CFLAGS	= -Wall -Wextra -Werror
 
 READLINE	= -lreadline
 
-LIBFT:
-		@make -C Libft
-
 %.o: %.c
 			@gcc -g $(CFLAGS) $(INC) -o $@ -c $?
 

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:42:20 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/05 12:54:50 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/05 15:12:55 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	exec_builtins(char ***newargv, t_control *list, char **paths)
 	if (!fds)
 		return (-1);
 	fds[0][0]++;
-	ret = ft_manage_fds(newargv, paths, fds);
+	ret = ft_manage_fds(newargv, paths, fds, 0);
 	if (!ret)
 	{
 		free_mati(fds, 2);
@@ -30,6 +30,8 @@ int	exec_builtins(char ***newargv, t_control *list, char **paths)
 	}
 	exec = ft_builtins(*newargv, list, ret[2]);
 	ft_close_fd(fds[1][1]);
+	if (ret[2] != 1)
+		ft_close_fd(ret[2]);
 	free_mati(fds, 2);
 	free(ret);
 	return (exec);
