@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 16:23:17 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/04 19:35:28 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 16:19:57 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,6 @@ int	get_tmp(char *retreat, t_element *tmp, t_control *list, char *var_name)
 	return (1);
 }
 
-int	get_f(t_control *list, char *var_name, char *retreat)
-{
-	char	*nodq;
-
-	nodq = ft_strdup(retreat);
-	list->first_env_var->str = ft_remove_quotes(nodq);
-	list->first_env_var->var_name
-		= add_var_name(list->first_env_var->str);
-	list->first_env_var->next = NULL;
-	free(nodq);
-	free(var_name);
-	return (1);
-}
-
 int	get_not_valid(char *retreat, t_element *tmp)
 {
 	if ((ft_is_space_before_qual(retreat))
@@ -56,6 +42,16 @@ int	get_not_valid(char *retreat, t_element *tmp)
 	return (SUCCESS);
 }
 
+void	modify_values(t_element *elem, char *str, int type)
+{
+	free(elem->str);
+	if (type == DEAL_EXPORT)
+		elem->str = add_str2(str, DEAL_EXPORT);
+	else
+		elem->str = ft_strdup(str);
+	return ;
+}
+
 int	ft_get_new_var2(char *var_name, char *retreat, t_control *list, int i)
 {
 	t_element	*tmp;
@@ -66,13 +62,12 @@ int	ft_get_new_var2(char *var_name, char *retreat, t_control *list, int i)
 		return (FAILURE);
 	if (tmp && get_tmp(retreat, tmp, list, var_name))
 		return (FAILURE);
-	if (tmp == NULL)
+	if (tmp == NULL && elem_in_list(list->first_export, var_name))
 	{
-		tmp = elem_in_list(list->first_export, var_name);
-		ft_remove_from_list(elem_in_list(list->first_export, var_name),
-			list->first_export);
-		ft_remove_from_list(elem_in_list(list->first_env, var_name),
-			list->first_env);
+		modify_values(elem_in_list(list->first_export, var_name), retreat, DEAL_EXPORT);
+		modify_values(elem_in_list(list->first_env, var_name), retreat, DEAL_ENV);
+		free(var_name);
+		return (SUCCESS);
 	}
 	if (list->first_env_var->str == NULL && get_f(list, var_name, retreat))
 		return (FAILURE);
@@ -99,8 +94,7 @@ int	ft_get_new_var(t_control *list, char **newargv)
 		retreat = ft_deal_dollar(newargv[i], list);
 		if (retreat == NULL)
 			retreat = ft_remove_simple_quotes(newargv[i]);
-		printf("retreat is %s\n", retreat);
-		if (process_retreat(newargv[i], retreat) == FAILURE)
+		if (process_retreat(newargv[i], retreat, list) == FAILURE)
 			continue ;
 		if (ft_get_new_var2(var_name, retreat, list, i))
 			continue ;

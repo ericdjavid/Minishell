@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 14:11:46 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/04 14:27:07 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 14:12:30 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,6 @@ char	***init_param_in(char ***split, char *cmd_line, int *c_1, int *c)
 {
 	char	***newargv;
 	char	charset[3];
-	// char	*new_cmd_line;
-	// new_cmd_line = ft_strdup(cmd_line);
-	// cmd_line = add_spaces_to_cmd_line(new_cmd_line);
 	newargv = malloc(sizeof(char **) * (get_n_cmd(cmd_line) + 2));
 	if (!newargv)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 14:59:06 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/02 15:33:21 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 15:33:16 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ char	*get_new_str(char *str, int i, int *size)
 
 void	ft_remove_from_env(t_element *to_supp, t_control *control)
 {
+	if (to_supp == NULL || control->first_env_var == NULL)
+		return ;
 	if (to_supp == control->first_env_var)
 		ft_remove_first_env(control);
 	else if (to_supp->next == NULL)

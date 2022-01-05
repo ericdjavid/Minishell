@@ -6,11 +6,25 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 18:11:48 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/27 14:46:24 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 16:20:04 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	get_f(t_control *list, char *var_name, char *retreat)
+{
+	char	*nodq;
+
+	nodq = ft_strdup(retreat);
+	list->first_env_var->str = ft_remove_quotes(nodq);
+	list->first_env_var->var_name
+		= add_var_name(list->first_env_var->str);
+	list->first_env_var->next = NULL;
+	free(nodq);
+	free(var_name);
+	return (1);
+}
 
 int	add_end_list(char *str, t_element *first, int type)
 {

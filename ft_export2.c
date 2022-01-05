@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 15:10:49 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/26 16:58:03 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 15:39:11 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	ft_remove_first_env(t_control *control)
 	free(tmp->str);
 	tmp->var_name = NULL;
 	tmp->str = NULL;
+	free(tmp);
 }
 
 /* liste toutes les variables d’environnement dans un ordre random */
