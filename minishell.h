@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/05 17:43:16 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/05 17:54:58 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int			exit_exec(int ret, char ***newargv, char *cmd_line);
 
 		//	PROMPT_MSG.C
 
-char		*prompt_msg(void);
+char		*prompt_msg(int *ret);
 
 		//	FT_BUILTINS.C
 

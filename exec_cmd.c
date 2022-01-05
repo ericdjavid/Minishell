@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 14:10:39 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/05 17:15:52 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/05 17:53:43 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char	*get_new_line(char *cmd_line, t_control *list, int *i)
 	if (ft_deal_bad_sq_dq(new_line) == -1)
 	{
 		*i = 1;
-		ft_printf_fd(2, "minishell: ");
+		ft_printf_fd(2, "minishell: error parsing <quotes>\n");
 		return (0);
 	}
 	return (new_line);
