@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 14:59:10 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/05 17:43:01 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 18:28:10 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,17 @@ void	ft_get_value(t_element *prev1, t_element *prev2, t_element *node2,
 	}
 }
 
-void	swap_elem(int pos1, int pos2, t_control *list, int i)
+t_element	*modify_value(t_element *node1, t_element *node2,
+	t_element *prev1, t_element *prev2)
+{
+	if (prev1 == NULL)
+		return (node2);
+	else if (prev2 == NULL)
+		return (node1);
+	return (NULL);
+}
+
+t_element	*swap_elem(int pos1, int pos2, t_control *list, int i)
 {
 	t_element	*tmp;
 	t_element	*node1;
@@ -76,11 +86,7 @@ void	swap_elem(int pos1, int pos2, t_control *list, int i)
 		tmp = tmp->next;
 	}
 	ft_get_value(prev1, prev2, node2, node1);
-	if (prev1 == NULL)
-		list->first_export = node2;
-	else if (prev2 == NULL)
-		list->first_export = node1;
-	add_index(list->first_export);
+	return (modify_value(node1, node2, prev1, prev2));
 }
 
 t_bool	is_ascii_ordered(char *str1, char *str2)
@@ -99,36 +105,4 @@ t_bool	is_ascii_ordered(char *str1, char *str2)
 	if (!str2[i])
 		return (TRUE);
 	return (FALSE);
-}
-
-int	order_ascii(t_control *list)
-{
-	t_element	*tmp;
-	int			i;
-
-	i = 0;
-	tmp = list->first_export;
-	while (1)
-	{
-		if (tmp == NULL || tmp->next == NULL)
-			break ;
-		if (!is_ascii_ordered(tmp->str, tmp->next->str))
-			swap_elem(tmp->index, tmp->next->index, list, i);
-		tmp = tmp->next;
-	}
-	return (SUCCESS);
-}
-
-t_bool	check_order(t_control *list)
-{
-	t_element	*tmp;
-
-	tmp = list->first_export;
-	while (tmp->next)
-	{
-		if (is_ascii_ordered(tmp->str, tmp->next->str) == FALSE)
-			return (FALSE);
-		tmp = tmp->next;
-	}
-	return (TRUE);
 }
