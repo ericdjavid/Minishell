@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 16:23:30 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/27 16:24:53 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 15:06:31 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char	*ft_deal_dollar(char *str, t_control *list)
 int	ft_assign(t_element *tmp, t_control *list, char *retreat, int i)
 {
 	t_element	*new;
+	char		*nodq;
 
 	tmp = list->first_env_var;
 	while (tmp->next != NULL)
@@ -82,7 +83,9 @@ int	ft_assign(t_element *tmp, t_control *list, char *retreat, int i)
 	new = malloc(sizeof(*new));
 	if (!new)
 		return (FAILURE);
-	new->str = ft_strdup(retreat);
+	nodq = ft_strdup(retreat);
+	new->str = ft_remove_quotes(nodq);
+	free(nodq);
 	new->var_name = add_var_name(new->str);
 	new->next = NULL;
 	new->index = i;
@@ -90,14 +93,24 @@ int	ft_assign(t_element *tmp, t_control *list, char *retreat, int i)
 	return (SUCCESS);
 }
 
-int	process_retreat(char *newargv, char *retreat)
+/* check if there are bad entries */
+int	process_retreat(char *newargv, char *retreat, t_control *list)
 {
-	if (!(ft_check_position('$', '=', newargv)) || (newargv[0] <= 'Z'
-			&& newargv[0] >= 'A') || (newargv[0] == '='
+	char	*var_name;
+
+	if (!(ft_check_position('$', '=', newargv)) || (newargv[0] == '='
 			|| ((retreat[0] <= '9') && (retreat[0] >= '0'))))
 	{
 		ft_printf_fd(1, "\"%s\" : not a valid identifier\n", retreat);
 		return (FAILURE);
 	}
+	var_name = add_var_name(retreat);
+	if (newargv[0] <= 'Z' && newargv[0] >= 'A'
+		&& (elem_in_list(list->first_export, var_name) == NULL))
+	{
+		free(var_name);
+		return (FAILURE);
+	}
+	free(var_name);
 	return (SUCCESS);
 }

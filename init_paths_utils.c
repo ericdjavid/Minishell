@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 17:03:52 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/31 15:35:21 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 17:01:42 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*init_cmd_path(char *cmd, char **paths)
 
 	if (cmd == NULL)
 		return (0);
-	if (is_builtins(cmd) || ft_strchr(cmd, '/'))
+	if (is_builtins(cmd) || ft_strchr(cmd, '/') || !*cmd)
 		return (cmd);
 	n_path = 0;
 	cmd_len = ft_strlen(cmd);

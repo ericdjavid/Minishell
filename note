@@ -1,11 +1,22 @@
+echo -nnnnnnnnnnnn
+	ko
 
-echo """""" | wc -c
----> doit display 1
-echo "" "" "" | wc -c 
----> doit display 4
+echo "cat| |lol.c| | |cat > lol.c"
+	des espaces en trop
+
+grep ldkfjh
+	double prompt
+
+>a cat <b >>c 	a est créé vide. c recoit le contenu de b
+--> gerer l'absence d espaces
+
+export and modify value of USER and then unset USER 
+	--> malloc
+
+export USER=lol not a valid indentifier
+bash ne revoie rien lorsque tu crees une var en majuscule (et ne la cree pas) par contre il modifie les var d environnement deja en majuscule
 
 (une var d'env c'est de $--> tant que c est un alpha num + _)
-echo $jfd : si env invalide affiche rien k--> ok
 
 pour les noms de fichier, l'expend est legerement differents; telils est considere comme 1 seul mot (export l="ls -la"; echo bonjour > $l; ls --> 'ls -la')
 pour les fichiers simple ( < ou > ) les variables d'env sont expend comme entre double quote)
@@ -23,5 +34,3 @@ pour le heredoc : le limitor a deux etats telque :
 pour les redirections, tu dois les creer/open dans l'ordre qu'on te les donnes, si jamias ca fail, les precedents doivent etre creer.aSeul le dernier fils creer sera remplit si les redirections sont correct
 
 pour les buitlins en cas d'error return sur sortie d'error (write(2)) et remplir le fdout avec null
-
-si $lsdghhksdgj => retour a la ligne--->ok

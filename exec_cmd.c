@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/17 13:10:52 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/05 11:45:53 by abrun            ###   ########.fr       */
+/*   Created: 2022/01/04 14:10:39 by edjavid           #+#    #+#             */
+/*   Updated: 2022/01/05 16:50:16 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,9 @@ char	*get_new_line(char *cmd_line, t_control *list, int *i)
 	if (ft_deal_bad_sq_dq(new_line) == -1)
 	{
 		*i = 1;
+		ft_printf_fd(2, "minishell: ");
 		return (0);
 	}
-	if (!new_line)
-		return (0);
-	if (ft_deal_bad_sq_dq(new_line) == -1)
-		return (0);
 	return (new_line);
 }
 
