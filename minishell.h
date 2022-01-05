@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/05 15:06:51 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 16:23:35 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,10 @@ char		*add_str2(char *str, int type);
 
 int			ft_assign(t_element *tmp, t_control *list, char *retreat, int i);
 
+		// EXPORT4.C
+
+int			get_f(t_control *list, char *var_name, char *retreat);
+
 		// EXPORT5.C
 
 int			process_retreat(char *newargv, char *retreat, t_control *list);
@@ -224,7 +228,7 @@ int			get_tmp(char *retreat, t_element *tmp, t_control *list, char *var_name);
 
 		// FT_ENV.C
 
-int 		ft_env(t_control *list);
+int			ft_env(t_control *list);
 
 		//	FT_READ_INPUT.C
 
@@ -236,7 +240,6 @@ int		init_config(char **newargv, int *c);
 
 int		is_unexpected(char *arg);
 
-
 		//	MAKE_CONFIGS_RDIN.C
 
 int		make_configs_rdin(char ***newargv, char **files, char **heredoc, int *c);
@@ -245,7 +248,7 @@ int		make_config_1(char **heredoc, char *lim, int *last);
 
 int		make_config_2(char **files, char *arg, int *last);
 
-char		*get_heredoc(char *lim);
+char	*get_heredoc(char *lim);
 
 char	*print_error_rdin(int ret, char *lim, char *heredoc);
 

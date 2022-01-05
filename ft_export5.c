@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 16:23:17 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/05 15:07:59 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 16:19:57 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,6 @@ int	get_tmp(char *retreat, t_element *tmp, t_control *list, char *var_name)
 		list->first_export);
 	ft_remove_from_list(elem_in_list(list->first_env, var_name),
 		list->first_env);
-	free(var_name);
-	return (1);
-}
-
-int	get_f(t_control *list, char *var_name, char *retreat)
-{
-	char	*nodq;
-
-	nodq = ft_strdup(retreat);
-	list->first_env_var->str = ft_remove_quotes(nodq);
-	list->first_env_var->var_name
-		= add_var_name(list->first_env_var->str);
-	list->first_env_var->next = NULL;
-	free(nodq);
 	free(var_name);
 	return (1);
 }

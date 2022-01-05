@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 20:08:32 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/04 15:56:11 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 16:28:22 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ char	*ft_is_dollar2(char *str, t_control *control, int *modif)
 			if (str_good == NULL)
 			{
 				str = ft_strcut(str, size, i);
-				//TODO : can t do it, need to modify value of $nothing to nothin in the string
 				*modif = 0;
 				free(new_str);
 				i = -1;
