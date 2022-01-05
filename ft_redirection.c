@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:58:06 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/05 15:24:40 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/05 15:33:41 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ char	***loop_redirection(char ***newargv, int *box, int c, int forked)
 	if (forked)
 	{
 		ft_dup2(fd, STDOUT_FILENO);
-		ft_printf_fd(2, "fd : %d\n", fd);
 		ft_close_fd(fd);
 	}
 	box[3] = fd;
