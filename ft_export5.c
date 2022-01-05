@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 16:23:17 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/05 14:19:35 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 15:07:59 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,7 @@ int	ft_get_new_var(t_control *list, char **newargv)
 		retreat = ft_deal_dollar(newargv[i], list);
 		if (retreat == NULL)
 			retreat = ft_remove_simple_quotes(newargv[i]);
-		printf("retreat is %s\n", retreat);
-		if (process_retreat(newargv[i], retreat) == FAILURE)
+		if (process_retreat(newargv[i], retreat, list) == FAILURE)
 			continue ;
 		if (ft_get_new_var2(var_name, retreat, list, i))
 			continue ;

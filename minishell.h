@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/05 13:56:45 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 15:06:51 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,7 @@ int			ft_assign(t_element *tmp, t_control *list, char *retreat, int i);
 
 		// EXPORT5.C
 
-int			process_retreat(char *newargv, char *retreat);
+int			process_retreat(char *newargv, char *retreat, t_control *list);
 
 int			ft_get_new_var(t_control *list, char **newargv);
 

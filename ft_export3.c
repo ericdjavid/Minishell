@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 16:23:30 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/04 18:09:01 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 15:06:31 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,17 +94,23 @@ int	ft_assign(t_element *tmp, t_control *list, char *retreat, int i)
 }
 
 /* check if there are bad entries */
-int	process_retreat(char *newargv, char *retreat)
+int	process_retreat(char *newargv, char *retreat, t_control *list)
 {
+	char	*var_name;
+
 	if (!(ft_check_position('$', '=', newargv)) || (newargv[0] == '='
 			|| ((retreat[0] <= '9') && (retreat[0] >= '0'))))
 	{
 		ft_printf_fd(1, "\"%s\" : not a valid identifier\n", retreat);
 		return (FAILURE);
 	}
-	// TODO: deal with first char in maj that should return nothing except if the var already exist
-	// if (newargv[0] <= 'Z' && newargv[0] >= 'A')
-	// 	if (is_in_list()))
-	// 	return (FAILURE);
+	var_name = add_var_name(retreat);
+	if (newargv[0] <= 'Z' && newargv[0] >= 'A'
+		&& (elem_in_list(list->first_export, var_name) == NULL))
+	{
+		free(var_name);
+		return (FAILURE);
+	}
+	free(var_name);
 	return (SUCCESS);
 }
