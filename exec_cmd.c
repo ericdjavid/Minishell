@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 14:10:39 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/04 14:22:35 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 17:29:59 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 	if (!*cmd_line)
 		return (1);
 	new_line = get_new_line(cmd_line, list, &i);
-	printf("i is %d\n", i);
-	printf("new line in exec cmd is : |%s|\n", new_line);
 	if (i == 1)
 		return (-1);
 	if (!new_line)
@@ -91,12 +89,15 @@ int	ft_deal_bad_sq_dq(char *str)
 char	*get_new_line(char *cmd_line, t_control *list, int *i)
 {
 	char	*new_line;
+	int		is_mal;
+	int		count;
 
+	count = 0;
+	is_mal = 0;
 	new_line = ft_strdup(cmd_line);
 	if (!new_line)
 		return (0);
-	new_line = ft_is_dollar2(new_line, list, i);
-	printf("new line after ft is dollar 2 : |%s|\n", new_line);
+	new_line = ft_is_dollar2(new_line, list, is_mal, count);
 	if (!new_line)
 		return (0);
 	if (ft_deal_bad_sq_dq(new_line) == -1)

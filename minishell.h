@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/05 16:23:35 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 17:28:26 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,15 +168,17 @@ void	ft_close_fd(int fd);
 
 char	*ft_get_good_str(char *str);
 
-// void	ft_is_dollar(char **str, t_control *control);
-
-char	*ft_is_dollar2(char *str, t_control *control, int *i);
+char	*ft_is_dollar2(char *str, t_control *control, int is_mal, int count);
 
 int		no_unpair_char_before(char *str, int i, char c);
 
 t_element	*ft_is_in_list(t_control *list, char *str);
 
 t_element	*check_in_list(t_element *first, char *str);
+
+		//	TOOLS6.C
+
+char	*ft_is_dollar3(t_control *control, char *new_str, int *is_mal);
 
 		// EXPORT.C
 

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 14:59:10 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/27 19:36:26 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 17:43:01 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	swap_elem(int pos1, int pos2, t_control *list, int i)
 	node1 = NULL;
 	prev1 = NULL;
 	node2 = NULL;
-	// node_init(prev2, node1, prev1, node2);
 	tmp = list->first_export;
 	while (tmp && ++i <= list->size)
 	{

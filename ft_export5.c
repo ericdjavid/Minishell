@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 16:23:17 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/05 16:19:57 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 17:32:32 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	get_not_valid(char *retreat, t_element *tmp)
 	return (SUCCESS);
 }
 
-void	modify_values(t_element *elem, char *str, int type)
+void	mdval(t_element *elem, char *str, int type)
 {
 	free(elem->str);
 	if (type == DEAL_EXPORT)
@@ -64,8 +64,8 @@ int	ft_get_new_var2(char *var_name, char *retreat, t_control *list, int i)
 		return (FAILURE);
 	if (tmp == NULL && elem_in_list(list->first_export, var_name))
 	{
-		modify_values(elem_in_list(list->first_export, var_name), retreat, DEAL_EXPORT);
-		modify_values(elem_in_list(list->first_env, var_name), retreat, DEAL_ENV);
+		mdval(elem_in_list(list->first_export, var_name), retreat, DEAL_EXPORT);
+		mdval(elem_in_list(list->first_env, var_name), retreat, DEAL_ENV);
 		free(var_name);
 		return (SUCCESS);
 	}
