@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/04 14:21:38 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 13:56:45 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,8 +161,6 @@ int		is_syntax_er_spl(char **split);
 		//	TOOLS.C
 
 t_element	*check_in_list(t_element *first, char *str);
-
-char	*get_new_str(char *str, int i, int *size);
 
 void	ft_dup2(int newfd, int oldfd);
 
