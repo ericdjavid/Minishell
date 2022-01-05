@@ -6,13 +6,12 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:07:16 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/04 13:55:03 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 18:34:24 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "../minishell.h"
-
 
 int	browse_str(char *str, char *charset)
 {

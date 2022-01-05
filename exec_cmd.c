@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 14:10:39 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/05 17:29:59 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/05 19:08:31 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,46 +43,42 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 	return (exit_exec(ret, newargv, new_line));
 }
 
-int	ft_deal_bad_sq_dq(char *str)
+int	ft_deal_bad(char *str, int count, char c, char d)
 {
 	int	i;
-	int	count;
 
 	i = 0;
-	count = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'' && no_unpair_char_before(str, i, '"'))
+		if (str[i] == c && no_unpair_char_before(str, i, d))
 		{
 			while (str[i] != '\0')
 			{
-				if (str[i] == '\'')
+				if (str[i] == c)
 					count++;
 				i++;
 			}
 			if (count % 2 != 0)
 			{
 				free(str);
-				return (-1);
-			}
-		}
-		if (str[i] == '"' && no_unpair_char_before(str, i, '\''))
-		{
-			while (str[i] != '\0')
-			{
-				if (str[i] == '"')
-					count++;
-				i++;
-			}
-			if (count % 2 != 0)
-			{
-				free(str);
-				return (-1);
+				return (1);
 			}
 		}
 		if (str[i] != '\0')
 			i++;
 	}
+	return (0);
+}
+
+int	ft_deal_bad_sq_dq(char *str)
+{
+	int	count;
+
+	count = 0;
+	if (ft_deal_bad(str, count, '\'', '"') == 1)
+		return (-1);
+	if (ft_deal_bad(str, count, '"', '\'') == 1)
+		return (-1);
 	return (SUCCESS);
 }
 
