@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/31 18:12:37 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/04 14:21:38 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,6 +364,8 @@ char	*ft_get_dollar_var(char *str, t_control *list);
 int		ft_check_position(char c, char c2, char *str);
 
 		//	TOOLS3.C
+
+int		no_unpair_char_before(char *str, int i, char c);
 
 char	*get_new_line_cmd(char *str, int i, int size, char *str_good);
 

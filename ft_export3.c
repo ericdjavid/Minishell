@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 16:23:30 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/27 16:24:53 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/04 18:09:01 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char	*ft_deal_dollar(char *str, t_control *list)
 int	ft_assign(t_element *tmp, t_control *list, char *retreat, int i)
 {
 	t_element	*new;
+	char		*nodq;
 
 	tmp = list->first_env_var;
 	while (tmp->next != NULL)
@@ -82,7 +83,9 @@ int	ft_assign(t_element *tmp, t_control *list, char *retreat, int i)
 	new = malloc(sizeof(*new));
 	if (!new)
 		return (FAILURE);
-	new->str = ft_strdup(retreat);
+	nodq = ft_strdup(retreat);
+	new->str = ft_remove_quotes(nodq);
+	free(nodq);
 	new->var_name = add_var_name(new->str);
 	new->next = NULL;
 	new->index = i;
@@ -90,14 +93,18 @@ int	ft_assign(t_element *tmp, t_control *list, char *retreat, int i)
 	return (SUCCESS);
 }
 
+/* check if there are bad entries */
 int	process_retreat(char *newargv, char *retreat)
 {
-	if (!(ft_check_position('$', '=', newargv)) || (newargv[0] <= 'Z'
-			&& newargv[0] >= 'A') || (newargv[0] == '='
+	if (!(ft_check_position('$', '=', newargv)) || (newargv[0] == '='
 			|| ((retreat[0] <= '9') && (retreat[0] >= '0'))))
 	{
 		ft_printf_fd(1, "\"%s\" : not a valid identifier\n", retreat);
 		return (FAILURE);
 	}
+	// TODO: deal with first char in maj that should return nothing except if the var already exist
+	// if (newargv[0] <= 'Z' && newargv[0] >= 'A')
+	// 	if (is_in_list()))
+	// 	return (FAILURE);
 	return (SUCCESS);
 }
