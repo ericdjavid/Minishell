@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 17:55:12 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/05 17:22:11 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/06 12:03:53 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	**get_new_redir(char **newargv, int redir)
 	int		c_2;
 
 	new = malloc(sizeof(char *) * ft_matlen(newargv));
+	new = 0;
 	if (!new)
 		return (free_redirection(newargv, new));
 	c = 0;

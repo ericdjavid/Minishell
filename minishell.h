@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/05 17:54:58 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/06 11:46:42 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,6 @@ char		*get_absolute_path(void);
 		//	FT_CMD.C
 
 int			ft_cmd(char ***newargv, char **paths, t_control *list, int n_pid);
-
-int			*init_ret(void);
 
 int			**init_fds(int n_cmd);
 
@@ -328,9 +326,9 @@ void		free_elms(t_element *first);
 int			*ft_manage_fds(char ***newargv, char **paths,
 				int **fds, int forked);
 
-int			check_ret_stdin(int *ret);
+void		free_manage_fds(int *ret, char ***newargv);
 
-int			check_ret_stdout(int *ret);
+int			*init_ret(void);
 
 		//	FT_CHILD.C
 
