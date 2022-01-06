@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:40:53 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/26 18:04:59 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/06 16:47:27 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char	*ft_remove_simple_quotes(char *str)
 			nb++;
 	}
 	str2 = malloc(sizeof(char) * (ft_strlen(str) - nb + 1));
+	if (!str2)
+		return (NULL);
 	i = -1;
 	j = 0;
 	while (str[++i])

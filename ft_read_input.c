@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:02:04 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/06 12:04:46 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/06 16:39:38 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ char	**init_files(char **newargv)
 		c++;
 	}
 	files = malloc(sizeof(char *) * (n_files + 1));
+	if (!files)
+		return (0);
 	*files = 0;
 	return (files);
 }

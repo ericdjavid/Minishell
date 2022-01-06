@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 09:24:21 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/28 14:46:15 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/06 16:50:08 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*get_new_var_str(char *str)
 	while (str[i] != '\0' && str[i] != '=')
 		i++;
 	str2 = malloc(sizeof(char) * (i + 1));
+	if (!str2)
+		return (NULL);
 	i = -1;
 	while (str[++i] != '\0' && str[i] != '=')
 		str2[i] = str[i];

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 17:26:43 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/05 17:28:13 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/06 16:49:21 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ char	*get_new_line_cmd(char *str, int i, int size, char *str_good)
 
 	neo_line_cmd = malloc(sizeof(char) * ((int)ft_strlen(str_good)
 				+ (int)ft_strlen(str) - size + 1));
+	if (!neo_line_cmd)
+		return (NULL);
 	j = -1;
 	while (str[++j] && j < i)
 		neo_line_cmd[j] = str[j];
@@ -46,11 +48,7 @@ char	*get_new_line_cmd(char *str, int i, int size, char *str_good)
 	}
 	k = (i + size);
 	while (str[k])
-	{
-		neo_line_cmd[j] = str[k];
-		j++;
-		k++;
-	}
+		neo_line_cmd[j++] = str[k++];
 	free(str);
 	neo_line_cmd[j] = '\0';
 	return (neo_line_cmd);

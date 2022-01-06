@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 17:03:52 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/05 17:01:42 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/06 16:40:29 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char	*init_cmd_path(char *cmd, char **paths)
 	while (paths && paths[n_path])
 	{
 		cmd_path = malloc(ft_strlen(paths[n_path]) + cmd_len + 1);
+		if (!cmd_path)
+			return (0);
 		ft_strcpy(cmd_path, paths[n_path]);
 		ft_strcat(cmd_path, cmd);
 		if (!access(cmd_path, F_OK))
