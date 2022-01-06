@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 14:10:39 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/06 12:28:37 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/06 13:26:18 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,26 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 
 int	ft_deal_bad_sq_dq(char *str)
 {
-	int	c;
+	int		c;
+	char	k;
 
 	c = 0;
-	(void)str;
-	return (c);
+	while (str[c])
+	{
+		if (str[c] == '"' || str[c] == '\'')
+		{
+			k = str[c++];
+			while (str[c] && str[c] != k)
+				c++;
+			if (str[c])
+				c++;
+			else
+				return (0);
+		}
+		else
+			c++;
+	}
+	return (1);
 }
 
 char	*get_new_line(char *cmd_line, t_control *list, int *i)
@@ -58,19 +73,19 @@ char	*get_new_line(char *cmd_line, t_control *list, int *i)
 
 	count = 0;
 	is_mal = 0;
-	(void)i;
 	new_line = ft_strdup(cmd_line);
 	if (!new_line)
 		return (0);
 	new_line = ft_is_dollar2(new_line, list, is_mal, count);
 	if (!new_line)
 		return (0);
-/*	if (ft_deal_bad_sq_dq(new_line) == -1)
+	if (!ft_deal_bad_sq_dq(new_line))
 	{
+		free(new_line);
 		*i = 1;
 		ft_printf_fd(2, "minishell: error parsing <quotes>\n");
 		return (0);
-	}*/
+	}
 	return (new_line);
 }
 
