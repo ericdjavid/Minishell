@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:58:06 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/06 12:08:28 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/06 12:16:04 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	*ft_redirection(char ***newargv, int *ret, int forked)
 
 	c = 0;
 	box = malloc(sizeof(int) * 4);
-	box = 0;
 	if (!box)
 		return (ret);
 	while (c < 4)
