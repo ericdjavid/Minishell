@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 17:39:49 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/06 13:12:38 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/06 17:59:49 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,17 @@ void	ft_modify_pwd(t_control *list, char *path, char *pwd, int type)
 
 int	ft_cd(char **newargv, t_control *list)
 {
-	int			ret;
-	static char	*old_path = NULL;
+	int		ret;
+	char	*old_path;
 
 	ret = 0;
+	// assiner a old_path la valeur de OLDPWD
 	if (!old_path)
+	{
 		old_path = get_absolute_path();
+		if (!old_path)
+			return (-1);
+	}
 	if (ft_matlen(newargv) > 2)
 	{
 		ft_printf_fd(2, "minishell: cd: too many arguments\n");
@@ -48,6 +53,8 @@ int	ft_cd(char **newargv, t_control *list)
 	}
 	else if (ft_matlen(newargv) > 1 && newargv[1][0] == '-' && !newargv[1][1])
 	{
+		if (!old_path)
+		
 		ret = chdir(old_path);
 		ft_printf_fd(1, "%s\n", old_path);
 	}
@@ -69,13 +76,14 @@ char	*ft_cd_2(char **newargv, int ret, char *old_path)
 	if (!old_path)
 		return (0);
 	if (ft_matlen(newargv) == 1)
+	{
+		// aller chercher $HOME, sinon msg erreur
 		ret = chdir(getenv("HOME"));
-	else if (newargv[1][0] != '~')
-		ret = chdir(newargv[1]);
+	}
 	else
 	{
-		chdir(getenv("HOME"));
 		newargv[1] += 2;
+		// 
 		ret = chdir(newargv[1]);
 		newargv[1] -= 2;
 	}
