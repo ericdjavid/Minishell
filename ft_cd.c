@@ -6,13 +6,34 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 17:39:49 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/05 17:15:05 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/06 13:12:38 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_cd(char **newargv)
+void	ft_modify_pwd(t_control *list, char *path, char *pwd, int type)
+{
+	char	*str;
+	char	*joined;
+
+	str = ft_strdup(pwd);
+	if (type == 1)
+		joined = ft_strjoin2("OLDPWD=", path);
+	else
+		joined = ft_strjoin2("PWD=", path);
+	if (elem_in_list(list->first_export, str))
+	{
+		mdval(elem_in_list(list->first_export, str), joined, DEAL_EXPORT);
+		mdval(elem_in_list(list->first_env, str), joined, DEAL_ENV);
+	}
+	if (type != 1)
+		free(path);
+	free(joined);
+	free(str);
+}
+
+int	ft_cd(char **newargv, t_control *list)
 {
 	int			ret;
 	static char	*old_path = NULL;
@@ -28,8 +49,7 @@ int	ft_cd(char **newargv)
 	else if (ft_matlen(newargv) > 1 && newargv[1][0] == '-' && !newargv[1][1])
 	{
 		ret = chdir(old_path);
-		write(1, old_path, ft_strlen(old_path));
-		write(1, "\n", 1);
+		ft_printf_fd(1, "%s\n", old_path);
 	}
 	else
 	{
@@ -37,6 +57,8 @@ int	ft_cd(char **newargv)
 		if (!old_path)
 			return (-1);
 	}
+	ft_modify_pwd(list, old_path, "OLDPWD", 1);
+	ft_modify_pwd(list, get_absolute_path(), "PWD", 666);
 	return (1);
 }
 
@@ -57,7 +79,6 @@ char	*ft_cd_2(char **newargv, int ret, char *old_path)
 		ret = chdir(newargv[1]);
 		newargv[1] -= 2;
 	}
-	// TODO: changer la valeur de la variable PWD et OLDPWD de env
 	if (ret)
 	{
 		ft_printf_fd(2,

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 14:10:39 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/06 12:24:29 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/06 12:28:37 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	ft_deal_bad_sq_dq(char *str)
 	c = 0;
 	(void)str;
 	return (c);
-	
 }
 
 char	*get_new_line(char *cmd_line, t_control *list, int *i)

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:18:03 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/05 17:32:19 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/06 12:59:33 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 char	*ft_strdup(const char *s);
 
 char	*ft_strjoin(char *s1, char *s2);
+
+char	*ft_strjoin2(char *s1, char *s2);
 
 void	free_matc(char **matc);
 

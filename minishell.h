@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/06 12:14:01 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/06 12:47:08 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int			ft_pwd(char **newargv, int fd);
 
 		//	FT_CD.C
 
-int			ft_cd(char **newargv);
+int			ft_cd(char **newargv, t_control *list);
 
 char		*ft_cd_2(char **newargv, int ret, char *old_path);
 
@@ -241,6 +241,8 @@ int			ft_get_new_var(t_control *list, char **newargv);
 
 int			get_tmp(char *retreat, t_element *tmp,
 				t_control *list, char *var_name);
+
+void		mdval(t_element *elem, char *str, int type);
 
 		// FT_ENV.C
 
