@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/06 12:47:08 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/06 17:21:12 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int			exec_cmd(char *cmd_line, char **paths, t_control *list);
 char		*get_new_line(char *cmd_line, t_control *list, int *i);
 
 char		*init_cmd_path(char *cmd, char **paths);
+
+char		*init_cmd_with_path(char *cmd, char *path, size_t cmd_len);
 
 void		free_newargv(char ***matc);
 

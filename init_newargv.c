@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:56:08 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/06 16:51:20 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/06 17:14:51 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	***init_newargv(char *cmd_line, char **paths)
 	int		c[3];
 	char	**spl;
 
+	(void)paths;
 	c[1] = 0;
 	newargv = init_param_in(&spl, cmd_line, &c[1], &c[0]);
 	if (!newargv)
@@ -31,9 +32,6 @@ char	***init_newargv(char *cmd_line, char **paths)
 		newargv[c[1]][0] = NULL;
 		while (spl[c[0]] && ft_strncmp(spl[c[0]], "|", ft_strlen(spl[c[0]])))
 			newargv[c[1]][c[2]++] = spl[c[0]++];
-		newargv[c[1]][0] = init_cmd_path(newargv[c[1]][0], paths);
-		if (!newargv[c[1]][0])
-			return (free_init_new(newargv, spl));
 		if (spl[c[0]])
 			free(spl[c[0]++]);
 		newargv[c[1]++][c[2]] = 0;
