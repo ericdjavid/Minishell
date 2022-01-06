@@ -17,8 +17,8 @@ ft_read_input.c ft_export.c ft_free.c ft_redirection.c ft_redirection_utils.c \
 ft_linked_lists.c ft_manage_fds.c ft_child.c ft_exit.c ft_linked_lists2.c \
  ft_ascii_order.c tools5.c ft_export3.c ft_export4.c ft_export5.c  exec_cmd_utils.c\
 ft_unset.c tools2.c ft_clear.c ft_close_fds.c tools3.c tools4.c  ft_export2.c\
-make_configs_rdin.c get_newargv_rdin.c returns_rdin.c init_newargv_utils.c \
-ft_redirection_utils2.c
+make_configs_rdin.c get_newargv_rdin.c returns_rdin.c init_newargv_utils.c tools6.c\
+ft_ascii_order2.c ft_redirection_utils2.c\
 
 SRCS_P	= convert_hexa.c ft_printf_fd.c print_d.c print_s.c print_x.c tools.c
 

@@ -6,12 +6,11 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 10:07:16 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/05 17:30:53 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/06 12:12:19 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "../minishell.h"
 
 char	**ft_split(char *str, char *charset)
 {
