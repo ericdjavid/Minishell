@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 16:23:30 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/05 15:06:31 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/06 16:15:57 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	ft_process_str(char **arr_str, t_control *list, char *new_str)
 	int	i;
 
 	i = 0;
+	if (arr_str[i] == NULL)
+		return ;
 	while (arr_str[++i])
 	{
 		new_str = ft_get_dollar_var(arr_str[i], list);
@@ -64,7 +66,7 @@ char	*ft_deal_dollar(char *str, t_control *list)
 	ft_process_str(arr_str, list, new_str);
 	i = 0;
 	ret = NULL;
-	while (arr_str[++i])
+	while (arr_str[i] && arr_str[++i])
 		ret = ft_strjoin(ret, arr_str[i]);
 	free_matc(arr_str);
 	ret2 = ft_remove_quotes(ret);
