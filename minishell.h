@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/06 12:47:08 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/06 16:57:31 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,8 @@ t_element	*ft_is_in_list(t_control *list, char *str);
 t_element	*check_in_list(t_element *first, char *str);
 
 		//	TOOLS6.C
+
+int			count_amout(char *str, char c);
 
 char		*ft_is_dollar3(t_control *control, char *new_str, int *is_mal);
 
