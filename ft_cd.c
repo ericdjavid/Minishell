@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 17:39:49 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/06 17:59:49 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/06 22:31:56 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,38 @@ void	ft_modify_pwd(t_control *list, char *path, char *pwd, int type)
 	free(str);
 }
 
+char	*get_var_value(char *var_val)
+{
+	char	*str;
+	int		i;
+	int		j;
+
+	i = -1;
+	j = -1;
+	while (var_val[++i])
+	{
+		if (var_val[i] == '=')
+			break ;
+	}
+	str = malloc(sizeof(char) * (ft_strlen(var_val) - i + 1));
+	if (!str)
+		return (NULL);
+	while (var_val[++i])
+	{
+		str[++j] = var_val[i];
+	}
+	str[++j] = '\0';
+	return (str);
+}
+
 int	ft_cd(char **newargv, t_control *list)
 {
 	int		ret;
 	char	*old_path;
 
 	ret = 0;
-	// assiner a old_path la valeur de OLDPWD
+	old_path = get_var_value(elem_in_list(list->first_env, "OLDPWD")->str);
+	printf(RED"old path is %s\n"END, old_path);
 	if (!old_path)
 	{
 		old_path = get_absolute_path();
@@ -49,18 +74,18 @@ int	ft_cd(char **newargv, t_control *list)
 	if (ft_matlen(newargv) > 2)
 	{
 		ft_printf_fd(2, "minishell: cd: too many arguments\n");
+		free(old_path);
 		return (1);
 	}
 	else if (ft_matlen(newargv) > 1 && newargv[1][0] == '-' && !newargv[1][1])
 	{
-		if (!old_path)
-		
+		// if (!old_path)
 		ret = chdir(old_path);
 		ft_printf_fd(1, "%s\n", old_path);
 	}
 	else
 	{
-		old_path = ft_cd_2(newargv, ret, old_path);
+		old_path = ft_cd_2(newargv, ret, old_path, list);
 		if (!old_path)
 			return (-1);
 	}
@@ -69,21 +94,26 @@ int	ft_cd(char **newargv, t_control *list)
 	return (1);
 }
 
-char	*ft_cd_2(char **newargv, int ret, char *old_path)
+char	*ft_cd_2(char **newargv, int ret, char *old_path, t_control *list)
 {
+	char	*home;
+
 	free(old_path);
 	old_path = get_absolute_path();
 	if (!old_path)
 		return (0);
 	if (ft_matlen(newargv) == 1)
 	{
-		// aller chercher $HOME, sinon msg erreur
-		ret = chdir(getenv("HOME"));
+		home = get_var_value(elem_in_list(list->first_env, "HOME")->str);
+		printf("home is %s\n", home);
+		ret = chdir(getenv(home));
+		// ret = chdir(getenv("HOME"));
+		free(home);
 	}
 	else
 	{
 		newargv[1] += 2;
-		// 
+		//
 		ret = chdir(newargv[1]);
 		newargv[1] -= 2;
 	}
