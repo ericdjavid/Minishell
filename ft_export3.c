@@ -99,6 +99,7 @@ int	ft_assign(t_element *tmp, t_control *list, char *retreat, int i)
 int	process_retreat(char *newargv, char *retreat)
 {
 	char	*var_name;
+
 	if (!(ft_check_position('$', '=', newargv)) || (newargv[0] == '='
 			|| ((retreat[0] <= '9') && (retreat[0] >= '0'))))
 	{

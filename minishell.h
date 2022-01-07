@@ -129,7 +129,23 @@ int			ft_cd(char **newargv, t_control *list);
 
 int			ft_cd_2(char **newargv, t_control *list);
 
+		//	FT_CD2.C
+
+void		modify_both(t_control *list, char *old_path);
+
+void		ft_modify_pwd(t_control *list, char *path, char *pwd, int type);
+
+char		*get_var_value(char *var_val);
+
 char		*get_absolute_path(void);
+
+void		deal_old_path(int *ret, char *old_path);
+
+char		*alloc_values(char *path, t_control *list, int type);
+
+		//	FT_CD3.C
+
+int	ft_cd3(char **newargv, char *old_path, int *ret, t_control *list);
 
 		//	FT_CMD.C
 
