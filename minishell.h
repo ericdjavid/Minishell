@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/07 15:19:10 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/07 15:47:15 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int			ft_pwd(char **newargv, int fd);
 
 int			ft_cd(char **newargv, t_control *list);
 
-void		ft_cd_2(char **newargv, t_control *list);
+void		ft_cd_2(char **newargv, t_control *list, int *ret);
 
 char		*get_absolute_path(void);
 

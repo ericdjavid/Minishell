@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 17:39:49 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/07 15:15:44 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/07 16:00:17 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,18 @@ int	ft_cd(char **newargv, t_control *list)
 {
 	char		*old_path;
 	t_element	*elm;
+	int			ret;
+	char		*pwd;
 
 	elm = elem_in_list(list->first_env, "OLDPWD");
 	if (!elm)
 		return (0);
 	old_path = get_var_value(elm->str);
-	printf(RED"old path is %s\n"END, old_path);
+	elm = elem_in_list(list->first_env, "PWD");
+	if (!elm)
+		pwd = get_absolute_path();
+	else
+		pwd = get_var_value(elm->str);
 	if (!old_path)
 	{
 		old_path = get_absolute_path();
@@ -83,28 +89,38 @@ int	ft_cd(char **newargv, t_control *list)
 	}
 	else if (ft_matlen(newargv) > 1 && newargv[1][0] == '-' && !newargv[1][1])
 	{
-		// if (!old_path)
-		//ret = chdir(old_path);
-		ft_printf_fd(1, "%s\n", old_path);
+		ret = chdir(old_path);
+		if (!ret)
+			ft_printf_fd(1, "%s\n", old_path);
+		else
+			ft_printf_fd(2,
+				"minishell: cd: %s: No such file or directory\n",
+				old_path);
 	}
 	else
 	{
-		ft_cd_2(newargv, list);
+		ft_cd_2(newargv, list, &ret);
 	}
-	ft_modify_pwd(list, old_path, "OLDPWD", 1);
-	ft_modify_pwd(list, get_absolute_path(), "PWD", 666);
+	if (!ret)
+	{
+		ft_modify_pwd(list, old_path, "OLDPWD", 1);
+		ft_modify_pwd(list, get_absolute_path(), "PWD", 666);
+	}
 	free(old_path);
+	free(pwd);
 	return (1);
 }
 
-void	ft_cd_2(char **newargv, t_control *list)
+void	ft_cd_2(char **newargv, t_control *list, int *ret)
 {
 	char		*home;
-	int		ret;
 	t_element		*elm;
+	int		config;
 
+	home = NULL;
 	if (ft_matlen(newargv) == 1)
 	{
+		config = 1;
 		elm = elem_in_list(list->first_env, "HOME");
 		if (!elm)
 		{
@@ -112,24 +128,27 @@ void	ft_cd_2(char **newargv, t_control *list)
 			return ;
 		}
 		home = get_var_value(elm->str);
-		printf("home is %s\n", home);
-		ret = chdir(home);
-		free(home);
+		*ret = chdir(home);
 	}
 	else
 	{
-		newargv[1] += 2;
-		//
-		ret = chdir(newargv[1]);
-		newargv[1] -= 2;
+		config = 2;
+		*ret = chdir(newargv[1]);
 	}
-	if (ret)
+	if (*ret)
 	{
-		ft_printf_fd(2,
-			"minishell: cd: %s: No such file or directory\n",
-			newargv[1]);
+		if (config == 1)
+			ft_printf_fd(2,
+				"minishell: cd: %s: No such file or directory\n",
+				home);
+		else
+			ft_printf_fd(2,
+				"minishell: cd: %s: No such file or directory\n",
+				newargv[1]);
 		g_status = 1;
 	}
+	if (home)
+		free(home);
 }
 
 char	*get_absolute_path(void)
