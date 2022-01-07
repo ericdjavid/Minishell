@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 17:39:49 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/06 22:31:56 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/07 15:15:44 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	*get_var_value(char *var_val)
 
 	i = -1;
 	j = -1;
+	if (!var_val)
+		return (NULL);
 	while (var_val[++i])
 	{
 		if (var_val[i] == '=')
@@ -59,11 +61,13 @@ char	*get_var_value(char *var_val)
 
 int	ft_cd(char **newargv, t_control *list)
 {
-	int		ret;
-	char	*old_path;
+	char		*old_path;
+	t_element	*elm;
 
-	ret = 0;
-	old_path = get_var_value(elem_in_list(list->first_env, "OLDPWD")->str);
+	elm = elem_in_list(list->first_env, "OLDPWD");
+	if (!elm)
+		return (0);
+	old_path = get_var_value(elm->str);
 	printf(RED"old path is %s\n"END, old_path);
 	if (!old_path)
 	{
@@ -80,34 +84,36 @@ int	ft_cd(char **newargv, t_control *list)
 	else if (ft_matlen(newargv) > 1 && newargv[1][0] == '-' && !newargv[1][1])
 	{
 		// if (!old_path)
-		ret = chdir(old_path);
+		//ret = chdir(old_path);
 		ft_printf_fd(1, "%s\n", old_path);
 	}
 	else
 	{
-		old_path = ft_cd_2(newargv, ret, old_path, list);
-		if (!old_path)
-			return (-1);
+		ft_cd_2(newargv, list);
 	}
 	ft_modify_pwd(list, old_path, "OLDPWD", 1);
 	ft_modify_pwd(list, get_absolute_path(), "PWD", 666);
+	free(old_path);
 	return (1);
 }
 
-char	*ft_cd_2(char **newargv, int ret, char *old_path, t_control *list)
+void	ft_cd_2(char **newargv, t_control *list)
 {
-	char	*home;
+	char		*home;
+	int		ret;
+	t_element		*elm;
 
-	free(old_path);
-	old_path = get_absolute_path();
-	if (!old_path)
-		return (0);
 	if (ft_matlen(newargv) == 1)
 	{
-		home = get_var_value(elem_in_list(list->first_env, "HOME")->str);
+		elm = elem_in_list(list->first_env, "HOME");
+		if (!elm)
+		{
+			ft_printf_fd(2, "minishell: cd: HOME not set\n");
+			return ;
+		}
+		home = get_var_value(elm->str);
 		printf("home is %s\n", home);
-		ret = chdir(getenv(home));
-		// ret = chdir(getenv("HOME"));
+		ret = chdir(home);
 		free(home);
 	}
 	else
@@ -124,7 +130,6 @@ char	*ft_cd_2(char **newargv, int ret, char *old_path, t_control *list)
 			newargv[1]);
 		g_status = 1;
 	}
-	return (old_path);
 }
 
 char	*get_absolute_path(void)
