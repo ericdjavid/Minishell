@@ -57,17 +57,22 @@ int	ft_export(t_control *list, char **newargv)
 void	ft_remove_first_env(t_control *control)
 {
 	t_element	*tmp;
+	int			i;
 
+	i = 0;
+	if (control->first_env_var->next)
+		i = 1;
 	if (control->first_env_var == NULL)
 		return ;
 	tmp = control->first_env_var;
 	if (control->first_env_var->next)
-		control->first_env_var = control->first_env_var->next;
+		control->first_env_var = tmp->next;
 	free(tmp->var_name);
 	free(tmp->str);
 	tmp->var_name = NULL;
 	tmp->str = NULL;
-	free(tmp);
+	if (i)
+		free(tmp);
 }
 
 /* liste toutes les variables d’environnement dans un ordre random */
