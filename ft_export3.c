@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 16:23:30 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/06 16:15:57 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/07 15:19:50 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,9 @@ int	ft_assign(t_element *tmp, t_control *list, char *retreat, int i)
 }
 
 /* check if there are bad entries */
-int	process_retreat(char *newargv, char *retreat, t_control *list)
+int	process_retreat(char *newargv, char *retreat)
 {
 	char	*var_name;
-
 	if (!(ft_check_position('$', '=', newargv)) || (newargv[0] == '='
 			|| ((retreat[0] <= '9') && (retreat[0] >= '0'))))
 	{
@@ -107,12 +106,6 @@ int	process_retreat(char *newargv, char *retreat, t_control *list)
 		return (FAILURE);
 	}
 	var_name = add_var_name(retreat);
-	if (newargv[0] <= 'Z' && newargv[0] >= 'A'
-		&& (elem_in_list(list->first_export, var_name) == NULL))
-	{
-		free(var_name);
-		return (FAILURE);
-	}
 	free(var_name);
 	return (SUCCESS);
 }

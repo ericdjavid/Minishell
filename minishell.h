@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/07 14:56:03 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/07 15:19:10 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,7 @@ int			get_f(t_control *list, char *var_name, char *retreat);
 
 		// EXPORT5.C
 
-int			process_retreat(char *newargv, char *retreat, t_control *list);
+int			process_retreat(char *newargv, char *retreat);
 
 int			ft_get_new_var(t_control *list, char **newargv);
 
