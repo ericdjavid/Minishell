@@ -45,7 +45,9 @@ t_element	*ft_init(void)
 
 void	ft_init_list2(t_control *list, char **envp)
 {
-	int	i;
+	int			i;
+	t_element	*tmp;
+	char		*val;
 
 	i = -1;
 	while (envp[++i])
@@ -58,6 +60,10 @@ void	ft_init_list2(t_control *list, char **envp)
 	add_index(list->first_export);
 	while (check_order(list) == FALSE)
 		order_ascii(list);
+	tmp = elem_in_list(list->first_env, "PWD");
+	val = get_var_value(tmp->str);
+	ft_modify_pwd(list, val, "OLDPWD", 1);
+	free(val);
 }
 
 int	ft_init_list(t_control *list, char **envp)
