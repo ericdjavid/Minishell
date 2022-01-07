@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 16:26:57 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/07 16:27:13 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/07 17:27:13 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*alloc_values(char *path, t_control *list, int type)
 void	deal_old_path(int *ret, char *old_path)
 {
 	*ret = chdir(old_path);
-	if (!ret)
+	if (!*ret)
 		ft_printf_fd(1, "%s\n", old_path);
 	else
 		ft_printf_fd(2,

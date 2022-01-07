@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/07 16:15:10 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/07 17:14:27 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ char		*alloc_values(char *path, t_control *list, int type);
 
 		//	FT_CD3.C
 
-int	ft_cd3(char **newargv, char *old_path, int *ret, t_control *list);
+int			ft_cd3(char **newargv, char *old_path, int *ret, t_control *list);
 
 		//	FT_CMD.C
 

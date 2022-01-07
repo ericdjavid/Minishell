@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 16:24:56 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/07 16:59:18 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/07 17:27:29 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	error_with_file_or_directory(int config, char *home, char *newargv)
 	g_status = 1;
 }
 
-int	ft_cd_alone(t_control *list, char *home, int *ret)
+int	ft_cd_alone(t_control *list, char **home, int *ret)
 {
 	t_element		*elm;
 
@@ -59,10 +59,10 @@ int	ft_cd_alone(t_control *list, char *home, int *ret)
 		ft_printf_fd(2, "minishell: cd: HOME not set\n");
 		return (0);
 	}
-	home = get_var_value(elm->str);
-	if (!home)
+	*home = get_var_value(elm->str);
+	if (!*home)
 		*ret = 1;
-	*ret = chdir(home);
+	*ret = chdir(*home);
 	return (1);
 }
 
@@ -75,7 +75,7 @@ int	ft_cd_2(char **newargv, t_control *list)
 	home = NULL;
 	if (ft_matlen(newargv) == 1)
 	{
-		config = ft_cd_alone(list, home, &ret);
+		config = ft_cd_alone(list, &home, &ret);
 		if (!config)
 			return (1);
 	}

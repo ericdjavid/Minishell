@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 16:24:56 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/07 16:59:18 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/07 17:26:50 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_cd3(char **newargv, char *old_path, int *ret, t_control *list)
 		deal_old_path(ret, old_path);
 	else
 		*ret = ft_cd_2(newargv, list);
-	if (!ret)
+	if (!*ret)
 		modify_both(list, old_path);
 	else
 	{
