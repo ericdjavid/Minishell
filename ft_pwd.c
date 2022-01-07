@@ -6,21 +6,18 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 17:32:46 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/07 15:48:47 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/07 18:53:17 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_pwd(char **newargv, int fd)
+int	ft_pwd(int fd)
 {
 	char	buf[1024];
 	char	*ret;
 
-	if (ft_matlen(newargv) != 1)
-		return (0);
-	else
-		ret = getcwd(buf, 1024);
+	ret = getcwd(buf, 1024);
 	if (!ret)
 	{
 		write(2, "pwd: error retrieving current directory: getcwd: can", 52);

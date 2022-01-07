@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 15:14:53 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/06 16:37:42 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/07 18:37:51 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ t_element	*ft_init(void)
 void	ft_init_list2(t_control *list, char **envp)
 {
 	int			i;
-	t_element	*tmp;
-	char		*val;
 
 	i = -1;
 	while (envp[++i])
@@ -60,10 +58,6 @@ void	ft_init_list2(t_control *list, char **envp)
 	add_index(list->first_export);
 	while (check_order(list) == FALSE)
 		order_ascii(list);
-	tmp = elem_in_list(list->first_env, "PWD");
-	val = get_var_value(tmp->str);
-	ft_modify_pwd(list, val, "OLDPWD", 1);
-	free(val);
 }
 
 int	ft_init_list(t_control *list, char **envp)

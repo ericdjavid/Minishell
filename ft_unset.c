@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 14:03:18 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/26 17:55:18 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/07 19:38:20 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void	ft_unset_env(t_control *control, char *newargv)
 	}
 }
 
-//if = in uset word, print "not a valid identifier"
 int	ft_unset(t_control *control, char **newargv)
 {
 	t_element	*tmp;

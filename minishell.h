@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/07 17:14:27 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/07 19:53:27 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int			check_echo_arg(char *newargv);
 
 		//	FT_PWD.C
 
-int			ft_pwd(char **newargv, int fd);
+int			ft_pwd(int fd);
 
 		//	FT_CD.C
 
@@ -131,9 +131,9 @@ int			ft_cd_2(char **newargv, t_control *list);
 
 		//	FT_CD2.C
 
-void		modify_both(t_control *list, char *old_path);
+int			modify_both(t_control *list, char *old_path, char *pwd, int ret);
 
-void		ft_modify_pwd(t_control *list, char *path, char *pwd, int type);
+int			ft_modify_pwd(t_control *list, char *path, char *pwd, int type);
 
 char		*get_var_value(char *var_val);
 
@@ -146,6 +146,8 @@ char		*alloc_values(char *path, t_control *list, int type);
 		//	FT_CD3.C
 
 int			ft_cd3(char **newargv, char *old_path, int *ret, t_control *list);
+
+int			free_cur(char *cur);
 
 		//	FT_CMD.C
 
@@ -306,7 +308,7 @@ int			dup_readin(char ***files, char **heredoc, int last);
 
 int			dup_readin_2(char **heredoc, char ***files, int last, int fdin);
 
-int			exit_readin(char **files, char *heredoc);
+int			exit_readin(char **files, char *heredoc, int ret);
 
 		//	FT_REDIRECTION.C
 

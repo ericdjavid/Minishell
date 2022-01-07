@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 16:24:56 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/07 17:27:29 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/07 19:42:26 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,16 @@
 
 int	ft_cd(char **newargv, t_control *list)
 {
-	char		*old_path;
-	int			ret;
-	char		*pwd;
-	int			ret2;
+	char	*old_path;
+	int		ret;
+	int		ret2;
 
 	old_path = alloc_values("OLDPWD", list, 0);
 	if (!old_path)
 		return (-1);
-	pwd = alloc_values("PWD", list, 1);
 	ret2 = ft_cd3(newargv, old_path, &ret, list);
-	if (ret2 == 3)
-	{
-		free(pwd);
-		return (3);
-	}
-	else if (ret2 == 1)
-		return (1);
 	free(old_path);
-	free(pwd);
-	return (1);
+	return (ret2);
 }
 
 void	error_with_file_or_directory(int config, char *home, char *newargv)

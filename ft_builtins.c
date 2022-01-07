@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:42:20 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/06 12:46:27 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/07 18:53:27 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_builtins(char **newargv, t_control *list, int fd)
 	if (!ft_strncmp(newargv[0], "echo", len_0))
 		return (ft_echo(newargv, fd));
 	else if (!ft_strncmp(newargv[0], "pwd", len_0))
-		return (ft_pwd(newargv, fd));
+		return (ft_pwd(fd));
 	else if (!ft_strncmp(newargv[0], "cd", len_0))
 		return (ft_cd(newargv, list));
 	else if (!ft_strncmp(newargv[0], "export", len_0))

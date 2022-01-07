@@ -6,16 +6,19 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 20:59:11 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/06 17:16:39 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/07 19:53:56 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	*exit_manage_free(int *ret)
+int	*exit_manage_free(int *ret, int config)
 {
 	free(ret);
-	g_status = 42;
+	if (config)
+		g_status = 42;
+	else
+		g_status = 2;
 	return (0);
 }
 
@@ -28,12 +31,14 @@ int	*ft_manage_fds(char ***newargv, char **paths, int **fds, int forked)
 		return (0);
 	ft_close_fds(fds, fds[0][0]);
 	ret[0] = ft_read_input(newargv, paths);
+	if (ret[0] == -1)
+		return (exit_manage_free(ret, 0));
 	ret = ft_redirection(newargv, ret, forked);
 	if (!ret[0] || !ret[1])
-		return (exit_manage_free(ret));
+		return (exit_manage_free(ret, 1));
 	(*newargv)[0] = init_cmd_path((*newargv)[0], paths);
 	if (!(*newargv)[0])
-		return (exit_manage_free(ret));
+		return (exit_manage_free(ret, 1));
 	if (ret[0] && ((ft_matlen((*newargv)) > 1) || *(newargv - 1))
 		&& fds[0][0] > 1)
 	{
