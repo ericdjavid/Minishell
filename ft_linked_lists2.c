@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 15:14:53 by edjavid           #+#    #+#             */
-/*   Updated: 2021/12/26 16:56:31 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/07 18:37:51 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_element	*ft_init(void)
 
 void	ft_init_list2(t_control *list, char **envp)
 {
-	int	i;
+	int			i;
 
 	i = -1;
 	while (envp[++i])

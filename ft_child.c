@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:44:16 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/28 15:05:11 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/06 11:48:25 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,35 @@ char	**ft_get_envs_var(t_control *list)
 	return (neo_env);
 }
 
+int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
+{
+	int		*ret;
+	char	**new_env;
+
+	new_env = ft_get_envs_var(list);
+	signal(SIGQUIT, SIG_DFL);
+	ret = ft_manage_fds(newargv, paths, fds, 1);
+	if (!ret)
+		exit(g_status);
+	else if (ft_builtins(*newargv, list, 1) > -1)
+		;
+	else if (!ft_strchr((*newargv)[0], '/') || access((*newargv)[0], F_OK))
+		is_directory((*newargv)[0]);
+	else if (access((*newargv)[0], X_OK))
+	{
+		ft_printf_fd(2, "minishell: permission non accordée: %s\n",
+			(*newargv)[0]);
+		g_status = 126;
+	}
+	else if (execve((*newargv)[0],
+		(*newargv), new_env) < 0)
+		g_status = 1;
+	if (new_env)
+		free_matc(new_env);
+	free(ret);
+	exit(g_status);
+}
+
 void	is_directory(char *arg)
 {
 	DIR	*fdir;
@@ -97,33 +126,4 @@ void	is_directory(char *arg)
 			(arg));
 	}
 	g_status = 127;
-}
-
-int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
-{
-	int		*ret;
-	char	**new_env;
-
-	new_env = ft_get_envs_var(list);
-	signal(SIGQUIT, SIG_DFL);
-	ret = ft_manage_fds(newargv, paths, fds);
-	if (!ret)
-		exit(g_status);
-	else if (ft_builtins(*newargv, list) > -1)
-		;
-	else if (!ft_strchr((*newargv)[0], '/') || access((*newargv)[0], F_OK))
-		is_directory((*newargv)[0]);
-	else if (access((*newargv)[0], X_OK))
-	{
-		ft_printf_fd(2, "minishell: permission non accordée: %s\n",
-			(*newargv)[0]);
-		g_status = 126;
-	}
-	else if (execve((*newargv)[0],
-		(*newargv), new_env) < 0)
-		g_status = 1;
-	if (new_env)
-		free_matc(new_env);
-	free(ret);
-	exit(g_status);
 }

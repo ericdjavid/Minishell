@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:18:03 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/24 15:00:15 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/06 12:59:33 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ char	*ft_strdup(const char *s);
 
 char	*ft_strjoin(char *s1, char *s2);
 
+char	*ft_strjoin2(char *s1, char *s2);
+
 void	free_matc(char **matc);
 
 size_t	ft_strlen(const char *s);
@@ -35,6 +37,16 @@ void	ft_strcpy(char *dst, const char *str);
 void	ft_strcat(char *dst, const char *str);
 
 char	**ft_split(char *s, char *charset);
+
+char	*get_next_str(char *str, char *charset, int count);
+
+char	*fill_split(char *str, char *charset);
+
+int		get_n_cases(char *str, char *charset);
+
+int		browse_str(char *str, char *charset);
+
+int		browse_classic(char *str, char *charset, char *specs);
 
 int		ft_matlen(char **mat);
 
@@ -59,4 +71,6 @@ int		ft_str_is_num(char *str);
 int		ft_atoi(const char *str);
 
 int		ft_isdigit(int c);
+
+int		ft_strlen2(char *s);
 #endif

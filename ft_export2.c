@@ -12,16 +12,38 @@
 
 #include "minishell.h"
 
-int	ft_add_new_var(t_control *list, int type)
+int	ft_print_stuff(t_element *first, char *str)
+{
+	t_element	*tmp;
+
+	if (!first)
+	{
+		printf("list is empty !\n");
+		return (FAILURE);
+	}
+	tmp = first;
+	printf(YELLOW"---LIST %s---\n", str);
+	while (tmp != NULL)
+	{
+		printf("[%s]\n", tmp->str);
+		if (tmp->next == NULL)
+			break ;
+		tmp = tmp->next;
+	}
+	printf("----------\n" END);
+	return (1);
+}
+
+void	ft_add_new_var(t_control *list, int type)
 {
 	t_element	*tmp;
 
 	tmp = list->first_env_var;
-	if (!tmp)
-		return (FAILURE);
 	while (tmp && tmp->str)
 	{
-		if (elem_in_list(list->first_env, tmp->var_name))
+		if ((elem_in_list(list->first_export, tmp->var_name)
+				&& type == DEAL_EXPORT) || (elem_in_list(list->first_env,
+					tmp->var_name) && type == DEAL_ENV))
 		{
 			if (tmp->next == NULL)
 				break ;
@@ -38,36 +60,44 @@ int	ft_add_new_var(t_control *list, int type)
 		else
 			break ;
 	}
-	return (SUCCESS);
 }
 
 /* Liste toutes les variables d’environnement dans l’ordre ascii.
 sous la forme : declare -x nom=”valeur” ou declare -x nom */
 int	ft_export(t_control *list, char **newargv)
 {
-	(void)newargv;
+	printf("new argv[0] is %s\n", newargv[0]);
+	printf("new argv[1] is %s\n", newargv[1]);
 	if (!ft_strncmp(newargv[0], "export",
 			ft_strlen(newargv[0])) && newargv[1])
 		ft_get_new_var(list, newargv);
 	else
+	{
+		printf(RED"fucking here\n"END);
 		ft_print_export(list->first_export, TRUE);
+	}
 	return (1);
 }
 
 void	ft_remove_first_env(t_control *control)
 {
 	t_element	*tmp;
+	int			i;
 
+	i = 0;
+	if (control->first_env_var->next)
+		i = 1;
 	if (control->first_env_var == NULL)
 		return ;
 	tmp = control->first_env_var;
 	if (control->first_env_var->next)
-		control->first_env_var = control->first_env_var->next;
+		control->first_env_var = tmp->next;
 	free(tmp->var_name);
 	free(tmp->str);
 	tmp->var_name = NULL;
 	tmp->str = NULL;
-	free(tmp);
+	if (i)
+		free(tmp);
 }
 
 /* liste toutes les variables d’environnement dans un ordre random */

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:31:49 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/05 15:21:36 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/07 17:25:57 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,32 +39,21 @@ void	ft_minishell(t_control *list)
 	signal(SIGQUIT, SIG_IGN);
 	env = ft_get_envs_var(list);
 	paths = init_paths(env);
-	cmd_line = prompt_msg();
+	cmd_line = prompt_msg(&ret);
 	if (cmd_line)
 		ret = exec_cmd(cmd_line, paths, list);
-	else
-		ret = 0;
 	while ((ret > 0 && cmd_line) || ret == -2)
 	{
-		if (paths)
-			free_matc(paths);
-		if (env)
-			free_matc(env);
+		free_1(cmd_line, paths, env);
 		env = ft_get_envs_var(list);
 		paths = init_paths(env);
-		free(cmd_line);
-		cmd_line = prompt_msg();
+		cmd_line = prompt_msg(&ret);
 		if (cmd_line)
 			ret = exec_cmd(cmd_line, paths, list);
 	}
-	if (cmd_line)
-		free(cmd_line);
 	if (ret == -1)
-		ft_printf_fd(2, RED "Erreur : Quote orphelin ou malloc qui echoue !\n" END);
-	if (paths)
-		free_matc(paths);
-	if (env)
-		free_matc(env);
+		ft_printf_fd(2, RED "minishell: error with a malloc\n" END);
+	free_1(cmd_line, paths, env);
 }
 
 void	sigint_handler(int sig)
@@ -91,4 +80,14 @@ void	sigint_handler(int sig)
 			ft_printf_fd(1, "\n");
 		g_status = 130;
 	}
+}
+
+void	free_1(char *cmd_line, char **paths, char **env)
+{
+	if (cmd_line)
+		free(cmd_line);
+	if (paths)
+		free_matc(paths);
+	if (env)
+		free_matc(env);
 }

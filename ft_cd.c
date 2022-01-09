@@ -5,67 +5,80 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/17 17:39:49 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/28 14:15:53 by abrun            ###   ########.fr       */
+/*   Created: 2022/01/07 16:24:56 by edjavid           #+#    #+#             */
+/*   Updated: 2022/01/07 19:42:26 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_cd(char **newargv)
+int	ft_cd(char **newargv, t_control *list)
 {
-	int			ret;
-	static char	*old_path = NULL;
+	char	*old_path;
+	int		ret;
+	int		ret2;
 
-	ret = 0;
+	old_path = alloc_values("OLDPWD", list, 0);
 	if (!old_path)
-		old_path = get_absolute_path();
-	if (ft_matlen(newargv) > 2)
-	{
-		ft_printf_fd(2, "minishell: cd: too many arguments\n");
-		return (1);
-	}
-	else if (ft_matlen(newargv) > 1 && newargv[1][0] == '-' && !newargv[1][1])
-	{
-		ret = chdir(old_path);
-		write(1, old_path, ft_strlen(old_path));
-		write(1, "\n", 1);
-	}
-	else
-	{
-		old_path = ft_cd_2(newargv, ret, old_path);
-		if (!old_path)
-			return (-1);
-	}
-	return (1);
+		return (-1);
+	ret2 = ft_cd3(newargv, old_path, &ret, list);
+	free(old_path);
+	return (ret2);
 }
 
-char	*ft_cd_2(char **newargv, int ret, char *old_path)
+void	error_with_file_or_directory(int config, char *home, char *newargv)
 {
-	free(old_path);
-	old_path = get_absolute_path();
-	if (!old_path)
-		return (0);
-	if (ft_matlen(newargv) == 1)
-		ret = chdir(getenv("HOME"));
-	else if (newargv[1][0] != '~')
-		ret = chdir(newargv[1]);
+	if (config == 1)
+		ft_printf_fd(2,
+			"minishell: cd: %s: No such file or directory\n",
+			home);
 	else
-	{
-		chdir(getenv("HOME"));
-		newargv[1] += 2;
-		ret = chdir(newargv[1]);
-		newargv[1] -= 2;
-	}
-	// TODO: changer la valeur de la variable PWD et OLDPWD de env
-	if (ret)
-	{
 		ft_printf_fd(2,
 			"minishell: cd: %s: No such file or directory\n",
 			newargv[1]);
-		g_status = 1;
+	g_status = 1;
+}
+
+int	ft_cd_alone(t_control *list, char **home, int *ret)
+{
+	t_element		*elm;
+
+	elm = elem_in_list(list->first_env, "HOME");
+	if (!elm)
+	{
+		ft_printf_fd(2, "minishell: cd: HOME not set\n");
+		return (0);
 	}
-	return (old_path);
+	*home = get_var_value(elm->str);
+	if (!*home)
+		*ret = 1;
+	*ret = chdir(*home);
+	return (1);
+}
+
+int	ft_cd_2(char **newargv, t_control *list)
+{
+	char	*home;
+	int		config;
+	int		ret;
+
+	home = NULL;
+	if (ft_matlen(newargv) == 1)
+	{
+		config = ft_cd_alone(list, &home, &ret);
+		if (!config)
+			return (1);
+	}
+	else
+	{
+		config = 2;
+		ret = chdir(newargv[1]);
+	}
+	if (ret)
+		error_with_file_or_directory(config, home, newargv[1]);
+	if (home)
+		free(home);
+	return (ret);
 }
 
 char	*get_absolute_path(void)

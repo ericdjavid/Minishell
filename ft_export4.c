@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 18:11:48 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/05 16:20:04 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/06 16:35:56 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,11 @@ int	add_end_list(char *str, t_element *first, int type)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp2 = malloc(sizeof(*tmp));
+	if (!tmp2)
+		return (0);
 	tmp2->str = str_new;
 	tmp2->var_name = add_var_name(str_new);
 	tmp2->next = NULL;
-	tmp2->index = 0;
 	tmp->next = tmp2;
 	return (SUCCESS);
 }

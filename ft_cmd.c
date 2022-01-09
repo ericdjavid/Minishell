@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/28 18:16:59 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/07 17:25:22 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,28 @@ void	wait_cmds_free(int n_pid, pid_t *child_pid, int **fds)
 			g_status = WEXITSTATUS(g_status);
 		if (g_status == 131)
 			write(1, "\n", 1);
+		if (g_status == 42)
+			ft_printf_fd(2, RED "minishell: error with a malloc\n" END);
 		c++;
 	}
 	free_mati(fds, n_pid + 1);
 	free(child_pid);
 }
 
-void	close_fds_in_parent(int **fds)
+void	close_fds_in_parent(int **fds, int config)
 {
-	if (fds[0][0] > 2)
-		ft_close_fd(fds[fds[0][0] - 2][0]);
-	ft_close_fd(fds[fds[0][0]][1]);
+	if (config == 1)
+	{
+		if (fds[0][0] > 2)
+			ft_close_fd(fds[fds[0][0] - 2][0]);
+		ft_close_fd(fds[fds[0][0]][1]);
+	}
+	else
+	{
+		ft_close_fd(fds[fds[0][0]][0]);
+		if (fds[0][0] > 1)
+			ft_close_fd(fds[fds[0][0] - 1][0]);
+	}
 }
 
 int	ft_cmd(char ***newargv, char **paths, t_control *list, int n_pid)
@@ -69,11 +80,8 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list, int n_pid)
 				return (g_status);
 		}
 		else
-			close_fds_in_parent(fds);
+			close_fds_in_parent(fds, 1);
 	}
-	ft_close_fd(fds[fds[0][0]][0]);
-	if (fds[0][0] > 1)
-		ft_close_fd(fds[fds[0][0] - 1][0]);
 	wait_cmds_free(n_pid, child_pid, fds);
 	return (g_status);
 }
@@ -90,8 +98,7 @@ int	**init_fds(int n_cmd)
 	fds[c] = malloc(sizeof(int));
 	if (!fds[c])
 		return (0);
-	fds[c][0] = 0;
-	c++;
+	fds[c++][0] = 0;
 	if (n_cmd == 1)
 		n_cmd++;
 	while (c < n_cmd)

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 16:23:17 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/05 17:32:32 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/07 15:19:24 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int	get_tmp(char *retreat, t_element *tmp, t_control *list, char *var_name)
 	char	*nodq;
 
 	if (!ft_strchr(retreat, '='))
+	{
+		free(var_name);
 		return (1);
+	}
 	free(tmp->str);
 	nodq = ft_strdup(retreat);
 	tmp->str = ft_remove_quotes(nodq);
@@ -35,7 +38,7 @@ int	get_not_valid(char *retreat, t_element *tmp)
 	if ((ft_is_space_before_qual(retreat))
 		|| (is_quest(retreat) == TRUE))
 	{
-		ft_printf_fd(1, "\"%s\" : not a valid identifier\n", retreat);
+		ft_printf_fd(1, RED"Minishell: export: \"%s\" : not a valid identifier\n"END, retreat);
 		free(tmp);
 		return (FAILURE);
 	}
@@ -59,7 +62,10 @@ int	ft_get_new_var2(char *var_name, char *retreat, t_control *list, int i)
 	var_name = add_var_name(retreat);
 	tmp = elem_in_list(list->first_env_var, var_name);
 	if (get_not_valid(retreat, tmp))
+	{
+		free(var_name);
 		return (FAILURE);
+	}
 	if (tmp && get_tmp(retreat, tmp, list, var_name))
 		return (FAILURE);
 	if (tmp == NULL && elem_in_list(list->first_export, var_name))
@@ -94,7 +100,7 @@ int	ft_get_new_var(t_control *list, char **newargv)
 		retreat = ft_deal_dollar(newargv[i], list);
 		if (retreat == NULL)
 			retreat = ft_remove_simple_quotes(newargv[i]);
-		if (process_retreat(newargv[i], retreat, list) == FAILURE)
+		if (process_retreat(newargv[i], retreat) == FAILURE)
 			continue ;
 		if (ft_get_new_var2(var_name, retreat, list, i))
 			continue ;

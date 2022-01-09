@@ -6,59 +6,67 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:58:06 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/28 18:55:44 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/06 12:16:04 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_redirection(char ***newargv)
+int	*ft_redirection(char ***newargv, int *ret, int forked)
 {
 	int	c;
-	int	config;
-	int	*ret;
+	int	*box;
 
 	c = 0;
-	ret = malloc(sizeof(int) * 3);
-	while (c < 3)
-		ret[c++] = 0;
+	box = malloc(sizeof(int) * 4);
+	if (!box)
+		return (ret);
+	while (c < 4)
+		box[c++] = 0;
 	c = 0;
-	while ((*newargv)[c])
+	while ((*newargv) && (*newargv)[c])
 	{
-		config = which_redirection((*newargv)[c]);
-		if (config)
+		if (which_redirection((*newargv)[c]))
 		{
-			newargv = loop_redirection(newargv, config, ret, c);
+			newargv = loop_redirection(newargv, box, c, forked);
 			if (!newargv)
-				return (0);
+			{
+				free(box);
+				return (ret);
+			}
 		}
 		else
 			c++;
 	}
-	return (exit_redirection(ret));
+	return (exit_redirection(box, ret));
 }
 
-char	***loop_redirection(char ***newargv, int config, int *ret, int c)
+char	***loop_redirection(char ***newargv, int *box, int c, int forked)
 {
 	int	fd;
+	int	config;
 
+	config = which_redirection((*newargv)[c]);
 	fd = get_outfd((*newargv)[c + 1], config);
 	if (fd < 0)
-	{
-		free(ret);
 		return (0);
-	}
 	*newargv = get_new_redir(*newargv, c);
 	if (!(*newargv))
 	{
 		ft_close_fd(fd);
-		free(ret);
 		return (0);
 	}
-	if (config == 3 || config == 4)
+	if (is_other_wrout(*newargv))
+	{
+		ft_close_fd(fd);
+		return (newargv);
+	}
+	box = assign_config(box, config, fd);
+	if (forked)
+	{
 		ft_dup2(fd, STDOUT_FILENO);
-	ft_close_fd(fd);
-	ret = assign_config(ret, config);
+		ft_close_fd(fd);
+	}
 	return (newargv);
 }
 
@@ -110,10 +118,10 @@ int	get_outfd_2(char *file, int config)
 	outfd = -1;
 	if (config == 3 && !access(file, W_OK))
 		outfd = open(file, O_TRUNC | O_WRONLY);
-	else if (config == 2 && !access(file, R_OK))
-		outfd = open(file, O_RDONLY);
 	else if (config == 4 && !access(file, W_OK))
 		outfd = open(file, O_WRONLY | O_APPEND);
+	else if (config == 2 && !access(file, R_OK))
+		outfd = open(file, O_RDONLY);
 	else
 	{
 		ft_printf_fd(2, "minishell: %s: Permission denied\n", file);

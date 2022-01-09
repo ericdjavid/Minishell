@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 16:23:30 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/05 15:06:31 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/07 15:19:50 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	ft_process_str(char **arr_str, t_control *list, char *new_str)
 	int	i;
 
 	i = 0;
+	if (arr_str[i] == NULL)
+		return ;
 	while (arr_str[++i])
 	{
 		new_str = ft_get_dollar_var(arr_str[i], list);
@@ -64,11 +66,12 @@ char	*ft_deal_dollar(char *str, t_control *list)
 	ft_process_str(arr_str, list, new_str);
 	i = 0;
 	ret = NULL;
-	while (arr_str[++i])
+	while (arr_str[i] && arr_str[++i])
 		ret = ft_strjoin(ret, arr_str[i]);
 	free_matc(arr_str);
 	ret2 = ft_remove_quotes(ret);
 	free(ret);
+	printf("str returned by deal dollar is %s\n", ret2);
 	return (ret2);
 }
 
@@ -94,23 +97,32 @@ int	ft_assign(t_element *tmp, t_control *list, char *retreat, int i)
 }
 
 /* check if there are bad entries */
-int	process_retreat(char *newargv, char *retreat, t_control *list)
+int	check_str_entry(char *str)
 {
-	char	*var_name;
+	int	i;
 
-	if (!(ft_check_position('$', '=', newargv)) || (newargv[0] == '='
-			|| ((retreat[0] <= '9') && (retreat[0] >= '0'))))
+	i = -1;
+	while (str[++i])
 	{
-		ft_printf_fd(1, "\"%s\" : not a valid identifier\n", retreat);
+		printf("str i is|%c|\n", str[i]);
+		if (str[i] == '_' || str[i] == '=')
+			continue ;
+		if (((str[i] < 'A') || (str[i] > 'Z' && str[i] < 'a') || (str[i] > 'z')))
+			return (FAILURE);
+	}
+	return (SUCCESS);
+}
+
+/* check if there are bad entries */
+int	process_retreat(char *newargv, char *retreat)
+{
+	if (retreat == NULL)
+		return (FAILURE);
+	if ((newargv[0] == '=') || ((retreat[0] <= '9') && (retreat[0] >= '0'))
+		|| (!(check_str_entry(retreat))))
+	{
+		ft_printf_fd(1, "Minishell: export: \'%s\' : not a valid identifier\n", retreat);
 		return (FAILURE);
 	}
-	var_name = add_var_name(retreat);
-	if (newargv[0] <= 'Z' && newargv[0] >= 'A'
-		&& (elem_in_list(list->first_export, var_name) == NULL))
-	{
-		free(var_name);
-		return (FAILURE);
-	}
-	free(var_name);
 	return (SUCCESS);
 }

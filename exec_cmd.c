@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 14:10:39 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/05 19:12:58 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/07 16:24:19 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,13 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 	if (!*cmd_line)
 		return (1);
 	new_line = get_new_line(cmd_line, list, &i);
-	if (i == 1)
-		return (-1);
-	if (!new_line)
+	if (i == 1 || !new_line)
 		return (-2);
 	newargv = init_newargv(new_line, paths);
 	if (!newargv)
 	{
 		free(new_line);
-		return (1);
+		return (-1);
 	}
 	if (ft_3dimlen(newargv + 1) == 1 && is_builtins(newargv[1][0]))
 		ret = exec_builtins(&newargv[1], list, paths);
@@ -43,43 +41,28 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 	return (exit_exec(ret, newargv, new_line));
 }
 
-int	ft_deal_bad(char *str, int count, char c, char d)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == c && no_unpair_char_before(str, i, d))
-		{
-			while (str[i] != '\0')
-			{
-				if (str[i] == c)
-					count++;
-				i++;
-			}
-			if (count % 2 != 0)
-			{
-				free(str);
-				return (1);
-			}
-		}
-		if (str[i] != '\0')
-			i++;
-	}
-	return (0);
-}
-
 int	ft_deal_bad_sq_dq(char *str)
 {
-	int	count;
+	int		c;
+	char	k;
 
-	count = 0;
-	if (ft_deal_bad(str, count, '\'', '"') == 1)
-		return (-1);
-	if (ft_deal_bad(str, count, '"', '\'') == 1)
-		return (-1);
-	return (SUCCESS);
+	c = 0;
+	while (str[c])
+	{
+		if (str[c] == '"' || str[c] == '\'')
+		{
+			k = str[c++];
+			while (str[c] && str[c] != k)
+				c++;
+			if (str[c])
+				c++;
+			else
+				return (0);
+		}
+		else
+			c++;
+	}
+	return (1);
 }
 
 char	*get_new_line(char *cmd_line, t_control *list, int *i)
@@ -93,12 +76,14 @@ char	*get_new_line(char *cmd_line, t_control *list, int *i)
 	new_line = ft_strdup(cmd_line);
 	if (!new_line)
 		return (0);
-	new_line = ft_is_dollar2(new_line, list, is_mal count);
+	new_line = ft_is_dollar2(new_line, list, is_mal, count);
 	if (!new_line)
 		return (0);
-	if (ft_deal_bad_sq_dq(new_line) == -1)
+	if (!ft_deal_bad_sq_dq(new_line))
 	{
+		free(new_line);
 		*i = 1;
+		ft_printf_fd(2, "minishell: error parsing <quotes>\n");
 		return (0);
 	}
 	return (new_line);

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 14:45:23 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/04 18:01:09 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/06 16:58:02 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*add_var_name(char *str)
 	i = 0;
 	if (str == NULL)
 		return (NULL);
-	while (str[i] != '\0')
+	while (str[i])
 	{
 		if (str[i] == '=')
 			break ;
@@ -63,11 +63,12 @@ char	*ft_remove_quotes(char *str)
 	char	*str2;
 	int		nb;
 
-	printf("str is %s\n", str);
 	if (!str)
 		return (NULL);
 	nb = ft_count(str, '\"');
 	str2 = malloc(sizeof(char) * (ft_strlen(str) - nb + 1));
+	if (!str2)
+		return (NULL);
 	i = -1;
 	j = 0;
 	while (str[++i])
@@ -78,6 +79,5 @@ char	*ft_remove_quotes(char *str)
 		j++;
 	}
 	str2[j] = '\0';
-	printf("str2 is %s\n", str2);
 	return (str2);
 }

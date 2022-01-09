@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 17:25:15 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/05 17:27:57 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/06 16:48:31 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,12 @@ char	*ft_strcut(char *str, int size, int pos)
 		return (NULL);
 	}
 	new = malloc(sizeof(char) * (ft_strlen(str) - size + 1));
+	if (!new)
+		return (NULL);
 	i = 0;
 	j = 0;
 	while (str[i] && i < pos)
-	{
-		new[j] = str[i];
-		j++;
-		i++;
-	}
+		new[j++] = str[i++];
 	i += size;
 	while (str[i])
 		new[j++] = str[i++];
