@@ -71,6 +71,7 @@ char	*ft_deal_dollar(char *str, t_control *list)
 	free_matc(arr_str);
 	ret2 = ft_remove_quotes(ret);
 	free(ret);
+	printf("str returned by deal dollar is %s\n", ret2);
 	return (ret2);
 }
 
@@ -96,17 +97,32 @@ int	ft_assign(t_element *tmp, t_control *list, char *retreat, int i)
 }
 
 /* check if there are bad entries */
+int	check_str_entry(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		printf("str i is|%c|\n", str[i]);
+		if (str[i] == '_' || str[i] == '=')
+			continue ;
+		if (((str[i] < 'A') || (str[i] > 'Z' && str[i] < 'a') || (str[i] > 'z')))
+			return (FAILURE);
+	}
+	return (SUCCESS);
+}
+
+/* check if there are bad entries */
 int	process_retreat(char *newargv, char *retreat)
 {
-	char	*var_name;
-
-	if (!(ft_check_position('$', '=', newargv)) || (newargv[0] == '='
-			|| ((retreat[0] <= '9') && (retreat[0] >= '0'))))
+	if (retreat == NULL)
+		return (FAILURE);
+	if ((newargv[0] == '=') || ((retreat[0] <= '9') && (retreat[0] >= '0'))
+		|| (!(check_str_entry(retreat))))
 	{
-		ft_printf_fd(1, "\"%s\" : not a valid identifier\n", retreat);
+		ft_printf_fd(1, "Minishell: export: \'%s\' : not a valid identifier\n", retreat);
 		return (FAILURE);
 	}
-	var_name = add_var_name(retreat);
-	free(var_name);
 	return (SUCCESS);
 }

@@ -69,7 +69,7 @@ char	*get_new_str(char *str, int i, int *size)
 
 	j = i + 1;
 	while (str[j] && str[j] != '\0' && str[j] != '$' && str[j] != ' '
-		&& str[j] != '\"' && str[j] != '\'')
+		&& str[j] != '\"' && str[j] != '\'' )
 		j++;
 	*size = j - i;
 	new_str = malloc(sizeof(char) * (j - i + 1));
@@ -80,7 +80,7 @@ char	*get_new_str(char *str, int i, int *size)
 	i++;
 	k++;
 	while (str[i] && str[i] != '\0' && str[i] != '$'
-		&& str[i] != ' ' && str[i] != '\"' && str[i] != '\'')
+		&& str[i] != ' ' && str[i] != '\"' && str[i] != '\'' )
 	{
 		new_str[k] = str[i];
 		k++;

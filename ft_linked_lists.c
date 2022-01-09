@@ -85,7 +85,7 @@ t_element	*elem_in_list(t_element *first, char *str)
 	tmp = first;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->var_name, new_str, ft_strlen(new_str)) == 0)
+		if (ft_strncmp(tmp->var_name, new_str, ft_strlen(tmp->var_name)) == 0)
 			return (tmp);
 		if (tmp->next == NULL)
 			break ;

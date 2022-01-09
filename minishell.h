@@ -231,7 +231,7 @@ char		*add_str2(char *str, int type);
 
 char		*ft_remove_quotes(char *str);
 
-int			ft_add_new_var(t_control *list, int type);
+void		ft_add_new_var(t_control *list, int type);
 
 void		ft_remove_first_env(t_control *control);
 

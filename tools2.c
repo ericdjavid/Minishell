@@ -17,19 +17,20 @@ char	*ft_remove_simple_quotes(char *str)
 	int		i;
 	int		j;
 	char	*str2;
-	int		nb;
+	// int		nb;
 
-	nb = 0;
-	nb = count_amout(str, '\'');
-	str2 = malloc(sizeof(char) * (ft_strlen(str) - nb + 1));
+	// nb = 0;
+	// nb = count_amout(str, '\'');
+	str2 = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	// printf("str is %s\n", str);
 	if (!str2)
 		return (NULL);
 	i = -1;
 	j = 0;
 	while (str[++i])
 	{
-		if (str[i] == '\'')
-			continue ;
+		// if (str[i] == '\'' && no_unpair_char_before(str, i, '"'))
+		// 	continue ;
 		str2[j] = str[i];
 		j++;
 	}
@@ -69,7 +70,7 @@ t_bool	is_quest(char *str)
 	{
 		if (str[i] == '=')
 			return (FALSE);
-		if (!ft_isalnum(str[i]))
+		if (!ft_isalnum(str[i]) && str[i] != '_')
 			return (TRUE);
 	}
 	return (FALSE);

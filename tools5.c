@@ -64,7 +64,6 @@ char	*ft_get_dollar_var(char *str, t_control *list)
 	deal_space = NULL;
 	if (ft_strchr(str, ' '))
 		deal_space = ft_deal_space(str);
-	(void)deal_space;
 	tmp = ft_is_in_list(list, str);
 	if (!tmp || !tmp->str)
 		return (NULL);

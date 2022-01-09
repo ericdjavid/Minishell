@@ -17,7 +17,10 @@ int	get_tmp(char *retreat, t_element *tmp, t_control *list, char *var_name)
 	char	*nodq;
 
 	if (!ft_strchr(retreat, '='))
+	{
+		free(var_name);
 		return (1);
+	}
 	free(tmp->str);
 	nodq = ft_strdup(retreat);
 	tmp->str = ft_remove_quotes(nodq);
@@ -35,7 +38,7 @@ int	get_not_valid(char *retreat, t_element *tmp)
 	if ((ft_is_space_before_qual(retreat))
 		|| (is_quest(retreat) == TRUE))
 	{
-		ft_printf_fd(1, "\"%s\" : not a valid identifier\n", retreat);
+		ft_printf_fd(1, RED"Minishell: export: \"%s\" : not a valid identifier\n"END, retreat);
 		free(tmp);
 		return (FAILURE);
 	}
