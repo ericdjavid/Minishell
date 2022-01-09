@@ -40,30 +40,12 @@ int	ft_is_space_before_qual(char *str)
 	return (0);
 }
 
-char	*ft_deal_space(char *str)
-{
-	char	**split;
-	int		i;
-
-	i = 0;
-	split = NULL;
-	split = ft_split(str, " ");
-	while (split[i])
-		i++;
-	free_matc(split);
-	return (str);
-}
-
 char	*ft_get_dollar_var(char *str, t_control *list)
 {
 	t_element	*tmp;
 	char		*tmp_char;
-	char		*deal_space;
 
 	tmp_char = NULL;
-	deal_space = NULL;
-	if (ft_strchr(str, ' '))
-		deal_space = ft_deal_space(str);
 	tmp = ft_is_in_list(list, str);
 	if (!tmp || !tmp->str)
 		return (NULL);
