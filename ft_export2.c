@@ -66,16 +66,11 @@ void	ft_add_new_var(t_control *list, int type)
 sous la forme : declare -x nom=”valeur” ou declare -x nom */
 int	ft_export(t_control *list, char **newargv)
 {
-	printf("new argv[0] is %s\n", newargv[0]);
-	printf("new argv[1] is %s\n", newargv[1]);
 	if (!ft_strncmp(newargv[0], "export",
 			ft_strlen(newargv[0])) && newargv[1])
 		ft_get_new_var(list, newargv);
 	else
-	{
-		printf(RED"fucking here\n"END);
 		ft_print_export(list->first_export, TRUE);
-	}
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/07 19:53:27 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/09 19:41:58 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,8 +237,6 @@ void		ft_remove_first_env(t_control *control);
 
 		// EXPORT2.C
 
-char		*ft_deal_dollar(char *str, t_control *list);
-
 void		ft_print_export(t_element *first, t_bool bool);
 
 int			ft_get_new_var(t_control *list, char **newargv);
@@ -446,6 +444,8 @@ int			ft_is_space_before_qual(char *str);
 char		*ft_deal_space(char *str);
 
 char		*ft_get_dollar_var(char *str, t_control *list);
+
+void		ft_remove_from_list(t_element *to_supp, t_element *first);
 
 		//	FT_EXIT.C
 

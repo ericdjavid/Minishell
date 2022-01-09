@@ -6,11 +6,22 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 17:26:43 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/06 16:56:55 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/09 19:41:41 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_remove_from_list(t_element *to_supp, t_element *first)
+{
+	if (to_supp == NULL)
+		return ;
+	if (to_supp->next == NULL)
+		ft_delete_last(first);
+	else
+		ft_replace_str(to_supp);
+	return ;
+}
 
 int	count_amout(char *str, char c)
 {

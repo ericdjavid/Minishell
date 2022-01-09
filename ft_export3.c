@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 16:23:30 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/07 15:19:50 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/09 19:38:45 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,31 +49,6 @@ void	ft_process_str(char **arr_str, t_control *list, char *new_str)
 	}
 }
 
-char	*ft_deal_dollar(char *str, t_control *list)
-{
-	char	*new_str;
-	char	**arr_str;
-	char	*ret;
-	char	*ret2;
-	int		i;
-
-	new_str = NULL;
-	if (!(ft_strchr(str, '$')))
-		return (NULL);
-	arr_str = ft_split(str, "$");
-	if (!arr_str)
-		return (NULL);
-	ft_process_str(arr_str, list, new_str);
-	i = 0;
-	ret = NULL;
-	while (arr_str[i] && arr_str[++i])
-		ret = ft_strjoin(ret, arr_str[i]);
-	free_matc(arr_str);
-	ret2 = ft_remove_quotes(ret);
-	free(ret);
-	return (ret2);
-}
-
 int	ft_assign(t_element *tmp, t_control *list, char *retreat, int i)
 {
 	t_element	*new;
@@ -100,9 +75,11 @@ int	process_retreat(char *newargv, char *retreat)
 {
 	if (retreat == NULL)
 		return (FAILURE);
-	if ((newargv[0] == '=') || ((retreat[0] <= '9') && (retreat[0] >= '0')))
+	if (!newargv[0] || (newargv[0] == '=') || ((retreat[0] <= '9')
+			&& (retreat[0] >= '0')))
 	{
-		ft_printf_fd(1, "Minishell: export: \'%s\' : not a valid identifier\n", retreat);
+		ft_printf_fd(1, "Minishell: export: \'%s\' : not a valid identifier\n",
+			retreat);
 		return (FAILURE);
 	}
 	return (SUCCESS);

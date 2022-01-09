@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 16:23:17 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/07 15:19:24 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/09 19:39:19 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,12 @@ int	get_tmp(char *retreat, t_element *tmp, t_control *list, char *var_name)
 
 int	get_not_valid(char *retreat, t_element *tmp)
 {
+	printf(RED"retreat is |%s|\n"END, retreat);
 	if ((ft_is_space_before_qual(retreat))
 		|| (is_quest(retreat) == TRUE))
 	{
-		ft_printf_fd(1, RED"Minishell: export: \"%s\" : not a valid identifier\n"END, retreat);
+		ft_printf_fd(1, RED"Minishell: export: \"%s\": not a valid identifier\n"
+			END, retreat);
 		free(tmp);
 		return (FAILURE);
 	}
@@ -96,10 +98,7 @@ int	ft_get_new_var(t_control *list, char **newargv)
 	{
 		if (retreat)
 			free (retreat);
-		retreat = NULL;
-		retreat = ft_deal_dollar(newargv[i], list);
-		if (retreat == NULL)
-			retreat = ft_remove_simple_quotes(newargv[i]);
+		retreat = ft_remove_simple_quotes(newargv[i]);
 		if (process_retreat(newargv[i], retreat) == FAILURE)
 			continue ;
 		if (ft_get_new_var2(var_name, retreat, list, i))
