@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 14:59:06 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/05 15:33:16 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/09 19:41:15 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,17 @@ void	ft_is_dollar(char **str, t_control *control)
 	return ;
 }
 
+t_bool	is_not_not_in_bad_ascii(char c)
+{
+	if (c >= '0' && c <= '9')
+		return (TRUE);
+	if (c && c != '\0' && c != '$' && c != ' '
+		&& c != '\"' && c != '\'' && ((c >= 'A' && c <= 'Z')
+			|| (c >= 'a' && c <= 'z')) && (c != '_'))
+		return (TRUE);
+	return (FALSE);
+}
+
 char	*get_new_str(char *str, int i, int *size)
 {
 	int		j;
@@ -68,8 +79,7 @@ char	*get_new_str(char *str, int i, int *size)
 	char	*new_str;
 
 	j = i + 1;
-	while (str[j] && str[j] != '\0' && str[j] != '$' && str[j] != ' '
-		&& str[j] != '\"' && str[j] != '\'' )
+	while (str[j] && is_not_not_in_bad_ascii(str[j]) == TRUE)
 		j++;
 	*size = j - i;
 	new_str = malloc(sizeof(char) * (j - i + 1));
@@ -79,8 +89,7 @@ char	*get_new_str(char *str, int i, int *size)
 	new_str[k] = '$';
 	i++;
 	k++;
-	while (str[i] && str[i] != '\0' && str[i] != '$'
-		&& str[i] != ' ' && str[i] != '\"' && str[i] != '\'' )
+	while (str[i] && is_not_not_in_bad_ascii(str[i]) == TRUE)
 	{
 		new_str[k] = str[i];
 		k++;
@@ -98,17 +107,6 @@ void	ft_remove_from_env(t_element *to_supp, t_control *control)
 		ft_remove_first_env(control);
 	else if (to_supp->next == NULL)
 		ft_delete_last(control->first_env_var);
-	else
-		ft_replace_str(to_supp);
-	return ;
-}
-
-void	ft_remove_from_list(t_element *to_supp, t_element *first)
-{
-	if (to_supp == NULL)
-		return ;
-	if (to_supp->next == NULL)
-		ft_delete_last(first);
 	else
 		ft_replace_str(to_supp);
 	return ;
