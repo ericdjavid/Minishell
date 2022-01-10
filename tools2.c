@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:40:53 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/06 16:56:14 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/10 12:14:23 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,14 @@ char	*ft_remove_simple_quotes(char *str)
 	int		i;
 	int		j;
 	char	*str2;
-	// int		nb;
 
-	// nb = 0;
-	// nb = count_amout(str, '\'');
 	str2 = malloc(sizeof(char) * (ft_strlen(str) + 1));
-	// printf("str is %s\n", str);
 	if (!str2)
 		return (NULL);
 	i = -1;
 	j = 0;
 	while (str[++i])
 	{
-		// if (str[i] == '\'' && no_unpair_char_before(str, i, '"'))
-		// 	continue ;
 		str2[j] = str[i];
 		j++;
 	}
