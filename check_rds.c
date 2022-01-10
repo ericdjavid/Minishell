@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 20:52:12 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/10 12:44:55 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/10 13:31:59 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,12 @@ int	rds_ok(char *cmd, int c, char k)
 		}
 		c_2++;
 	}
-	if (cmd[c + 1] && cmd[c + 1] == k)
+	if (!cmd[c + 1])
+		return (0);
+	if (cmd[c + 1] == k)
 		c++;
+	if (!cmd[c + 1])
+		return (0);
 	if (cmd[++c]
 		&& (cmd[c] == '<' || cmd[c] == '>' || cmd[c] == '|'))
 		return (0);
