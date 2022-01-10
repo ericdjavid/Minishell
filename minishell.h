@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/10 12:14:31 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/10 19:49:06 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ char		*prompt_msg(int *ret);
 
 int			ft_builtins(char **newargv, t_control *list, int fd);
 
-int			exec_builtins(char ***newargv, t_control *list, char **paths);
+int		exec_builtins(char **newargv, t_control *list, char **paths);
 
 int			is_builtins(char *newargv);
 
@@ -332,7 +332,7 @@ int			is_other_redin(char **newargv);
 
 int			is_other_wrout(char **newargv);
 
-char		***exit_fd_neg(int *box, char **newargv);
+char		***exit_fd_neg(int *box, char ***newargv);
 
 		// FT_LINKED_LISTS
 

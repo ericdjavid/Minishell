@@ -6,13 +6,13 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:42:20 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/07 18:53:27 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/10 19:56:49 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_builtins(char ***newargv, t_control *list, char **paths)
+int	exec_builtins(char **newargv, t_control *list, char **paths)
 {
 	int	*ret;
 	int	**fds;
@@ -22,18 +22,30 @@ int	exec_builtins(char ***newargv, t_control *list, char **paths)
 	if (!fds)
 		return (-1);
 	fds[0][0]++;
-	ret = ft_manage_fds(newargv, paths, fds, 0);
-	if (!ret)
+	ret = ft_manage_fds(&newargv, paths, fds, 0);
+	if (!ret || (ret[0] < 1 || ret[1] < 1))
 	{
+		ft_close_fd(fds[1][1]);
 		free_mati(fds, 2);
-		return (-1);
+		if (ret[0] < 1)
+			free_matc(newargv);
+		if (ret)
+			free(ret);
+		if (g_status == 42)
+			return (-1);
+		else
+			return (1);
 	}
-	exec = ft_builtins(*newargv, list, ret[2]);
-	ft_close_fd(fds[1][1]);
-	if (ret[2] != 1)
-		ft_close_fd(ret[2]);
+	else
+	{
+		exec = ft_builtins(newargv, list, ret[2]);
+		ft_close_fd(fds[1][1]);
+		if (ret[2] != 1)
+			ft_close_fd(ret[2]);
+	}
 	free_mati(fds, 2);
 	free(ret);
+	free_matc(newargv);
 	return (exec);
 }
 

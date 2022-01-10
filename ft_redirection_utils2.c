@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 17:19:31 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/10 12:44:32 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/10 19:49:39 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int	is_other_wrout(char **newargv)
 	return (0);
 }
 
-char	***exit_fd_neg(int *box, char **newargv)
+char	***exit_fd_neg(int *box, char ***newargv)
 {
 	box[0] = -2;
-	free_matc(newargv);
+	free_matc(*newargv);
 	return (0);
 }

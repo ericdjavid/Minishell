@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 15:43:44 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/14 16:23:36 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/10 17:45:46 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_matc(char **matc)
 	int		n;
 
 	n = 0;
-	while (matc[n])
+	while (matc && matc[n])
 	{
 		if (matc[n])
 			free(matc[n]);
