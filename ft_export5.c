@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 16:23:17 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/09 19:39:19 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/10 12:14:52 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	get_tmp(char *retreat, t_element *tmp, t_control *list, char *var_name)
 
 int	get_not_valid(char *retreat, t_element *tmp)
 {
-	printf(RED"retreat is |%s|\n"END, retreat);
 	if ((ft_is_space_before_qual(retreat))
 		|| (is_quest(retreat) == TRUE))
 	{
