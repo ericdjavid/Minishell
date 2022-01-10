@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 14:32:02 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/27 14:33:04 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/10 12:21:45 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,6 @@ char	*print_error_rdin(int ret, char *lim, char *heredoc)
 {
 	ft_printf_fd(2,
 		"minishell: warning: here-document at line %d", ret);
-	ft_printf_fd(2, " delimited by end-of-file (wanted `l')\n", lim);
+	ft_printf_fd(2, " delimited by end-of-file (wanted `%s')\n", lim);
 	return (heredoc);
 }

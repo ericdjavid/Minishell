@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:02:04 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/07 19:54:40 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/10 12:21:48 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,21 +73,7 @@ int	init_config(char **newargv, int *c)
 	else if (!ft_strncmp(newargv[*c], "<",
 			ft_strlen(newargv[*c])))
 		config = 2;
-	if (config && is_unexpected(newargv[*c + 1]))
-	{
-		write(2,
-			"minishell: syntax error\n", 24);
-		return (-1);
-	}
 	if (!config)
 		*c += 1;
 	return (config);
-}
-
-int	is_unexpected(char *arg)
-{
-	if (!arg || *arg == 28 || *arg == 29 || *arg == '<'
-		|| *arg == '>' || *arg == '|')
-		return (1);
-	return (0);
 }

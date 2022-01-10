@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:58:06 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/06 12:16:04 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/10 12:23:18 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ int	*ft_redirection(char ***newargv, int *ret, int forked)
 		{
 			newargv = loop_redirection(newargv, box, c, forked);
 			if (!newargv)
-			{
-				free(box);
-				return (ret);
-			}
+				return (exit_redirection(box, ret));
 		}
 		else
 			c++;
@@ -49,7 +46,7 @@ char	***loop_redirection(char ***newargv, int *box, int c, int forked)
 	config = which_redirection((*newargv)[c]);
 	fd = get_outfd((*newargv)[c + 1], config);
 	if (fd < 0)
-		return (0);
+		return (exit_fd_neg(box, *newargv));
 	*newargv = get_new_redir(*newargv, c);
 	if (!(*newargv))
 	{
@@ -89,9 +86,8 @@ int	get_outfd(char *file, int config)
 	outfd = -1;
 	if (!file)
 	{
-		ft_printf_fd(2, "minishell: syntax error");
-		ft_printf_fd(2, " near unexpected token newline\n");
-		g_status = 258;
+		ft_printf_fd(2, "minishell: syntax error\n");
+		g_status = 2;
 		return (-2);
 	}
 	else if (!access(file, F_OK))

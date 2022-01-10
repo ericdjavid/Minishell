@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 20:59:11 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/07 19:53:56 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/07 21:07:12 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	*exit_manage_free(int *ret, int config)
 {
-	free(ret);
-	if (config)
+	if (ret[1] >= 0 && config)
 		g_status = 42;
 	else
 		g_status = 2;
+	free(ret);
 	return (0);
 }
 
@@ -34,7 +34,7 @@ int	*ft_manage_fds(char ***newargv, char **paths, int **fds, int forked)
 	if (ret[0] == -1)
 		return (exit_manage_free(ret, 0));
 	ret = ft_redirection(newargv, ret, forked);
-	if (!ret[0] || !ret[1])
+	if (ret[0] < 1 || ret[1] < 1)
 		return (exit_manage_free(ret, 1));
 	(*newargv)[0] = init_cmd_path((*newargv)[0], paths);
 	if (!(*newargv)[0])

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/09 19:41:58 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/10 12:14:31 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,8 +276,6 @@ char		**init_files(char **newargv);
 
 int			init_config(char **newargv, int *c);
 
-int			is_unexpected(char *arg);
-
 		//	MAKE_CONFIGS_RDIN.C
 
 int			make_configs_rdin(char ***newargv, char **files,
@@ -333,6 +331,8 @@ int			*exit_redirection(int *box, int *ret);
 int			is_other_redin(char **newargv);
 
 int			is_other_wrout(char **newargv);
+
+char		***exit_fd_neg(int *box, char **newargv);
 
 		// FT_LINKED_LISTS
 
@@ -458,4 +458,10 @@ int			ft_exit_2(char **arg);
 void		ft_close_fds(int **fds, int n);
 
 void		ft_close_fds_around(int **fds, int n);
+
+		//	CHECK_RDS.C
+
+int			check_rds(char *cmd);
+
+int			rds_ok(char *cmd, int c, char k);
 #endif

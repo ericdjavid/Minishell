@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 14:10:39 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/07 16:24:19 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/10 12:12:39 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 	i = 0;
 	while (*cmd_line && *cmd_line == 32)
 		cmd_line++;
-	if (!*cmd_line)
+	if (!*cmd_line || !check_rds(cmd_line))
 		return (1);
 	new_line = get_new_line(cmd_line, list, &i);
 	if (i == 1 || !new_line)
