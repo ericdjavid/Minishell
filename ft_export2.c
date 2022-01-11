@@ -6,33 +6,11 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 15:10:49 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/05 15:39:11 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/11 21:42:23 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_print_stuff(t_element *first, char *str)
-{
-	t_element	*tmp;
-
-	if (!first)
-	{
-		printf("list is empty !\n");
-		return (FAILURE);
-	}
-	tmp = first;
-	printf(YELLOW"---LIST %s---\n", str);
-	while (tmp != NULL)
-	{
-		printf("[%s]\n", tmp->str);
-		if (tmp->next == NULL)
-			break ;
-		tmp = tmp->next;
-	}
-	printf("----------\n" END);
-	return (1);
-}
 
 void	ft_add_new_var(t_control *list, int type)
 {
