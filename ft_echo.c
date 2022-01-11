@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:14 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/10 12:39:34 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/11 18:46:03 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ int	ft_echo(char **newargv, int fd)
 	char	c;
 
 	c = 0;
+	// if (!ft_strncmp(newargv[1], "<", 1))
+	// 	return (1);
+	printf("new argv is %s", newargv[1]);
 	if (ft_matlen(newargv) == 1)
 	{
 		write(fd, "\n", 1);

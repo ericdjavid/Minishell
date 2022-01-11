@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_manage_fds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 20:59:11 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/10 19:56:46 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/11 17:53:42 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	*exit_manage_free(int *ret, int config, int forked)
 		else
 			g_status = 2;
 	}
+	if (config == 666)
+		g_status = 0;
 	else
 		g_status = 42;
 	if (!forked)
@@ -38,8 +40,8 @@ int	*ft_manage_fds(char ***newargv, char **paths, int **fds, int forked)
 		return (0);
 	ft_close_fds(fds, fds[0][0]);
 	ret[0] = ft_read_input(newargv, paths);
-	if (ret[0] == -1)
-		return (exit_manage_free(ret, 0, forked));
+	if (ret[0] == -1 || ret[0] == 666)
+		return (exit_manage_free(ret, ret[0], forked));
 	ret = ft_redirection(newargv, ret, forked);
 	if (ret[0] < 1 || ret[1] < 1)
 		return (exit_manage_free(ret, 1, forked));
@@ -52,8 +54,8 @@ int	*ft_manage_fds(char ***newargv, char **paths, int **fds, int forked)
 		ft_dup2(fds[fds[0][0] - 1][0], STDIN_FILENO);
 		ft_close_fd(fds[fds[0][0] - 1][0]);
 	}
-	if (ret[1] == 1 && *(newargv + 1))
-		ft_dup2(fds[fds[0][0]][1], STDOUT_FILENO);
+	// if (ret[1] == 1 && *(newargv + 1))
+	// 	ft_dup2(fds[fds[0][0]][1], STDOUT_FILENO);
 	return (ret);
 }
 

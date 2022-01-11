@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/10 17:52:57 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/11 18:43:31 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list, int n_pid)
 			return (0);
 		else if (child_pid[n_newargv - 1] == 0
 			&& !(ft_child(&newargv[n_newargv], paths, list, fds)))
-				return (g_status);
+			return (g_status);
 		close_fds_in_parent(fds, 1);
 	}
 	close_fds_in_parent(fds, 0);
