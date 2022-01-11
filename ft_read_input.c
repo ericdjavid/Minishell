@@ -6,50 +6,49 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:30:03 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/11 17:41:51 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/11 17:57:53 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_read_input(char ***newargv, char **paths)
+int	ft_read_input(char ***nrv, char **paths)
 {
 	char	*heredoc;
 	char	**files;
 	int		c[3];
 
-	c[0] = 0;
-	c[2] = 0;
 	heredoc = NULL;
-	files = init_files(*newargv);
+	files = init_files(*nrv, c);
 	if (!files)
 		return (-1);
-	while ((*newargv)[c[0]])
+	while ((*nrv)[c[0]])
 	{
-		c[1] = init_config(*newargv, &c[0]);
+		c[1] = init_config(*nrv, &c[0]);
 		if (c[1])
 		{
-			if (!make_configs_rdin(newargv, files, &heredoc, &c[0]))
+			if (!make_configs_rdin(nrv, files, &heredoc, &c[0]))
 			{
-				if (!ft_strncmp(*newargv[c[0]], "<<"
-						, ft_strlen(*newargv[c[0]])))
+				if (!ft_strncmp(*nrv[c[0]], "<<", ft_strlen(*nrv[c[0]])))
 					return (exit_readin(files, heredoc, 666));
 				return (exit_readin(files, heredoc, -1));
 			}
-			(*newargv) = get_newargv_rdin((*newargv), c[0], paths);
-			if (!(*newargv))
+			(*nrv) = get_newargv_rdin((*nrv), c[0], paths);
+			if (!(*nrv))
 				return (exit_readin(files, heredoc, 1));
 		}
 	}
 	return (dup_readin(&files, &heredoc, c[2]));
 }
 
-char	**init_files(char **newargv)
+char	**init_files(char **newargv, int *c2)
 {
 	char	**files;
 	int		n_files;
 	int		c;
 
+	c2[0] = 0;
+	c2[2] = 0;
 	c = 0;
 	n_files = 0;
 	while (newargv[c])

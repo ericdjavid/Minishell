@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/11 17:42:07 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/11 17:57:21 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,7 +272,7 @@ int			ft_env(t_control *list);
 
 int			ft_read_input(char ***newargv, char **paths);
 
-char		**init_files(char **newargv);
+char		**init_files(char **newargv, int *c);
 
 int			init_config(char **newargv, int *c);
 

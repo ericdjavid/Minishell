@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 20:59:11 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/11 17:36:20 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/11 17:53:42 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ int	*ft_manage_fds(char ***newargv, char **paths, int **fds, int forked)
 		return (0);
 	ft_close_fds(fds, fds[0][0]);
 	ret[0] = ft_read_input(newargv, paths);
-	if (ret[0] == -1)
-		return (exit_manage_free(ret, 0, forked));
-	if (ret[0] == 666)
-		return (exit_manage_free(ret, 666, forked));
+	if (ret[0] == -1 || ret[0] == 666)
+		return (exit_manage_free(ret, ret[0], forked));
 	ret = ft_redirection(newargv, ret, forked);
 	if (ret[0] < 1 || ret[1] < 1)
 		return (exit_manage_free(ret, 1, forked));
