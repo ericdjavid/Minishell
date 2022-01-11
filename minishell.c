@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:31:49 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/10 13:13:19 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/11 18:18:48 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	ft_minishell(t_control *list)
 		if (cmd_line)
 			ret = exec_cmd(cmd_line, paths, list);
 	}
+	printf("ret is %d\n", ret);
 	if (ret == -1)
 		ft_printf_fd(2, RED "minishell: error with a malloc\n" END);
 	free_1(cmd_line, paths, env);

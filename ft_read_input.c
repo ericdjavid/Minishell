@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:30:03 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/11 17:57:53 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/11 19:04:22 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ char	**init_files(char **newargv, int *c2)
 	c2[2] = 0;
 	c = 0;
 	n_files = 0;
+	if (newargv[0][0] == '<')
+		return (NULL);
 	while (newargv[c])
 	{
 		if (!ft_strncmp(newargv[c], "<", ft_strlen(newargv[c])))
