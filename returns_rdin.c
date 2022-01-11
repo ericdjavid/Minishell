@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 14:34:29 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/07 19:47:58 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/10 19:30:27 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	dup_readin_2(char **heredoc, char ***files, int last, int fdin)
 	if (*heredoc && last == 1)
 	{
 		if (pipe(fds) == -1)
-			return (exit_readin(*files, *heredoc, 0));
+			return (exit_readin(*files, *heredoc, -1));
 		write(fds[1], *heredoc, ft_strlen(*heredoc));
 		ft_dup2(fds[0], STDIN_FILENO);
 		ft_close_fd(fds[0]);

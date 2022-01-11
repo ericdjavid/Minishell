@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 17:02:41 by abrun             #+#    #+#             */
-/*   Updated: 2021/12/28 15:22:47 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/10 17:50:26 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ int	n_pid(char ***newargv)
 
 int	exit_exec(int ret, char ***newargv, char *new_line)
 {
-	free_newargv(newargv);
+	if (ret == 2)
+		free_newargv(newargv);
+	else
+		free(newargv);
 	free(new_line);
 	return (ret);
 }

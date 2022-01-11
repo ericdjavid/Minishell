@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/07 17:25:22 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/10 17:52:57 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,12 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list, int n_pid)
 		child_pid[n_newargv - 1] = fork();
 		if (child_pid[n_newargv - 1] == -1)
 			return (0);
-		else if (child_pid[n_newargv - 1] == 0)
-		{
-			if (!(ft_child(&newargv[n_newargv], paths, list, fds)))
+		else if (child_pid[n_newargv - 1] == 0
+			&& !(ft_child(&newargv[n_newargv], paths, list, fds)))
 				return (g_status);
-		}
-		else
-			close_fds_in_parent(fds, 1);
+		close_fds_in_parent(fds, 1);
 	}
+	close_fds_in_parent(fds, 0);
 	wait_cmds_free(n_pid, child_pid, fds);
 	return (g_status);
 }

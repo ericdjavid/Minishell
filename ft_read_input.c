@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 12:02:04 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/07 19:54:40 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/10 19:43:56 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,17 @@ int	ft_read_input(char ***newargv, char **paths)
 	heredoc = NULL;
 	files = init_files(*newargv);
 	if (!files)
-		return (0);
+		return (-1);
 	while ((*newargv)[c[0]])
 	{
 		c[1] = init_config(*newargv, &c[0]);
-		if (c[1] < 0)
-			return (exit_readin(files, heredoc, -1));
-		else if (c[1])
+		if (c[1])
 		{
 			if (!make_configs_rdin(newargv, files, &heredoc, &c[0]))
-				return (exit_readin(files, heredoc, 0));
+				return (exit_readin(files, heredoc, -1));
 			(*newargv) = get_newargv_rdin((*newargv), c[0], paths);
 			if (!(*newargv))
-				return (exit_readin(files, heredoc, 0));
+				return (exit_readin(files, heredoc, -1));
 		}
 	}
 	return (dup_readin(&files, &heredoc, c[2]));
@@ -73,21 +71,7 @@ int	init_config(char **newargv, int *c)
 	else if (!ft_strncmp(newargv[*c], "<",
 			ft_strlen(newargv[*c])))
 		config = 2;
-	if (config && is_unexpected(newargv[*c + 1]))
-	{
-		write(2,
-			"minishell: syntax error\n", 24);
-		return (-1);
-	}
 	if (!config)
 		*c += 1;
 	return (config);
-}
-
-int	is_unexpected(char *arg)
-{
-	if (!arg || *arg == 28 || *arg == 29 || *arg == '<'
-		|| *arg == '>' || *arg == '|')
-		return (1);
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 17:55:12 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/06 12:17:13 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/10 19:44:53 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int	*exit_redirection(int *box, int *ret)
 		ret[2] = box[3];
 	else
 		ret[2] = 1;
+	if (box[0] == -2)
+		ret[1] = -2;
 	free(box);
 	return (ret);
 }

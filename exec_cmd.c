@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 14:10:39 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/07 16:24:19 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/10 17:56:38 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 	int		ret;
 	int		i;
 
-	ret = 1;
+	ret = 2;
 	i = 0;
 	while (*cmd_line && *cmd_line == 32)
 		cmd_line++;
-	if (!*cmd_line)
+	if (!*cmd_line || !check_rds(cmd_line))
 		return (1);
 	new_line = get_new_line(cmd_line, list, &i);
 	if (i == 1 || !new_line)
@@ -35,7 +35,7 @@ int	exec_cmd(char *cmd_line, char **paths, t_control *list)
 		return (-1);
 	}
 	if (ft_3dimlen(newargv + 1) == 1 && is_builtins(newargv[1][0]))
-		ret = exec_builtins(&newargv[1], list, paths);
+		ret = exec_builtins(newargv[1], list, paths);
 	else
 		ft_cmd(newargv, paths, list, n_pid(newargv));
 	return (exit_exec(ret, newargv, new_line));
@@ -94,7 +94,7 @@ void	free_newargv(char ***matc)
 	int	n;
 
 	n = 1;
-	while (matc[n])
+	while (matc && matc[n])
 	{
 		free_matc(matc[n]);
 		n++;

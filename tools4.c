@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 14:59:06 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/09 19:41:15 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/10 12:36:50 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	ft_is_dollar(char **str, t_control *control)
 
 t_bool	is_not_not_in_bad_ascii(char c)
 {
+	if (c == '?')
+		return (TRUE);
 	if (c >= '0' && c <= '9')
 		return (TRUE);
 	if (c && c != '\0' && c != '$' && c != ' '

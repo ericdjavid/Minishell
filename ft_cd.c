@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 16:24:56 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/07 19:42:26 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/10 13:28:03 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	error_with_file_or_directory(int config, char *home, char *newargv)
 	else
 		ft_printf_fd(2,
 			"minishell: cd: %s: No such file or directory\n",
-			newargv[1]);
+			newargv);
 	g_status = 1;
 }
 

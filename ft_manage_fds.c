@@ -6,19 +6,26 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 20:59:11 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/07 19:53:56 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/10 19:56:46 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	*exit_manage_free(int *ret, int config)
+int	*exit_manage_free(int *ret, int config, int forked)
 {
-	free(ret);
 	if (config)
-		g_status = 42;
+	{
+		if (ret[1] == -1 || ret[0] == -1 || config == 2)
+			g_status = 42;
+		else
+			g_status = 2;
+	}
 	else
-		g_status = 2;
+		g_status = 42;
+	if (!forked)
+		return (ret);
+	free(ret);
 	return (0);
 }
 
@@ -32,13 +39,13 @@ int	*ft_manage_fds(char ***newargv, char **paths, int **fds, int forked)
 	ft_close_fds(fds, fds[0][0]);
 	ret[0] = ft_read_input(newargv, paths);
 	if (ret[0] == -1)
-		return (exit_manage_free(ret, 0));
+		return (exit_manage_free(ret, 0, forked));
 	ret = ft_redirection(newargv, ret, forked);
-	if (!ret[0] || !ret[1])
-		return (exit_manage_free(ret, 1));
+	if (ret[0] < 1 || ret[1] < 1)
+		return (exit_manage_free(ret, 1, forked));
 	(*newargv)[0] = init_cmd_path((*newargv)[0], paths);
 	if (!(*newargv)[0])
-		return (exit_manage_free(ret, 1));
+		return (exit_manage_free(ret, 2, forked));
 	if (ret[0] && ((ft_matlen((*newargv)) > 1) || *(newargv - 1))
 		&& fds[0][0] > 1)
 	{

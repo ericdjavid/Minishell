@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:31:49 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/07 17:25:57 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/10 13:13:19 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	sigint_handler(int sig)
 		waitpid(-1, &stat, 0);
 		if (!stat && g_status != 9)
 		{
-			rl_clear_history();
 			ft_printf_fd(1, "\n");
 			rl_on_new_line();
 			rl_replace_line("", 0);
