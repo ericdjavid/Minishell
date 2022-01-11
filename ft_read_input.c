@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:30:03 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/11 19:04:22 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/11 20:54:42 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ int	ft_read_input(char ***nrv, char **paths)
 	int		c[3];
 
 	heredoc = NULL;
-	files = init_files(*nrv, c);
+	c[0] = 0;
+	c[2] = 0;
+	files = init_files(*nrv);
 	if (!files)
 		return (-1);
 	while ((*nrv)[c[0]])
@@ -41,18 +43,16 @@ int	ft_read_input(char ***nrv, char **paths)
 	return (dup_readin(&files, &heredoc, c[2]));
 }
 
-char	**init_files(char **newargv, int *c2)
+char	**init_files(char **newargv)
 {
 	char	**files;
 	int		n_files;
 	int		c;
 
-	c2[0] = 0;
-	c2[2] = 0;
 	c = 0;
 	n_files = 0;
-	if (newargv[0][0] == '<')
-		return (NULL);
+	// if (newargv[0][0] == '<')
+	// 	return (NULL);
 	while (newargv[c])
 	{
 		if (!ft_strncmp(newargv[c], "<", ft_strlen(newargv[c])))

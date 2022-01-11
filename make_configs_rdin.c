@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/27 14:32:02 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/11 18:01:40 by edjavid          ###   ########.fr       */
+/*   Created: 2022/01/11 21:07:36 by edjavid           #+#    #+#             */
+/*   Updated: 2022/01/11 21:07:41 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	make_configs_rdin(char ***newargv, char **files, char **heredoc, int *c)
 		{
 			return (0);
 		}
-		if (!ft_strncmp(*newargv[c[0]], "<<",
+		if (newargv[c[0]] && !ft_strncmp(*newargv[c[0]], "<<",
 				ft_strlen(*newargv[c[0]])))
 		{
 			free(*heredoc);
