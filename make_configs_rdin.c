@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_configs_rdin.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 14:32:02 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/10 19:24:50 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/11 17:24:14 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,17 @@ int	make_configs_rdin(char ***newargv, char **files, char **heredoc, int *c)
 	if (c[1] == 1)
 	{
 		if (!make_config_1(heredoc, (*newargv)[c[0] + 1], &c[2]))
+		{
 			return (0);
+		}
+		if (!ft_strncmp(*newargv[c[0]], "<<",
+				ft_strlen(*newargv[c[0]])))
+		{
+			free(*heredoc);
+			*heredoc = NULL;
+			g_status = 0;
+			return (0);
+		}
 	}
 	else
 	{

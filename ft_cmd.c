@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/10 17:52:57 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/11 16:57:02 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	wait_cmds_free(int n_pid, pid_t *child_pid, int **fds)
 		if (g_status == 131)
 			write(1, "\n", 1);
 		if (g_status == 42)
-			ft_printf_fd(2, RED "minishell: error with a malloc\n" END);
+			ft_printf_fd(2, RED "LOLminishell: error with a malloc\n" END);
 		c++;
 	}
 	free_mati(fds, n_pid + 1);
