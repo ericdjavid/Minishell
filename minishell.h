@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/11 20:20:24 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/12 15:20:59 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,15 @@ extern int	g_status;
 # define NEO_ENV 2
 
 		// STRUCTURES
+
+typedef struct s_file
+{
+	char	*name;
+	int		config;
+	struct s_file	*next;
+	char	*heredoc;
+}		t_file;
+
 typedef enum s_bool
 {
 	FALSE,
@@ -464,4 +473,20 @@ void		ft_close_fds_around(int **fds, int n);
 int			check_rds(char *cmd);
 
 int			rds_ok(char *cmd, int c, char k);
+
+		//	FT_FILE.C
+
+t_file		*ft_filenew(char *name, int config);
+
+void		ft_clearfiles(t_file **files);
+
+void		ft_fileadd_back(t_file **files, t_file *new);
+
+t_file		*ft_filelast(t_file *files);
+
+int			ft_filesize(t_file *files);
+
+		//	FT_MANAGE_RDWR.C
+
+int			*ft_manage_rdwr(char ***newargv, int forked);
 #endif
