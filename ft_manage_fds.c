@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 20:59:11 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/11 21:30:02 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/12 15:13:47 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	*ft_manage_fds(char ***newargv, char **paths, int **fds, int forked)
 		ft_dup2(fds[fds[0][0] - 1][0], STDIN_FILENO);
 		ft_close_fd(fds[fds[0][0] - 1][0]);
 	}
-	// if (ret[1] == 1 && *(newargv + 1))
-	// 	ft_dup2(fds[fds[0][0]][1], STDOUT_FILENO);
+	if (ret[1] == 1 && forked && *(newargv + 1))
+		ft_dup2(fds[fds[0][0]][1], STDOUT_FILENO);
 	return (ret);
 }
 
