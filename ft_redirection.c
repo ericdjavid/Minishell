@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:58:06 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/11 18:55:06 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/12 15:21:24 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	get_outfd(char *file, int config)
 	{
 		outfd = get_outfd_2(file, config);
 	}
-	else if (config != 2)
+	else if (config != 1)
 	{
 		outfd = open(file, O_CREAT | O_RDWR | O_TRUNC,
 				S_IRUSR | S_IRGRP | S_IWUSR | S_IROTH);
