@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_redirection_utils2.c                            :+:      :+:    :+:   */
+/*   dups_rdwr_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/05 17:19:31 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/10 19:49:39 by abrun            ###   ########.fr       */
+/*   Created: 2022/01/12 18:35:13 by abrun             #+#    #+#             */
+/*   Updated: 2022/01/12 18:35:32 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_other_wrout(char **newargv)
+int	get_inout(int config)
 {
-	int	c;
-
-	c = 0;
-	while (newargv[c])
-	{
-		if (which_redirection(newargv[c]))
-			return (1);
-		c++;
-	}
+	if (config >= 3)
+		return (1);
 	return (0);
 }
 
-char	***exit_fd_neg(int *box, char ***newargv)
+int	is_other_rdwr(int inout, t_file *files)
 {
-	box[0] = -2;
-	free_matc(*newargv);
+	files = files->next;
+	while (files)
+	{
+		if (inout && files->config >= 3)
+			return (1);
+		if (!inout && files->config <= 2)
+			return (1);
+		files = files->next;
+	}
 	return (0);
 }

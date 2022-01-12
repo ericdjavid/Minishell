@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 20:59:11 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/12 15:22:37 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/12 16:46:35 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,12 @@ int	*ft_manage_fds(char ***newargv, char **paths, int **fds, int forked)
 	ret = ft_manage_rdwr(newargv, forked);
 	if (!ret)
 		return (0);
-	(*newargv)[0] = init_cmd_path((*newargv)[0], paths);
-	if (!(*newargv)[0])
-		return (exit_manage_free(ret, 2, forked));
+	if ((*newargv)[0])
+	{
+		(*newargv)[0] = init_cmd_path((*newargv)[0], paths);
+		if (!(*newargv)[0])
+			return (exit_manage_free(ret, 2, forked));
+	}
 	if (!ret[0] && ((ft_matlen((*newargv)) > 1) || *(newargv - 1))
 		&& fds[0][0] > 1)
 	{

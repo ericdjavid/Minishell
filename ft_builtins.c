@@ -6,11 +6,30 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:42:20 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/12 15:22:56 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/12 18:43:16 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	malloc_failed2(int **fds, char **newargv, int *ret)
+{
+	ft_close_fd(fds[1][1]);
+	free_mati(fds, 2);
+	free_matc(newargv);
+	if (ret)
+		free(ret);
+	if (g_status == 42)
+		return (-1);
+	return (1);
+}
+
+void	free_in_builtins(int **fds, int *ret, char **newargv)
+{
+	free_mati(fds, 2);
+	free(ret);
+	free_matc(newargv);
+}
 
 int	exec_builtins(char **newargv, t_control *list, char **paths)
 {
@@ -25,15 +44,7 @@ int	exec_builtins(char **newargv, t_control *list, char **paths)
 	ret = ft_manage_fds(&newargv, paths, fds, 0);
 	if (!ret)
 	{
-		ft_close_fd(fds[1][1]);
-		free_mati(fds, 2);
-		free_matc(newargv);
-		if (ret)
-			free(ret);
-		if (g_status == 42)
-			return (-1);
-		else
-			return (1);
+		return (malloc_failed2(fds, newargv, ret));
 	}
 	else
 	{
@@ -44,9 +55,7 @@ int	exec_builtins(char **newargv, t_control *list, char **paths)
 		if (ret[1] != 1)
 			ft_close_fd(ret[1]);
 	}
-	free_mati(fds, 2);
-	free(ret);
-	free_matc(newargv);
+	free_in_builtins(fds, ret, newargv);
 	return (exec);
 }
 
