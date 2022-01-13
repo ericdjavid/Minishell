@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/12 15:20:59 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/12 18:42:38 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ extern int	g_status;
 
 typedef struct s_file
 {
-	char	*name;
-	int		config;
+	char			*name;
+	int				config;
 	struct s_file	*next;
-	char	*heredoc;
+	char			*heredoc;
 }		t_file;
 
 typedef enum s_bool
@@ -116,7 +116,7 @@ char		*prompt_msg(int *ret);
 
 int			ft_builtins(char **newargv, t_control *list, int fd);
 
-int		exec_builtins(char **newargv, t_control *list, char **paths);
+int			exec_builtins(char **newargv, t_control *list, char **paths);
 
 int			is_builtins(char *newargv);
 
@@ -277,73 +277,21 @@ void		mdval(t_element *elem, char *str, int type);
 
 int			ft_env(t_control *list);
 
-		//	FT_READ_INPUT.C
-
-int			ft_read_input(char ***newargv, char **paths);
-
-char		**init_files(char **newargv);
-
-int			init_config(char **newargv, int *c);
-
-		//	MAKE_CONFIGS_RDIN.C
-
-int			make_configs_rdin(char ***newargv, char **files,
-				char **heredoc, int *c);
-
-int			make_config_1(char **heredoc, char *lim, int *last);
-
-int			make_config_2(char **files, char *arg, int *last);
+		//	GET_HEREDOC.C
 
 char		*get_heredoc(char *lim);
 
 char		*print_error_rdin(int ret, char *lim, char *heredoc);
 
-		//	GET_NEWARGV_RDIN.C
-
-char		**get_newargv_rdin(char **newargv, int c, char **paths);
-
-char		**add_one_arg_rdin(char **newargv, char **new,
-				char **paths, int *counter);
-
-char		*ft_strdup_rdin(char *s, char **mat1, char **mat2);
-
-		//	RETURNS_RDIN.C
-
-int			dup_readin(char ***files, char **heredoc, int last);
-
-int			dup_readin_2(char **heredoc, char ***files, int last, int fdin);
-
-int			exit_readin(char **files, char *heredoc, int ret);
-
-		//	FT_REDIRECTION.C
-
-int			*ft_redirection(char ***newargv, int *ret, int forked);
-
-char		***loop_redirection(char ***newargv, int *ret, int c, int forked);
-
-int			which_redirection(char *s);
+		//	GET_OUTFD.C
 
 int			get_outfd(char *file, int config);
 
 int			get_outfd_2(char *file, int config);
 
-		//	FT_REDIRECTION_UTILS.C
-
-char		**get_new_redir(char **newargv, int redir);
-
-char		**free_redirection(char **newargv, char **new);
-
-int			*assign_config(int *ret, int config, int fd);
-
-int			*exit_redirection(int *box, int *ret);
-
-int			is_other_redin(char **newargv);
-
-int			is_other_wrout(char **newargv);
-
-char		***exit_fd_neg(int *box, char ***newargv);
-
 		// FT_LINKED_LISTS
+
+void		free_in_child(char **new_env, int *ret);
 
 void		ft_remove_from_list(t_element *to_supp, t_element *first);
 
@@ -387,6 +335,14 @@ int			ft_child(char ***newargv, char **paths, t_control *list, int **fds);
 void		is_directory(char *arg);
 
 char		**ft_get_envs_var(t_control *list);
+
+		//	FT_CHILD_UTILS.C
+
+char		*ft_fill_env(t_element *tmp);
+
+int			ft_add_from_list(char **neo_env, t_element *first, int i);
+
+int			close_fds_in_child(int **fds, int builtins, char ***prev);
 
 		//	FT_UNSET.C
 
@@ -489,4 +445,40 @@ int			ft_filesize(t_file *files);
 		//	FT_MANAGE_RDWR.C
 
 int			*ft_manage_rdwr(char ***newargv, int forked);
+
+int			get_config(char *s);
+
+char		**get_newargv_rdwr(char **old, int c);
+
+int			add_file(char *file, int config, t_file **files);
+
+int			*init_ret2(void);
+
+		//	DUPS_RDWR.C
+
+int			*make_dups_rdwr(t_file *files, int *ret, int forked, char *cmd);
+
+int			*fill_fds_rdwr(t_file *files, int *ret, int forked);
+
+int			print_heredoc(char *heredoc, int *ret, int *fds, int inout);
+
+int			*init_fds_rdwr(void);
+
+int			*fd_is_negative(int *fds, int inout, int forked);
+
+		//	DUPS_RDWR_UTILS.C
+
+int			get_inout(int config);
+
+int			is_other_rdwr(int inout, t_file *files);
+
+		//	EXIT_RDWR.C
+
+int			*exit_dups_rdwr(int *ret, t_file *files);
+
+char		**exit_get_newrdwr(char **old, char **new);
+
+int			*exit_manage_rdwr(int *ret, t_file *files);
+
+int			*malloc_failed(void);
 #endif

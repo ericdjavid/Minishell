@@ -13,13 +13,12 @@ NAME	= minishell
 
 SRCS	= minishell.c init_paths.c init_paths_utils.c exec_cmd.c prompt_msg.c \
 ft_builtins.c ft_echo.c ft_pwd.c ft_cd.c init_newargv.c ft_cmd.c tools.c \
-ft_read_input.c ft_export.c ft_free.c ft_redirection.c ft_redirection_utils.c \
-ft_linked_lists.c ft_manage_fds.c ft_child.c ft_exit.c ft_linked_lists2.c \
- ft_ascii_order.c tools5.c ft_export3.c ft_export4.c ft_export5.c  exec_cmd_utils.c\
-ft_unset.c tools2.c ft_clear.c ft_close_fds.c tools3.c tools4.c  ft_export2.c\
-make_configs_rdin.c get_newargv_rdin.c returns_rdin.c init_newargv_utils.c tools6.c\
-ft_ascii_order2.c ft_redirection_utils2.c ft_cd2.c ft_cd3.c check_rds.c\
-ft_file.c ft_manage_rdwr.c
+ft_export.c ft_free.c ft_linked_lists.c ft_manage_fds.c ft_child.c \
+ft_ascii_order.c tools5.c ft_export3.c ft_export4.c ft_export5.c  exec_cmd_utils.c \
+ft_unset.c tools2.c ft_clear.c ft_close_fds.c tools3.c tools4.c  ft_export2.c \
+init_newargv_utils.c tools6.c ft_child_utils.c ft_ascii_order2.c ft_cd2.c ft_cd3.c \
+check_rds.c ft_file.c ft_manage_rdwr.c ft_exit.c ft_linked_lists2.c \
+exit_rdwr.c get_outfd.c get_heredoc.c dups_rdwr.c dups_rdwr_utils.c
 
 SRCS_P	= convert_hexa.c ft_printf_fd.c print_d.c print_s.c print_x.c tools.c
 
