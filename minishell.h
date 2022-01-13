@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/13 17:05:52 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/13 17:19:09 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,7 +330,7 @@ int			*init_ret(void);
 
 		//	FT_CHILD.C
 
-void		check_heredoc(pid_t child_pid, char *str);
+void		check_heredoc(pid_t child_pid, char *str, char *str2);
 
 int			ft_child(char ***newargv, char **paths, t_control *list, int **fds);
 
