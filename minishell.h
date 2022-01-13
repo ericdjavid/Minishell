@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/12 18:42:38 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/13 17:05:52 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,6 +329,8 @@ void		free_manage_fds(int *ret, char ***newargv);
 int			*init_ret(void);
 
 		//	FT_CHILD.C
+
+void		check_heredoc(pid_t child_pid, char *str);
 
 int			ft_child(char ***newargv, char **paths, t_control *list, int **fds);
 

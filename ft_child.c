@@ -6,11 +6,21 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:44:16 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/12 18:25:45 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/13 17:05:21 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	check_heredoc(pid_t child_pid, char *str)
+{
+	int	status;
+
+	if (child_pid > 0
+		&& !ft_strncmp(str, "<<", ft_strlen("<<")))
+		wait(&status);
+	return ;
+}
 
 int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 {
