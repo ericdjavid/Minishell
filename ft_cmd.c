@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 08:13:57 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/11 18:43:31 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/12 18:52:38 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,9 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list, int n_pid)
 	int		n_newargv;
 	int		**fds;
 	pid_t	*child_pid;
+	int		hd_pid;
 
+	hd_pid = 0;
 	n_newargv = 0;
 	child_pid = malloc(sizeof(pid_t) * n_pid);
 	fds = init_fds(n_pid);
@@ -74,8 +76,15 @@ int	ft_cmd(char ***newargv, char **paths, t_control *list, int n_pid)
 		child_pid[n_newargv - 1] = fork();
 		if (child_pid[n_newargv - 1] == -1)
 			return (0);
+		if (child_pid[n_newargv - 1] > 0
+			&& !ft_strncmp(newargv[n_newargv][0], "<<", ft_strlen("<<")))
+		{
+			hd_pid = child_pid[n_newargv - 1];
+			printf("child with pid - %d\n", hd_pid);
+			printf(RED"|%s|\n"END, newargv[n_newargv][0]);
+		}
 		else if (child_pid[n_newargv - 1] == 0
-			&& !(ft_child(&newargv[n_newargv], paths, list, fds)))
+			&& !(ft_child(&newargv[n_newargv], paths, list, fds, hd_pid)))
 			return (g_status);
 		close_fds_in_parent(fds, 1);
 	}
