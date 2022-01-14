@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 18:25:02 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/14 11:03:29 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/14 11:43:55 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,9 @@ int	close_fds_in_child(int **fds, int builtins, char ***prev, int *ret)
 	{
 		n = fds[0][0];
 		ft_close_fd(fds[n][1]);
+		ft_close_fd(1);
 		while (fds[++n])
 			ft_close_fd(fds[n][1]);
-		n = fds[0][0] - 1;
 	}
 	free(ret);
 	exit(g_status);
