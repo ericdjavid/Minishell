@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 20:59:11 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/12 16:46:35 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/14 10:47:54 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,5 @@ int	*ft_manage_fds(char ***newargv, char **paths, int **fds, int forked)
 	}
 	if (!ret[1] && (forked && *(newargv + 1)))
 		ft_dup2(fds[fds[0][0]][1], STDOUT_FILENO);
-	return (ret);
-}
-
-int	*init_ret(void)
-{
-	int	*ret;
-
-	ret = malloc(sizeof(int) * 3);
-	if (!ret)
-	{
-		g_status = 42;
-		return (0);
-	}
-	ret[0] = 0;
-	ret[1] = 0;
 	return (ret);
 }

@@ -6,17 +6,16 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 17:26:43 by edjavid           #+#    #+#             */
-/*   Updated: 2022/01/12 18:21:30 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/14 10:58:19 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_in_child(char **new_env, int *ret)
+void	free_in_child(char **new_env)
 {
 	if (new_env)
 		free_matc(new_env);
-	free(ret);
 }
 
 void	ft_remove_from_list(t_element *to_supp, t_element *first)

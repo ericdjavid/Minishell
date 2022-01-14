@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:44:16 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/14 10:57:31 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/14 11:24:04 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 	signal(SIGQUIT, SIG_DFL);
 	ret = ft_manage_fds(newargv, paths, fds, 1);
 	if (!ret)
-		return (close_fds_in_child(fds, builtins, newargv - 1));
+		return (close_fds_in_child(fds, builtins, newargv - 1, ret));
 	else if (ft_builtins(*newargv, list, 1) > -1)
 		builtins = 1;
 	else if (!ft_strchr((*newargv)[0], '/') || access((*newargv)[0], F_OK))
@@ -54,8 +54,8 @@ int	ft_child(char ***newargv, char **paths, t_control *list, int **fds)
 	else if (execve((*newargv)[0],
 		(*newargv), new_env) < 0)
 		g_status = 1;
-	free_in_child(new_env, ret);
-	return (close_fds_in_child(fds, builtins, newargv - 1));
+	free_in_child(new_env);
+	return (close_fds_in_child(fds, builtins, newargv - 1, ret));
 }
 
 void	is_directory(char *arg)

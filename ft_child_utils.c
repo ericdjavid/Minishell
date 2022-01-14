@@ -6,7 +6,7 @@
 /*   By: abrun <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 18:25:02 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/12 18:30:10 by abrun            ###   ########.fr       */
+/*   Updated: 2022/01/14 11:03:29 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	**ft_get_envs_var(t_control *list)
 	return (neo_env);
 }
 
-void	close_fds_in_child2(int **fds, char ***prev)
+void	close_fds_in_child2(int **fds, char ***prev, int *ret)
 {
 	int	n;
 
@@ -84,19 +84,18 @@ void	close_fds_in_child2(int **fds, char ***prev)
 	while (fds[++n])
 		ft_close_fd(fds[n][1]);
 	if (fds[0][0] > 2)
-	{
 		ft_close_fd(fds[fds[0][0] - 2][0]);
+	if (fds[0][0] > 1 && ret[0])
 		ft_close_fd(fds[fds[0][0] - 1][0]);
-	}
 }
 
-int	close_fds_in_child(int **fds, int builtins, char ***prev)
+int	close_fds_in_child(int **fds, int builtins, char ***prev, int *ret)
 {
 	int	n;
 
 	if (builtins)
 	{
-		close_fds_in_child2(fds, prev);
+		close_fds_in_child2(fds, prev, ret);
 	}
 	else
 	{
@@ -106,5 +105,6 @@ int	close_fds_in_child(int **fds, int builtins, char ***prev)
 			ft_close_fd(fds[n][1]);
 		n = fds[0][0] - 1;
 	}
+	free(ret);
 	exit(g_status);
 }

@@ -6,7 +6,7 @@
 /*   By: edjavid <edjavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 09:44:17 by abrun             #+#    #+#             */
-/*   Updated: 2022/01/14 10:58:07 by edjavid          ###   ########.fr       */
+/*   Updated: 2022/01/14 11:04:58 by abrun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,7 +291,7 @@ int			get_outfd_2(char *file, int config);
 
 		// FT_LINKED_LISTS
 
-void		free_in_child(char **new_env, int *ret);
+void		free_in_child(char **new_env);
 
 void		ft_remove_from_list(t_element *to_supp, t_element *first);
 
@@ -344,7 +344,8 @@ char		*ft_fill_env(t_element *tmp);
 
 int			ft_add_from_list(char **neo_env, t_element *first, int i);
 
-int			close_fds_in_child(int **fds, int builtins, char ***prev);
+int			close_fds_in_child(int **fds, int builtins,
+				char ***prev, int *ret);
 
 		//	FT_UNSET.C
 
